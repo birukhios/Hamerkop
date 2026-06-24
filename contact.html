@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Contact Hamerkop Systems for ERP, EIMS, integration, data and managed services consultation." />
+    <title>Contact | Hamerkop Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./assets/hamerkop-bird.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f4ede6" />
+    <link rel="stylesheet" href="./styles.css" />
+    <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+    <script defer src="./main.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <a class="skip-link" href="#main">Skip to main content</a>
+      <div class="ambient ambient-left"></div>
+      <div class="ambient ambient-right"></div>
+      <header class="topbar">
+        <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
+          <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
+          <span class="brand-name">
+            <strong>Hamerkop</strong>
+            <span>System S.C.</span>
+          </span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav id="site-nav" class="site-nav" aria-label="Primary">
+          <a href="./solutions.html">Solutions</a>
+          <a href="./products.html">Products</a>
+          <a href="./services.html">Services</a>
+          <a href="./industries.html">Industries</a>
+          <a href="./contact.html" class="nav-cta">Request consultation</a>
+        </nav>
+      </header>
+
+      <main id="main" tabindex="-1">
+        <section class="hero page-hero">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Request consultation</p>
+            <h1>Let&apos;s scope your systems roadmap.</h1>
+            <p class="lede">
+              Tell us about your operations, constraints and compliance needs. We&apos;ll route
+              your brief to the right ERP, e-invoicing, integration, data or managed-services
+              specialist and reply within two business days.
+            </p>
+          </div>
+        </section>
+
+        <section class="page-band split-panel consult">
+          <aside class="panel-dark reveal">
+            <p class="eyebrow">What to bring</p>
+            <h2>Start with business context.</h2>
+            <ul>
+              <li>Current systems and pain points</li>
+              <li>Regulatory or reporting requirements</li>
+              <li>Branches, entities, users and transaction volumes</li>
+              <li>Desired timeline and go-live constraints</li>
+            </ul>
+            <div class="contact-list">
+              <a href="mailto:hello@hamerkop.systems">hello@hamerkop.systems</a>
+              <a href="https://hamerkop.systems">hamerkop.systems</a>
+              <span>Addis Ababa, Ethiopia</span>
+            </div>
+          </aside>
+
+          <div class="detail-card form-card reveal">
+            <h2>Send your brief</h2>
+            <p>Fields marked with * are required.</p>
+            <form class="consult-form" id="consult-form" novalidate>
+              <div class="form-grid">
+                <label class="form-field">
+                  <span>Full name *</span>
+                  <input type="text" name="name" autocomplete="name" required />
+                </label>
+                <label class="form-field">
+                  <span>Work email *</span>
+                  <input type="email" name="email" autocomplete="email" required />
+                </label>
+                <label class="form-field">
+                  <span>Organization</span>
+                  <input type="text" name="organization" autocomplete="organization" />
+                </label>
+                <label class="form-field">
+                  <span>Role</span>
+                  <input type="text" name="role" autocomplete="organization-title" />
+                </label>
+                <label class="form-field">
+                  <span>Sector</span>
+                  <select name="sector">
+                    <option value="">Select…</option>
+                    <option>Manufacturing</option>
+                    <option>Retail &amp; Distribution</option>
+                    <option>Financial Services</option>
+                    <option>Government</option>
+                    <option>Healthcare</option>
+                    <option>Logistics &amp; Transport</option>
+                    <option>Insurance</option>
+                    <option>Education</option>
+                    <option>NGOs &amp; Development</option>
+                    <option>Other</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>Area of interest</span>
+                  <select name="interest">
+                    <option value="">Select…</option>
+                    <option>Enterprise systems &amp; ERP</option>
+                    <option>Electronic invoicing</option>
+                    <option>Financial technology</option>
+                    <option>Identity &amp; trust</option>
+                    <option>Enterprise integration</option>
+                    <option>Data, analytics &amp; AI</option>
+                    <option>Managed services</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>Timeline</span>
+                  <select name="timeline">
+                    <option value="">Select…</option>
+                    <option>Just exploring</option>
+                    <option>0–3 months</option>
+                    <option>3–6 months</option>
+                    <option>6–12 months</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>Phone</span>
+                  <input type="tel" name="phone" autocomplete="tel" />
+                </label>
+              </div>
+              <label class="form-field">
+                <span>Project brief *</span>
+                <textarea name="message" rows="5" placeholder="Current systems, the problem to solve, scale and any compliance requirements…" required></textarea>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="button button-dark">
+                  Send request
+                  <span class="btn-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </span>
+                </button>
+                <p class="form-note" id="consult-status" role="status">We reply within two business days.</p>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+        <footer class="site-footer">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <img class="footer-logo" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." />
+              <p>
+                Enterprise technology and systems integration partner headquartered in Addis Ababa,
+                delivering compliant, scalable digital infrastructure for governments, financial
+                institutions and enterprises across Africa.
+              </p>
+              <div class="footer-cert">
+                <div class="cert-logos">
+                  <img src="./assets/insa.svg" alt="INSA certified" />
+                  <img src="./assets/mor.svg" alt="Ministry of Revenue accredited" />
+                </div>
+                <p>Certified by INSA and accredited by the Ethiopian Ministry of Revenue. All Hamerkop systems are inspected every 6 months.</p>
+              </div>
+            </div>
+            <div>
+              <p class="footer-title">Company</p>
+              <div class="footer-contact">
+                <span>Headquarters: Addis Ababa, Ethiopia</span>
+                <a href="https://hamerkop.systems">hamerkop.systems</a>
+                <a href="mailto:brand@hamerkop.systems">brand@hamerkop.systems</a>
+                <a href="mailto:hello@hamerkop.systems">hello@hamerkop.systems</a>
+              </div>
+            </div>
+            <div>
+              <p class="footer-title">Navigate</p>
+              <div class="footer-links">
+                <a href="./solutions.html">Solutions</a>
+                <a href="./products.html">Products</a>
+                <a href="./services.html">Services</a>
+                <a href="./industries.html">Industries</a>
+                <a href="./contact.html">Contact</a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <span>(c) 2026 Hamerkop System S.C. All rights reserved.</span>
+            <span>Authoritative | Engineering-led | Compliant by design.</span>
+          </div>
+        </footer>
+    </div>
+  </body>
+</html>
