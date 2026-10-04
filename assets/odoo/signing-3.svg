@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Placeholder for signing photo 3">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1f1b"/><stop offset="1" stop-color="#714B67"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <g fill="none" stroke="rgba(255,255,255,.35)" stroke-width="6"><rect x="470" y="300" width="260" height="190" rx="18"/><circle cx="600" cy="395" r="52"/><path d="M540 300l22-34h76l22 34"/></g>
+  <text x="600" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="rgba(255,255,255,.75)">Signing photo 3</text>
+  <text x="600" y="605" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="rgba(255,255,255,.5)">Replace assets/odoo/signing-3 with the real photo</text>
+</svg>

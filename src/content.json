@@ -1,0 +1,552 @@
+{
+  "solutions": [
+    {
+      "slug": "solution-erp",
+      "name": "Enterprise Systems & ERP",
+      "number": "01",
+      "image": "1556745757-8d76bdb6984b",
+      "alt": "Business leader running operations on one ERP platform",
+      "summary": "Finance, procurement, inventory, HR, sales, operations and reporting brought together in one enterprise environment.",
+      "headline": "Bring core operations onto one connected platform.",
+      "lede": "Hamerkop implements, customizes, supports and recovers ERP environments that connect finance, procurement, human resources, inventory, sales, operations and reporting. The engagement begins with the operating model rather than the software screen: how work moves between teams, where approvals happen, which records are trusted, how management reports are prepared and which systems already exist around the ERP.",
+      "scope": "ERP work can include Odoo and Hamerkop ERP offerings, Ethiopian localization, process design, system configuration, custom modules, data migration, integration, testing, user training, go-live and post-launch support.",
+      "designed_for": [
+        "Organizations implementing ERP for the first time",
+        "Organizations replacing an aging or fragmented ERP environment",
+        "Businesses moving beyond spreadsheets and disconnected departmental tools",
+        "Institutions expanding an existing ERP or recovering a stalled implementation"
+      ],
+      "capabilities": [
+        ["Finance & accounting", "Financial records and operational activity are managed in the same controlled environment."],
+        ["Procurement & inventory", "Purchasing, stock movement and operational demand remain connected across the operating cycle."],
+        ["People & workflow", "HR, roles, approvals and cross-department processes are handled within the shared enterprise environment."],
+        ["Sales & customer operations", "Sales activity stays connected with inventory, invoicing and finance."],
+        ["Reporting", "Management reporting is built on information captured through day-to-day operations."],
+        ["Migration & recovery", "Move from legacy environments or restore direction to stalled ERP programs."]
+      ],
+      "odoo": true
+    },
+    {
+      "slug": "solution-e-invoicing",
+      "name": "Electronic Invoicing",
+      "number": "02",
+      "image": "./assets/invoice.jpg",
+      "alt": "Structured invoice validation and reporting",
+      "summary": "Electronic invoice and receipt workflows connected with ERP, finance, billing and point-of-sale systems.",
+      "headline": "Make invoicing part of a controlled, auditable digital process.",
+      "lede": "Electronic invoicing is not an isolated document-generation process. It sits between sales, finance, billing, tax reporting, customer records and the systems where the underlying transaction is created. Hamerkop approaches electronic invoicing as an integrated operational workflow so the invoicing layer works with the wider institution.",
+      "scope": "Electronic invoicing work covers Hamerkop EIMS, invoice and receipt workflows, validation, reporting, audit records and integration with ERP, finance, billing and point-of-sale environments.",
+      "designed_for": [
+        "Organizations preparing for electronic invoicing requirements",
+        "Institutions that need invoicing connected to ERP, finance, billing or POS",
+        "Organizations managing complex invoice volumes or multiple operating locations",
+        "Teams that require clearer traceability around invoice status and reporting"
+      ],
+      "capabilities": [
+        ["Invoice & receipt workflow", "Structured creation, validation, status handling and record keeping."],
+        ["System integration", "Invoicing is connected with ERP, finance, billing and POS environments."],
+        ["Reporting", "Operational and regulatory reporting draws from structured transaction data."],
+        ["Traceability", "Important invoice events and workflow activity remain traceable through a clear transaction record."],
+        ["Access", "User roles separate the creation, management and review of invoice activity."],
+        ["Implementation", "EIMS is introduced around the organization’s existing invoicing process and the operational systems that feed it."]
+      ],
+      "product": ["product-eims", "Explore Hamerkop EIMS"]
+    },
+    {
+      "slug": "solution-fintech",
+      "name": "Financial Technology",
+      "number": "03",
+      "image": "./assets/fintech.jpg",
+      "alt": "Payment and settlement workflows",
+      "summary": "Payments, collections, reconciliation, settlement, merchant operations and financial-system integration.",
+      "headline": "Build financial workflows that connect transactions to operations.",
+      "lede": "Financial technology creates value when a transaction can move cleanly from initiation to record, reconciliation, settlement and reporting. Hamerkop develops and integrates the systems around these workflows for financial institutions, merchants and organizations with complex transaction environments.",
+      "scope": "Financial technology work covers payments, merchant operating systems, digital onboarding, KYC processes, collections, reconciliation, settlement and integration with core banking, MFI and enterprise platforms.",
+      "designed_for": [
+        "Banks and microfinance institutions",
+        "Insurance and merchant environments",
+        "Organizations managing collections, settlement or reconciliation workflows",
+        "Institutions connecting payment activity to core systems"
+      ],
+      "capabilities": [
+        ["Collections", "Payment collection activity remains linked to the operational records behind each transaction."],
+        ["Reconciliation", "Reconciliation brings transaction records together for comparison, investigation and resolution."],
+        ["Settlement", "Transaction capture, processing and settlement follow a controlled financial workflow."],
+        ["Merchant operations", "Technology around merchants, payment activity and related operational workflows."],
+        ["Onboarding & KYC", "Digital onboarding and Know-Your-Customer workflows."],
+        ["Core integration", "Financial workflows integrate with core banking, MFI and enterprise systems."]
+      ],
+      "product": ["product-finance-suite", "Explore Finance Suite"]
+    },
+    {
+      "slug": "solution-identity",
+      "name": "Identity & Trust",
+      "number": "04",
+      "image": "1555949963-aa79dcee981c",
+      "alt": "Verified digital identity for institutions",
+      "summary": "Authentication, verification, role management and controlled access across institutional applications.",
+      "headline": "Know who is accessing the system — and what they are allowed to do.",
+      "lede": "Digital operations depend on trusted identities. Hamerkop designs identity and access environments around authentication, verification, role management and controlled access so users can be connected to the right functions and data across institutional systems.",
+      "scope": "Identity work covers digital identity, authentication, access control, verification workflows and role management across standalone applications or wider ERP, financial, government and enterprise environments.",
+      "designed_for": [
+        "Institutions managing multiple applications and user roles",
+        "Financial and public-sector environments with controlled access requirements",
+        "Platforms that need verification and secure institutional onboarding",
+        "Enterprise systems requiring role-based permissions"
+      ],
+      "capabilities": [
+        ["Authentication", "Authentication establishes how users prove identity before entering a system."],
+        ["Verification", "Verification workflows confirm identity and institutional access requirements."],
+        ["Role management", "Users are linked to defined roles and permissions."],
+        ["Access control", "Limit functions and information according to institutional responsibility."],
+        ["Enterprise integration", "Identity controls integrate with ERP, financial and other institutional platforms."],
+        ["Institutional access", "Secure access extends across internal and external user environments."]
+      ],
+      "product": ["product-identity", "Explore Identity"]
+    },
+    {
+      "slug": "solution-integration",
+      "name": "Enterprise Integration",
+      "number": "05",
+      "image": "./assets/data.jpg",
+      "alt": "Integration and API infrastructure",
+      "summary": "Connect critical applications and data flows so enterprise systems can operate as one environment.",
+      "headline": "Make different systems work as one operating environment.",
+      "lede": "Institutional technology rarely lives in one system. ERP, banking applications, payment platforms, government systems, billing tools and legacy applications often need to exchange information continuously. Hamerkop designs integration environments that connect those systems through defined, monitored interfaces.",
+      "scope": "Integration work covers API management, integration platforms, government interoperability, legacy modernization, monitoring, observability and service-level management around connected systems.",
+      "designed_for": [
+        "Organizations running multiple critical platforms",
+        "Institutions modernizing legacy systems without replacing everything at once",
+        "Government environments requiring interoperability",
+        "Businesses connecting ERP, banking, payment, billing and operational applications"
+      ],
+      "capabilities": [
+        ["API architecture", "Controlled interfaces govern how systems and data services communicate."],
+        ["System connectors", "Applications across different vendors and technology environments operate through managed integrations."],
+        ["Legacy integration", "Extend the value of existing systems while new platforms are introduced."],
+        ["Interoperability", "Institutional systems exchange information through defined structures and interfaces."],
+        ["Monitoring", "Monitoring provides visibility into integration health and service behavior."],
+        ["Operational documentation", "Runbooks and service-level documentation support long-term operation and ownership."]
+      ],
+      "product": ["product-integrator", "Explore Integrator"]
+    },
+    {
+      "slug": "solution-data-ai",
+      "name": "Data, Analytics & AI",
+      "number": "06",
+      "image": "1460925895917-afdab827c52f",
+      "alt": "BI dashboards and analytics",
+      "summary": "Data warehousing, business intelligence, dashboards, document intelligence and data governance.",
+      "headline": "Turn institutional data into information people can act on.",
+      "lede": "Institutions often have large amounts of information but limited ability to use it consistently. Hamerkop helps structure and consolidate data across systems so reporting and analysis are based on clearer, more controlled information.",
+      "scope": "Data work covers data warehousing, business intelligence, executive reporting, predictive analytics, document intelligence and data governance across institutional information environments.",
+      "designed_for": [
+        "Organizations with reporting spread across multiple systems",
+        "Leadership teams that need more reliable operational and financial visibility",
+        "Institutions building a structured data environment",
+        "Teams exploring practical analytics and AI use cases"
+      ],
+      "capabilities": [
+        ["Data warehousing", "Information from operational systems is consolidated into a structured reporting environment."],
+        ["Business intelligence", "Dashboards and reporting reflect the information required for institutional decisions."],
+        ["Executive reporting", "Present management information in a clearer and more consistent form."],
+        ["Predictive analytics", "Apply analytical models where historical data supports forward-looking insight."],
+        ["Document intelligence", "Document intelligence extracts and organizes information held in institutional documents."],
+        ["Data governance", "Data governance clarifies ownership, access and appropriate use of institutional information."]
+      ],
+      "product": ["product-insight", "Explore Insight"]
+    }
+  ],
+
+  "products": [
+    {
+      "slug": "product-erp-lite",
+      "family": "erp",
+      "name": "ERP Lite",
+      "label": "ERP Product 01",
+      "eyebrow": "Hamerkop ERP",
+      "image": "1497215842964-222b430dc094",
+      "summary": "Finance, inventory, sales, purchasing and reporting for growing businesses.",
+      "headline": "Essential ERP control for growing businesses.",
+      "lede": "ERP Lite brings finance, purchasing, inventory, sales and reporting into one structured environment for organizations moving beyond spreadsheets and disconnected applications.",
+      "designed_for": "Growing businesses establishing structured operational and financial processes.",
+      "focus_title": "Implementation focus",
+      "focus": "A focused implementation around the essential finance, inventory, sales, purchasing and reporting processes needed to move beyond spreadsheets and disconnected tools.",
+      "capabilities": ["Finance", "Inventory", "Sales", "Purchasing", "Reporting"]
+    },
+    {
+      "slug": "product-erp-business",
+      "family": "erp",
+      "name": "ERP Business",
+      "label": "ERP Product 02",
+      "eyebrow": "Hamerkop ERP",
+      "image": "1486406146926-c627a92ad1ab",
+      "summary": "Broader control across finance, supply chain, HR, CRM and reporting.",
+      "headline": "A connected operating platform for growing enterprises.",
+      "lede": "ERP Business extends ERP control across a wider range of departments and processes, bringing finance, supply chain, human resources, CRM and reporting into a shared environment.",
+      "designed_for": "Established and mid-market organizations managing multiple teams and increasingly complex operations.",
+      "focus_title": "Implementation focus",
+      "focus": "Implementation is organized around broader cross-department workflows, bringing finance, supply chain, HR, CRM and reporting into one operating environment.",
+      "capabilities": ["Finance", "Supply chain", "Human resources", "CRM", "Reporting"]
+    },
+    {
+      "slug": "product-erp-enterprise",
+      "family": "erp",
+      "name": "ERP Enterprise",
+      "label": "ERP Product 03",
+      "eyebrow": "Hamerkop ERP",
+      "image": "1531973576160-7125cd663d86",
+      "summary": "Multi-entity and multi-currency operations with stronger governance and audit control.",
+      "headline": "ERP for complex, multi-entity operations.",
+      "lede": "ERP Enterprise is designed for organizations requiring stronger governance, broader integration and greater operational control across complex organizational structures.",
+      "designed_for": "Large enterprises and institutions with complex operating structures.",
+      "focus_title": "Implementation focus",
+      "focus": "Implementation centers on complex structures, multi-entity and multi-currency operations, advanced permissions, structured approvals and stronger audit control.",
+      "capabilities": ["Multi-entity operations", "Multi-currency support", "Advanced permissions", "Structured approvals", "Audit controls"]
+    },
+    {
+      "slug": "product-erp-government",
+      "family": "erp",
+      "name": "ERP for Government",
+      "label": "ERP Product 04",
+      "eyebrow": "Hamerkop ERP",
+      "image": "1529107386315-e1a2ed48a620",
+      "summary": "Budget, procurement, assets, approvals, HR and accountability-focused reporting.",
+      "headline": "Enterprise systems designed around public-sector accountability.",
+      "lede": "ERP for Government brings core public-sector administrative processes into a structured environment built around approvals, accountability and management reporting.",
+      "designed_for": "Public-sector institutions managing controlled administrative and financial operations.",
+      "focus_title": "Implementation focus",
+      "focus": "Implementation is organized around public-sector budgeting, procurement, assets, approvals, human resources and accountability-focused reporting.",
+      "capabilities": ["Budget", "Procurement", "Assets", "Approvals", "Human resources", "Accountability-focused reporting"]
+    },
+    {
+      "slug": "product-finance-suite",
+      "family": "core",
+      "name": "Finance Suite",
+      "label": "Core Product 01",
+      "eyebrow": "Hamerkop Finance Suite",
+      "image": "1611974789855-9c2a0a7236a3",
+      "summary": "A financial workflow platform for institutions managing collections, reconciliation and settlement.",
+      "headline": "Build the financial workflows the operation requires.",
+      "lede": "Hamerkop Finance Suite provides technology building blocks for collections, reconciliation, settlement, merchant services and other transaction-related processes. It can operate as part of a wider financial technology environment or connect with existing institutional systems.",
+      "focus_title": "Connected environment",
+      "focus": "Finance Suite can sit alongside existing institutional systems to support collections, reconciliation, settlement, merchant services and other transaction-related workflows.",
+      "capabilities": ["Collections", "Reconciliation", "Settlement", "Merchant services", "Payment workflows"]
+    },
+    {
+      "slug": "product-identity",
+      "family": "core",
+      "name": "Identity",
+      "label": "Core Product 02",
+      "eyebrow": "Hamerkop Identity",
+      "image": "1555949963-aa79dcee981c",
+      "summary": "Institutional identity and access for verified users, controlled roles and secure application access.",
+      "headline": "Identity and access built into the digital operation.",
+      "lede": "Hamerkop Identity supports digital identity, authentication, verification, roles and access management for organizations that require stronger control over how users interact with institutional systems.",
+      "focus_title": "Connected environment",
+      "focus": "Identity can operate as a standalone capability or provide authentication, verification, roles and access control across ERP, financial, government and other institutional applications.",
+      "capabilities": ["Digital identity", "Authentication", "Verification", "Role management", "Access control"]
+    },
+    {
+      "slug": "product-integrator",
+      "family": "core",
+      "name": "Integrator",
+      "label": "Core Product 03",
+      "eyebrow": "Hamerkop Integrator",
+      "image": "1544197150-b99a580bb7a8",
+      "summary": "A managed integration layer for applications, APIs and legacy environments.",
+      "headline": "One controlled layer for system-to-system communication.",
+      "lede": "Hamerkop Integrator connects ERP systems, financial applications, payment platforms, APIs and legacy systems through managed integrations. It provides a structured foundation for institutions that need different applications to exchange information reliably.",
+      "focus_title": "Connected environment",
+      "focus": "Integrator provides the connection layer between ERP, banking, payment, API and legacy environments, with monitoring around the data flows that move between them.",
+      "capabilities": ["ERP integration", "Banking and financial systems", "Payment platforms", "APIs and connectors", "Legacy systems", "Monitoring"]
+    },
+    {
+      "slug": "product-insight",
+      "family": "core",
+      "name": "Insight",
+      "label": "Core Product 04",
+      "eyebrow": "Hamerkop Insight",
+      "image": "1460925895917-afdab827c52f",
+      "summary": "A reporting and analytics layer built around institutional data.",
+      "headline": "Management visibility built on institutional data.",
+      "lede": "Hamerkop Insight brings dashboards, business intelligence, analytics and AI-assisted reporting together to help institutions use operational data more consistently.",
+      "focus_title": "Connected environment",
+      "focus": "Insight draws on institutional data to support dashboards, business intelligence, executive reporting, analytics and AI-assisted reporting.",
+      "capabilities": ["Dashboards", "Business intelligence", "Executive reporting", "Analytics", "AI-assisted reporting", "Data governance"]
+    }
+  ],
+
+  "services": [
+    {
+      "slug": "service-erp-implementation",
+      "name": "ERP Implementation",
+      "number": "01",
+      "image": "1543269865-cbf427effbad",
+      "summary": "End-to-end delivery from process analysis and configuration through migration, testing, training, go-live and hypercare.",
+      "headline": "Take ERP from requirement to working operation.",
+      "lede": "Hamerkop manages ERP delivery from initial process analysis through configuration, integration, testing, migration, training and go-live. The implementation is shaped around how the organization needs to operate while introducing the structure and control expected from an enterprise platform.",
+      "scope": [
+        ["Discovery & design", "Process analysis, business process design and the implementation scope."],
+        ["Build & connect", "System configuration, integrations and data migration."],
+        ["Readiness & launch", "Testing, user acceptance, training, go-live and hypercare."]
+      ],
+      "odoo": true
+    },
+    {
+      "slug": "service-erp-customization",
+      "name": "ERP Customization",
+      "number": "02",
+      "image": "1524758631624-e2822e304c36",
+      "summary": "Custom modules, workflows, reports and automation around defined operational requirements.",
+      "headline": "Extend the platform where the business requires it.",
+      "lede": "Standard software does not always cover every operational requirement. Hamerkop develops custom modules, reports, workflows and automations where they address a clear business need while keeping the wider system maintainable.",
+      "scope": [
+        ["Modules & workflows", "Custom modules and workflow automation around defined operational requirements."],
+        ["Reports & controls", "Reports, role adjustments and approval logic within the ERP environment."],
+        ["Extensions & documentation", "Integration-related extensions supported by clear technical and operational documentation."]
+      ]
+    },
+    {
+      "slug": "service-erp-support",
+      "name": "ERP Support",
+      "number": "03",
+      "image": "1487611459768-bd414656ea10",
+      "summary": "Ongoing system support, maintenance, health reviews and continuous improvement.",
+      "headline": "Keep critical systems stable after implementation.",
+      "lede": "ERP environments change as organizations grow. Hamerkop provides ongoing support for incident resolution, system maintenance, health reviews and continuous improvement around the deployed environment.",
+      "scope": [
+        ["Reliability", "Incident resolution and system maintenance for the deployed ERP environment."],
+        ["Operational support", "Support for users, workflows and issues that affect day-to-day operation."],
+        ["Improvement", "Health reviews, service-level arrangements and continuous improvement."]
+      ]
+    },
+    {
+      "slug": "service-systems-integration",
+      "name": "Systems Integration",
+      "number": "04",
+      "image": "1544197150-b99a580bb7a8",
+      "summary": "Design and build APIs, connectors, data exchange, monitoring and operational documentation across systems.",
+      "headline": "Make critical platforms operate as one environment.",
+      "lede": "Hamerkop connects applications across vendors through APIs, integration services and controlled data exchange. Integration work is designed around the systems, data flows, operational responsibilities and monitoring requirements behind the connection.",
+      "scope": [
+        ["Architecture & build", "Integration architecture, APIs and connectors across the systems involved."],
+        ["Testing & monitoring", "Testing and monitoring around data exchange and integration health."],
+        ["Operations", "Operational documentation and runbooks for the live integration environment."]
+      ]
+    },
+    {
+      "slug": "service-technology-consulting",
+      "name": "Technology Consulting",
+      "number": "05",
+      "image": "1554224155-6726b3ff858f",
+      "summary": "Technology strategy, roadmaps, architecture, solution design and vendor evaluation grounded in delivery experience.",
+      "headline": "Make technology decisions with implementation in mind.",
+      "lede": "Hamerkop provides advisory services for institutions planning new systems, modernizing existing environments or evaluating major technology investments. Consulting is grounded in practical delivery considerations rather than strategy in isolation.",
+      "scope": [
+        ["Direction", "Technology strategy and roadmaps grounded in the organization's operating requirements."],
+        ["Architecture", "Enterprise architecture and solution design for new or modernized systems."],
+        ["Decision support", "Vendor evaluation and implementation planning for major technology initiatives."]
+      ]
+    },
+    {
+      "slug": "service-managed-services",
+      "name": "Managed Services",
+      "number": "06",
+      "image": "1497215842964-222b430dc094",
+      "summary": "Monitoring, maintenance, incident management, service review and ongoing operation of defined technology environments.",
+      "headline": "Keep the technology operating while the institution focuses on its core work.",
+      "lede": "For organizations that require ongoing operational support, Hamerkop can manage defined technology environments through structured service arrangements covering system health, maintenance, incident management and improvement.",
+      "scope": [
+        ["Operate", "System monitoring and maintenance across defined technology environments."],
+        ["Respond", "Incident management and operational reporting around the live service."],
+        ["Improve", "Service reviews and improvement planning over time."]
+      ]
+    }
+  ],
+
+  "industries": [
+    {
+      "slug": "industry-manufacturing",
+      "name": "Manufacturing",
+      "number": "01",
+      "image": "1504917595217-d4dc5ebe6122",
+      "alt": "Manufacturing plant operations",
+      "summary": "Production, inventory, procurement, finance and management reporting across connected operations.",
+      "home_summary": "Enterprise operations across production, stock, purchasing, finance and reporting.",
+      "headline": "Connect plant-floor operations with financial and management control.",
+      "lede": "Manufacturing organizations need visibility across purchasing, inventory, production, distribution, finance and reporting. Hamerkop helps connect those processes through ERP, integration, invoicing and data capabilities.",
+      "focus": [
+        ["Production & inventory", "Production activity, stock movement and material availability remain connected across the operating cycle."],
+        ["Procurement & finance", "Purchasing and supplier activity feed the same financial environment used for control and reporting."],
+        ["Management visibility", "Operational and financial information can be brought together for clearer management reporting."]
+      ],
+      "capabilities": ["ERP and enterprise operations", "Inventory and procurement", "Production-related operational workflows", "Finance and reporting", "Electronic invoicing", "Systems integration"]
+    },
+    {
+      "slug": "industry-retail-distribution",
+      "name": "Retail & Distribution",
+      "number": "02",
+      "image": "1441986300917-64674bd600d8",
+      "alt": "Retail and distribution floor",
+      "summary": "Stock, purchasing, sales, invoicing and financial visibility across transaction-heavy operations.",
+      "home_summary": "Connected control across inventory, sales, invoicing and distribution.",
+      "headline": "Keep stock, sales, purchasing and invoicing connected.",
+      "lede": "Retail and distribution operations depend on accurate movement of stock and transactions across purchasing, sales, invoicing, finance and reporting. Hamerkop brings these processes into a more connected operating environment.",
+      "focus": [
+        ["Stock & purchasing", "Inventory movement and purchasing are managed against the same records used by sales and distribution."],
+        ["Sales & invoicing", "Sales activity stays connected with invoicing and the transaction records behind each order."],
+        ["Financial visibility", "Finance and reporting draw from the same operational information used across the business."]
+      ],
+      "capabilities": ["ERP", "Inventory", "Sales and purchasing", "Electronic invoicing", "Financial workflows", "Analytics"]
+    },
+    {
+      "slug": "industry-financial-services",
+      "name": "Financial Services",
+      "number": "03",
+      "image": "1611974789855-9c2a0a7236a3",
+      "alt": "Financial services and markets",
+      "summary": "Financial workflows, onboarding, identity, reconciliation, integration and institutional data.",
+      "home_summary": "Financial workflows and institutional systems where integration and control matter.",
+      "headline": "Technology for institutions where control and integration are essential.",
+      "lede": "Banks, MFIs and other financial institutions operate across highly connected technology environments. Hamerkop supports financial workflows, onboarding, identity, reconciliation, enterprise integration, data and institutional systems.",
+      "focus": [
+        ["Onboarding & identity", "Digital onboarding, KYC and controlled access form part of the wider financial workflow."],
+        ["Transactions & reconciliation", "Collections, transaction records, reconciliation and settlement remain connected through defined processes."],
+        ["Core-system integration", "Financial workflows exchange information with banking, MFI and enterprise platforms through managed integration."]
+      ],
+      "capabilities": ["Financial technology", "Identity and access", "Enterprise integration", "Reconciliation", "ERP", "Data and analytics"]
+    },
+    {
+      "slug": "industry-government",
+      "name": "Government & Public Sector",
+      "short": "Government",
+      "number": "04",
+      "image": "1529107386315-e1a2ed48a620",
+      "alt": "Government and public sector",
+      "summary": "Approvals, accountability, enterprise operations, interoperability, identity and reporting.",
+      "home_summary": "Structured enterprise operations, accountability and interoperability for public institutions.",
+      "headline": "Digital systems built around accountability and interoperability.",
+      "lede": "Public institutions require structured approvals, clear records, controlled access, reporting and interoperability across systems. Hamerkop works across ERP, integration, identity, data and digital service environments.",
+      "focus": [
+        ["Budget & procurement", "Budgeting, procurement and approvals operate within structured public-sector workflows."],
+        ["Assets & people", "Assets and human-resource processes sit within the same governed administrative environment."],
+        ["Interoperability & reporting", "Integration and reporting support accountability across institutional systems and services."]
+      ],
+      "capabilities": ["ERP for Government", "Approvals and accountability", "Assets and procurement", "Identity", "Integration and interoperability", "Data and reporting"]
+    },
+    {
+      "slug": "industry-healthcare",
+      "name": "Healthcare",
+      "number": "05",
+      "image": "1551076805-e1869033e561",
+      "alt": "Healthcare facility",
+      "summary": "Finance, procurement, inventory, HR, reporting and administrative operations.",
+      "home_summary": "Administrative systems across finance, procurement, inventory, people and reporting.",
+      "headline": "Enterprise technology behind reliable healthcare operations.",
+      "lede": "Healthcare institutions rely on technology across finance, procurement, inventory, human resources, reporting and operational administration. Hamerkop supports these enterprise processes through connected systems and integrations.",
+      "focus": [
+        ["Procurement & inventory", "Purchasing and inventory form part of the operational backbone behind healthcare administration."],
+        ["Finance & people", "Financial control and HR processes are managed through connected enterprise systems."],
+        ["Reporting", "Management reporting draws on structured operational and financial information."]
+      ],
+      "capabilities": ["ERP", "Finance and procurement", "Inventory", "Human resources", "Reporting", "Integration"]
+    },
+    {
+      "slug": "industry-insurance",
+      "name": "Insurance",
+      "number": "06",
+      "image": "1450101499163-c8848c66ca85",
+      "alt": "Insurance documentation and review",
+      "summary": "Enterprise and financial workflows connecting administration, policy operations, claims, identity and reporting.",
+      "headline": "Connect administration, financial control and institutional workflows.",
+      "lede": "Insurance organizations depend on coordinated customer, financial, approval, identity, reporting and integration processes. Hamerkop provides enterprise, financial and integration capabilities around that operating environment.",
+      "focus": [
+        ["Policy & claims operations", "Policy administration and claims sit within a wider enterprise and financial operating environment."],
+        ["Identity & approvals", "Controlled access, verification and approvals support sensitive institutional workflows."],
+        ["Finance & integration", "Financial records, reporting and connected systems support end-to-end operational visibility."]
+      ],
+      "capabilities": ["ERP", "Financial workflows", "Identity", "Integration", "Reporting", "Managed services"]
+    },
+    {
+      "slug": "industry-education",
+      "name": "Education",
+      "number": "07",
+      "image": "1523240795612-9a054b0db644",
+      "alt": "Education institution",
+      "summary": "Finance, procurement, assets, people and reporting across institutional operations.",
+      "headline": "Run institutional operations with stronger visibility and control.",
+      "lede": "Educational institutions manage people, procurement, finance, assets and reporting across increasingly complex operations. Hamerkop helps bring these processes into structured enterprise platforms.",
+      "focus": [
+        ["People & assets", "Human resources and asset records form part of the institution-wide operating environment."],
+        ["Finance & procurement", "Procurement and financial processes are managed through structured enterprise workflows."],
+        ["Reporting", "Operational, financial and administrative records can feed a clearer view of institutional performance."]
+      ],
+      "capabilities": ["ERP", "Finance", "Procurement", "Assets", "Human resources", "Reporting"]
+    },
+    {
+      "slug": "industry-ngos-development",
+      "name": "NGOs & Development",
+      "number": "08",
+      "image": "1488521787991-ed7bbaae773c",
+      "alt": "NGO and development teams",
+      "summary": "Enterprise systems for accountable program, financial and reporting operations across funding arrangements.",
+      "home_summary": "Operational and financial systems supporting accountability across programs and funding.",
+      "headline": "Systems built around operational and donor accountability.",
+      "lede": "Development organizations require clear financial control, procurement, asset management, project operations and reporting across funding arrangements. Hamerkop helps structure those processes in connected enterprise environments.",
+      "focus": [
+        ["Financial control", "Financial processes are structured around accountable operations across programs and funding arrangements."],
+        ["Procurement & assets", "Purchasing and asset management remain visible within the same enterprise environment."],
+        ["Program reporting", "Operational and financial information supports management and donor-focused reporting requirements."]
+      ],
+      "capabilities": ["ERP", "Financial control", "Procurement", "Assets", "Reporting", "Data and analytics"]
+    },
+    {
+      "slug": "industry-logistics-transport",
+      "name": "Logistics & Transport",
+      "number": "09",
+      "image": "1586528116311-ad8dd3c8310d",
+      "alt": "Logistics and warehouse operations",
+      "summary": "Assets, inventory, procurement, financial workflows, integration and operational reporting.",
+      "headline": "Connect the information behind movement.",
+      "lede": "Logistics and transport operations depend on accurate information across assets, purchasing, inventory, finance, transactions and reporting. Hamerkop provides enterprise systems and integrations around those operational flows.",
+      "focus": [
+        ["Assets & inventory", "Assets, inventory and operational resources remain visible across the movement cycle."],
+        ["Purchasing & finance", "Procurement and financial activity stay connected to the operations they support."],
+        ["Transactions & reporting", "Transaction data and operational records feed management reporting and wider system integrations."]
+      ],
+      "capabilities": ["ERP", "Assets", "Inventory and procurement", "Financial workflows", "Integration", "Analytics"]
+    }
+  ],
+
+  "insights": [
+    ["Electronic Invoicing & Tax Technology", "Electronic invoicing readiness, transaction workflows, system integration and operational implications."],
+    ["ERP & Enterprise Operations", "Process design, ERP selection, implementation, migration, adoption and long-term system operation."],
+    ["Financial Technology", "Collections, reconciliation, merchant systems, onboarding and financial-system integration."],
+    ["Integration & Architecture", "APIs, interoperability, legacy modernization and the architecture behind connected institutional systems."],
+    ["Data & AI", "Business intelligence, reporting, governance, document intelligence and practical institutional uses of AI."],
+    ["Digital Transformation", "The decisions that turn technology programs into systems that can be operated, supported and improved."]
+  ],
+
+  "delivery": [
+    ["Discover", "Map the current operation and requirements.", "Current processes, systems, risks, reporting needs and applicable obligations are mapped at the start of the engagement."],
+    ["Design", "Define the system, integrations and controls.", "Modules, integrations, controls, data flows, workflows and milestones are defined around the agreed scope."],
+    ["Implement", "Configure, connect, migrate and prepare users.", "Configuration, customization, integration and data migration move through workflow testing and user training."],
+    ["Stabilize & Improve", "Support go-live and improve the live environment.", "Go-live is followed by early operational support, issue resolution, system health reviews and continuous improvement."]
+  ],
+
+  "odoo": {
+    "_note": "Replace the placeholder photos and fill in the dates (e.g. \"12 August 2026\") once confirmed. Leave a date as null to hide it.",
+    "badge": "./assets/odoo/silver-badge.svg",
+    "partner_url": null,
+    "agreement_date": null,
+    "silver_date": null,
+    "days": 30,
+    "photos": [
+      {"src": "./assets/odoo/signing-1.svg", "caption": "Signing of the Odoo partnership agreement"},
+      {"src": "./assets/odoo/signing-2.svg", "caption": "Hamerkop and Odoo representatives after the signing"},
+      {"src": "./assets/odoo/signing-3.svg", "caption": "The Hamerkop ERP team"},
+      {"src": "./assets/odoo/signing-4.svg", "caption": "Partnership agreement documents"}
+    ]
+  }
+}

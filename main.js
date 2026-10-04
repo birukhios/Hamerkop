@@ -24,7 +24,7 @@ if (navToggle && siteNav) {
     if (event.key === "Escape") closeNav();
   });
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 760) closeNav();
+    if (window.innerWidth > 1180) closeNav();
   });
 }
 
@@ -37,22 +37,6 @@ if (topbar) {
   window.addEventListener("scroll", onScroll, { passive: true });
 }
 
-// Hero email-capture card — open a pre-filled email (no backend).
-const leadForm = document.getElementById("hero-lead-form");
-if (leadForm) {
-  leadForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const email = leadForm.querySelector("input")?.value.trim() || "";
-    const body = encodeURIComponent(
-      `Hello Hamerkop team,\n\nI'd like to talk about my systems roadmap.\nReach me at: ${email}`
-    );
-    window.location.href =
-      `mailto:hello@hamerkop.systems?subject=${encodeURIComponent(
-        "Consultation request"
-      )}&body=${body}`;
-  });
-}
-
 // Consultation form — compose a pre-filled email (no backend).
 const consultForm = document.getElementById("consult-form");
 if (consultForm) {
@@ -61,7 +45,7 @@ if (consultForm) {
     const status = document.getElementById("consult-status");
     const get = (n) => (consultForm.elements[n]?.value || "").trim();
     if (!get("name") || !get("email") || !get("message")) {
-      if (status) status.textContent = "Please add your name, email and a short brief.";
+      if (status) status.textContent = "Please add your name, work email and a short project summary.";
       return;
     }
     const lines = [
@@ -69,12 +53,11 @@ if (consultForm) {
       `Email: ${get("email")}`,
       `Organization: ${get("organization")}`,
       `Role: ${get("role")}`,
-      `Sector: ${get("sector")}`,
+      `Industry: ${get("industry")}`,
       `Area of interest: ${get("interest")}`,
-      `Timeline: ${get("timeline")}`,
       `Phone: ${get("phone")}`,
       "",
-      "Brief:",
+      "Project / requirement summary:",
       get("message"),
     ];
     const subject = `Consultation request — ${get("organization") || get("name")}`;
@@ -83,6 +66,34 @@ if (consultForm) {
         subject
       )}&body=${encodeURIComponent(lines.join("\n"))}`;
     if (status) status.textContent = "Opening your email app… if nothing happens, write to hello@hamerkop.systems.";
+  });
+}
+
+// Photo lightbox for the Odoo partnership gallery.
+const galleryItems = document.querySelectorAll("[data-lightbox]");
+if (galleryItems.length && typeof HTMLDialogElement === "function") {
+  const dialog = document.createElement("dialog");
+  dialog.className = "lightbox";
+  dialog.innerHTML =
+    '<button type="button" class="lightbox-close" aria-label="Close">&times;</button><img alt="" /><p></p>';
+  document.body.appendChild(dialog);
+  const image = dialog.querySelector("img");
+  const caption = dialog.querySelector("p");
+
+  dialog.querySelector(".lightbox-close").addEventListener("click", () => dialog.close());
+  // Clicking the backdrop (outside the content) closes it too.
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+
+  galleryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const source = item.querySelector("img");
+      image.src = source.src;
+      image.alt = source.alt;
+      caption.textContent = item.dataset.caption || "";
+      dialog.showModal();
+    });
   });
 }
 

@@ -229,7 +229,7 @@ main {
 .footer-grid {
   position: relative;
   display: grid;
-  grid-template-columns: 1.15fr 1fr 0.8fr;
+  grid-template-columns: 1.4fr 1fr 1fr 0.9fr;
   gap: 28px;
   z-index: 1;
 }
@@ -1673,6 +1673,474 @@ main:focus {
   box-shadow: 0 32px 72px rgba(17, 17, 17, 0.13);
 }
 
+/* ------------------------------------------------------------------ v2 content components */
+
+.hero-overlay .lede + .lede {
+  margin-top: 12px;
+}
+
+.hero-overlay .hero-actions {
+  margin-top: 28px;
+}
+
+.hero-overlay .hero-cta {
+  margin-top: 0;
+}
+
+.button-on-dark {
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.button-on-dark:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Achievement card floating on the homepage hero */
+.hero-award {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.hero-award:hover {
+  transform: translateY(-4px);
+}
+
+.hero-award h2,
+.hero-award p {
+  margin: 0;
+}
+
+.hero-award-badge {
+  width: 76px;
+  height: 76px;
+}
+
+/* Odoo Silver Partner milestone */
+.milestone-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: center;
+  padding: clamp(26px, 4vw, 52px);
+  border-radius: var(--radius-xl);
+  color: #fff;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(214, 219, 228, 0.22), transparent 36%),
+    radial-gradient(circle at 92% 100%, rgba(113, 75, 103, 0.55), transparent 42%),
+    linear-gradient(135deg, #121012, #2a1f26 60%, #1f1714);
+  box-shadow: var(--shadow);
+}
+
+.milestone-hero {
+  padding-top: 8px;
+}
+
+.milestone-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.milestone-badge-row .eyebrow {
+  margin: 0;
+  color: #d9dde4;
+}
+
+.milestone-badge {
+  width: 92px;
+  height: 92px;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+}
+
+.milestone-copy h1,
+.milestone-copy h2 {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(2.1rem, 3.6vw, 3.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  max-width: 18ch;
+}
+
+.milestone-copy em {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  color: #e3e6eb;
+}
+
+.milestone-copy > p {
+  margin: 20px 0 0;
+  max-width: 54ch;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.milestone-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.milestone-stats div {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.milestone-stats strong {
+  display: block;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff, #b9bec7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.milestone-stats span {
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.milestone-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.milestone-gallery .gallery-item:first-child {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+}
+
+.gallery-item {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #2a1f26;
+  cursor: zoom-in;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.04);
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.lightbox {
+  width: min(1100px, calc(100vw - 32px));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: #0b0b0d;
+  color: #fff;
+}
+
+.lightbox::backdrop {
+  background: rgba(7, 6, 5, 0.82);
+}
+
+.lightbox img {
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+}
+
+.lightbox p {
+  margin: 0;
+  padding: 14px 20px 18px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* Timeline on the partnership page */
+.timeline {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline-step {
+  display: flex;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass);
+  box-shadow: var(--glass-shadow);
+}
+
+.timeline-step .step-index {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.timeline-step h3 {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.4rem;
+}
+
+.timeline-step p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.timeline-date {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Odoo callout used on ERP pages */
+.odoo-note {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
+  border: 1px solid rgba(113, 75, 103, 0.28);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 0% 50%, rgba(185, 190, 199, 0.28), transparent 40%),
+    var(--glass-strong);
+  box-shadow: var(--glass-shadow);
+  transition: transform 220ms ease;
+}
+
+.odoo-note:hover {
+  transform: translateY(-3px);
+}
+
+.odoo-note img {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 auto;
+}
+
+.odoo-note > span:first-of-type {
+  flex: 1;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.odoo-note strong {
+  display: block;
+  color: var(--text);
+}
+
+.odoo-note .card-link {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.partner-card-featured {
+  position: relative;
+  border-color: rgba(113, 75, 103, 0.4);
+}
+
+.partner-tag {
+  position: absolute;
+  bottom: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e6e8ec, #b9bec7);
+  color: #3d4149;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Layout helpers for the new pages */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.compact-grid {
+  margin-top: 0;
+}
+
+.sub-heading {
+  margin: 32px 0 16px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.sub-heading a {
+  color: var(--accent);
+}
+
+.section-more {
+  margin-top: 28px;
+}
+
+.section-heading .tagline {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.product-name {
+  margin: 0 0 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.page-hero .eyebrow a:hover {
+  text-decoration: underline;
+}
+
+.check-list,
+.pill-list {
+  list-style: none;
+  padding: 0 !important;
+}
+
+.check-list li {
+  position: relative;
+  padding-left: 28px;
+}
+
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill-list li {
+  margin: 0 !important;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-weight: 700;
+  color: var(--text) !important;
+}
+
+.detail-card .service-kicker {
+  margin-top: 22px;
+}
+
+.detail-card .service-kicker:first-child {
+  margin-top: 0;
+}
+
+.panel-dark h2 {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.panel-dark p,
+.panel-dark ul {
+  line-height: 1.7;
+}
+
+.panel-dark .service-kicker {
+  margin-top: 24px;
+  color: #ffbca9;
+}
+
+.soon-tag {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(234, 88, 12, 0.1);
+  color: var(--accent-deep);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.pull-quote {
+  margin: 28px 0 0;
+  padding: 28px 32px;
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: var(--glass-strong);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  line-height: 1.25;
+}
+
+.cta-side .button {
+  justify-self: start;
+}
+
+a.team-card {
+  display: block;
+}
+
+.cert-logos a {
+  display: inline-flex;
+}
+
 @media (hover: none) {
   .service-card:hover,
   .work-card:hover,
@@ -1682,6 +2150,39 @@ main:focus {
   .industry-card:hover {
     transform: none;
     box-shadow: var(--shadow);
+  }
+}
+
+@media (max-width: 1180px) {
+  .topbar {
+    align-items: center;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: 78px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    border-radius: 24px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.92);
+    display: none;
+    z-index: 30;
+  }
+
+  .site-nav.is-open {
+    display: flex;
+  }
+
+  .nav-cta {
+    text-align: center;
   }
 }
 
@@ -1720,40 +2221,17 @@ main:focus {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .milestone-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 760px) {
-  .topbar {
-    align-items: center;
-  }
-
-  .nav-toggle {
-    display: inline-flex;
-  }
-
-  .site-nav {
-    position: absolute;
-    top: 78px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    border-radius: 24px;
-    padding: 18px;
-    background: rgba(255, 255, 255, 0.85);
-    display: none;
-    z-index: 30;
-  }
-
-  .site-nav.is-open {
-    display: flex;
-  }
-
-  .nav-cta {
-    text-align: center;
-  }
-
   .hero {
     min-height: auto;
     padding-top: 36px;
@@ -1801,6 +2279,21 @@ main:focus {
 
   .partner-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pillar-grid,
+  .milestone-stats,
+  .photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .milestone-panel {
+    padding: 24px;
+  }
+
+  .odoo-note {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .award-list li {
