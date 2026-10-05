@@ -1,3 +1,4 @@
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
 const navToggle = document.querySelector(".nav-toggle");
 const siteNav = document.querySelector(".site-nav");
 const topbar = document.querySelector(".topbar");
@@ -337,11 +338,45 @@ document.querySelectorAll("[data-faq]").forEach((faq) => {
   });
 });
 
+// Design-preview badge can be dismissed for the session.
+const badge = document.querySelector(".design-badge");
+if (badge) {
+  try {
+    if (sessionStorage.getItem("hide-design-badge")) badge.remove();
+  } catch {
+    /* storage unavailable */
+  }
+  badge.querySelector(".design-badge-close")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    badge.remove();
+    try {
+      sessionStorage.setItem("hide-design-badge", "1");
+    } catch {
+      /* storage unavailable */
+    }
+  });
+}
+
+// Reading progress on article pages.
+const article = document.querySelector(".article-body");
+if (article) {
+  const bar = document.createElement("div");
+  bar.className = "read-progress";
+  bar.setAttribute("aria-hidden", "true");
+  document.body.append(bar);
+  const update = () => {
+    const r = article.getBoundingClientRect();
+    const done = clamp01((window.innerHeight * 0.4 - r.top) / Math.max(1, r.height));
+    bar.style.transform = `scaleX(${done})`;
+  };
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+}
+
 // ---------------------------------------------------------------- motion library
 // Opt-in effects used by the design directions. Everything is skipped when the
 // visitor prefers reduced motion, leaving the content in its final state.
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
 // Wrap each word (and optionally each character) in spans, keeping inline markup such as <em>.
 const splitText = (el, chars) => {
@@ -430,7 +465,7 @@ if (!reduceMotion) {
     scrubs.forEach(({ el, mode, units }) => {
       const r = el.getBoundingClientRect();
       if (r.bottom < -vh || r.top > vh * 2) return;
-      const progress = clamp01((vh * 0.88 - r.top) / (r.height + vh * 0.42));
+      const progress = clamp01((vh * 0.9 - r.top) / Math.max(1, Math.min(r.height, vh * 0.5) + vh * 0.2));
       const n = units.length;
       units.forEach((u, i) => {
         const v = clamp01((progress * (n + 6) - i) / 6);

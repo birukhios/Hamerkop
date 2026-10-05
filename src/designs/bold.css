@@ -437,8 +437,8 @@ h3 {
 
 .nq-bento-media {
   position: relative;
-  grid-row: span 2;
-  min-height: 520px;
+  grid-row: span 3;
+  min-height: 560px;
   margin: 0;
   overflow: hidden;
   border-radius: var(--radius-lg);
@@ -508,9 +508,6 @@ h3 {
   background: var(--paper);
 }
 
-.nq-stat:last-child {
-  grid-column: 1 / -1;
-}
 
 .nq-stat-figure {
   margin: 0;
@@ -532,7 +529,7 @@ h3 {
 
 .nq-stat > p:last-child {
   margin: auto 0 0;
-  padding-top: 40px;
+  padding-top: 18px;
   max-width: 44ch;
   color: var(--muted);
   font-size: 0.92rem;
@@ -1269,11 +1266,14 @@ h3 {
 .footer-wordmark {
   order: -1;
   margin: 0;
-  padding: 40px 0 70px;
+  padding: 48px 20px 64px;
+  overflow: hidden;
   font-family: var(--font-display);
-  font-size: clamp(5rem, 24vw, 22rem);
+  font-size: clamp(3.4rem, 16.5vw, 19rem);
   font-weight: 700;
-  letter-spacing: -0.06em;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  text-align: center;
   color: #1c1c1c;
 }
 
@@ -1409,6 +1409,11 @@ h3 {
 }
 
 @media (max-width: 640px) {
+  .nq-glass-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .nq-segmented {
     flex-direction: column;
     align-items: stretch;

@@ -2556,26 +2556,79 @@ main:focus {
   border: 1px solid var(--line);
 }
 
-/* Design-direction preview badge (only on the comparison builds) */
+/* Design-direction preview label: compact, bottom-right, dismissible */
 .design-badge {
   position: fixed;
-  left: 16px;
-  bottom: 16px;
+  right: 14px;
+  bottom: 14px;
   z-index: 70;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
+  gap: 2px;
+  padding: 4px 4px 4px 14px;
   border-radius: 999px;
-  background: #151515;
+  background: rgba(21, 21, 21, 0.9);
   color: #fff;
   font-family: system-ui, sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-.design-badge span {
+.design-badge a span {
+  margin-left: 4px;
   color: rgba(255, 255, 255, 0.65);
+}
+
+.design-badge a:hover span {
+  color: #fff;
+}
+
+.design-badge-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Reading progress on articles */
+.read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  height: 3px;
+  background: var(--brand-orange);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+/* Clear keyboard focus on cards and tiles */
+a.feature-card:focus-visible,
+a.journal-card:focus-visible,
+a.photo-card:focus-visible,
+a.scroll-card:focus-visible,
+a.portrait-card:focus-visible,
+a.sv-tile:focus-visible,
+a.glass-case:focus-visible,
+.faq-item summary:focus-visible {
+  outline: 3px solid var(--brand-orange);
+  outline-offset: 4px;
+}
+
+/* Collapsed comparison panel: hidden from assistive technology until opened */
+.slide-panel:not(.is-open) .slide-body {
+  visibility: hidden;
 }
 
 /* ==========================================================================

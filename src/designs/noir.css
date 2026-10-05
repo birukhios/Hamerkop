@@ -279,7 +279,7 @@ h3 {
   display: grid;
   justify-items: start;
   gap: 18px;
-  max-width: 560px;
+  max-width: 720px;
   padding: clamp(24px, 5vw, 56px);
 }
 
