@@ -24,3 +24,12 @@ This regenerates every `*.html` page, `sitemap.xml` and `robots.txt` in the repo
 - **Odoo badge and photos:** put the files in `assets/odoo/` and fill in the `odoo` block (`badge`, `photos`, dates, `partner_url`). Galleries appear once photos are listed.
 - **Contact form delivery:** by default the form opens the visitor's email app. Set `site.form_endpoint` to a form service URL (e.g. Formspree) to send directly, and `site.routes` to send each Area of Interest to a different inbox.
 - **Custom domain:** update `site.url`, add a `CNAME` file, and rebuild.
+
+## Design system
+
+Defined at the top of `styles.css` as CSS custom properties, with a dark theme under `:root[data-theme="dark"]`.
+
+- **Colour:** cream canvas, paper cards, warm ink, espresso bands, one orange accent (`--accent`).
+- **Type:** Clash Grotesk for display, General Sans for text (both loaded from Fontshare).
+- **Shape:** 24px cards, 32px feature panels, pill buttons. Every `.button` gets its round arrow "puck" from CSS; variants are `button-dark` (accent), `button-ink`, `button-ghost` and `button-on-dark`.
+- **Theme:** the moon/sun toggle stores the visitor's choice in their browser (`localStorage`); the default is light.

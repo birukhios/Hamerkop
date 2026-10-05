@@ -60,6 +60,15 @@ CHEVRON = (
     '<path d="M6 9l6 6 6-6"/></svg>'
 )
 
+THEME_ICONS = (
+    '<svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" '
+    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'
+    '<svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" '
+    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+)
+
 # Area of Interest values on the contact form (must match its <option> text).
 PRODUCT_INTEREST = {
     "product-eims": "Electronic Invoicing",
@@ -124,20 +133,23 @@ def header(active, slug):
           </div>""")
     links = "\n".join(items)
     return f"""      <header class="topbar">
-        <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
-          <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
-          <span class="brand-name">
-            <strong>Hamerkop</strong>
-            <span>System S.C.</span>
-          </span>
-        </a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-        <nav id="site-nav" class="site-nav" aria-label="Primary">
+        <div class="nav-shell">
+          <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
+            <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
+            <span class="brand-name">Hamerkop</span>
+          </a>
+          <nav id="site-nav" class="site-nav" aria-label="Primary">
 {links}
-          <a href="./contact.html" class="nav-cta">Request a Consultation</a>
-        </nav>
+            <a href="./contact.html" class="button nav-cta-mobile">Request a Consultation</a>
+          </nav>
+          <div class="nav-actions">
+            <button class="theme-toggle" type="button" aria-label="Switch to dark theme">{THEME_ICONS}</button>
+            <a href="./contact.html" class="button nav-cta">Request a Consultation</a>
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+              <span></span><span></span>
+            </button>
+          </div>
+        </div>
       </header>"""
 
 
@@ -146,55 +158,61 @@ def footer():
         f'                <a href="./{s["slug"]}.html">{e(s["name"])}</a>' for s in DATA["solutions"]
     )
     return f"""      <footer class="site-footer">
-        <div class="footer-grid">
-          <div class="footer-brand">
-            <img class="footer-logo" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." />
-            <p>
-              Enterprise technology for organizations that require reliable operations, connected
-              systems and stronger institutional control.
-            </p>
-            <div class="footer-cert">
-              <div class="cert-logos">
-                <img src="./assets/insa.svg" alt="INSA certified" />
-                <img src="./assets/mor.svg" alt="Ministry of Revenue accredited" />
-                <a class="cert-odoo" href="./partnership-odoo.html">{odoo_mark()}</a>
+        <div class="footer-inner">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <a class="brand brand-light" href="./index.html" aria-label="Hamerkop System S.C. home">
+                <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
+                <span class="brand-name">Hamerkop</span>
+              </a>
+              <p>
+                Enterprise technology for organizations that require reliable operations, connected
+                systems and stronger institutional control.
+              </p>
+              <div class="footer-cert">
+                <div class="cert-logos">
+                  <img src="./assets/insa.svg" alt="INSA certified" />
+                  <img src="./assets/mor.svg" alt="Ministry of Revenue accredited" />
+                  <a class="cert-odoo" href="./partnership-odoo.html">{odoo_mark()}</a>
+                </div>
+                <p>Certified by INSA and accredited by the Ethiopian Ministry of Revenue. All Hamerkop systems are inspected every 6 months. Odoo Silver Partner.</p>
               </div>
-              <p>Certified by INSA and accredited by the Ethiopian Ministry of Revenue. All Hamerkop systems are inspected every 6 months. Odoo Silver Partner.</p>
             </div>
-          </div>
-          <div>
-            <p class="footer-title">Solutions</p>
-            <div class="footer-links">
+            <div>
+              <p class="footer-title">Solutions</p>
+              <div class="footer-links">
 {solutions}
+              </div>
+            </div>
+            <div>
+              <p class="footer-title">Company</p>
+              <div class="footer-links">
+                <a href="./company.html">About Hamerkop</a>
+                <a href="./partnership-odoo.html">Odoo partnership</a>
+                <a href="./industries.html">Industries</a>
+                <a href="./insights.html">Insights</a>
+                <a href="./contact.html">Contact</a>
+              </div>
+            </div>
+            <div>
+              <p class="footer-title">Talk to us</p>
+              <div class="footer-links">
+                <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>
+                <span>Addis Ababa, Ethiopia</span>
+                <a href="./contact.html">Request a Consultation</a>
+              </div>
             </div>
           </div>
-          <div>
-            <p class="footer-title">Company</p>
-            <div class="footer-links">
-              <a href="./company.html">About Hamerkop</a>
-              <a href="./partnership-odoo.html">Odoo partnership</a>
-              <a href="./industries.html">Industries</a>
-              <a href="./insights.html">Insights</a>
-              <a href="./contact.html">Contact</a>
-            </div>
-          </div>
-          <div>
-            <p class="footer-title">Contact</p>
-            <div class="footer-contact">
-              <span>Addis Ababa, Ethiopia</span>
-              <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>
-              <a href="./contact.html">Request a Consultation</a>
-            </div>
+          <div class="footer-bottom">
+            <span>&copy; 2026 Hamerkop System S.C. All rights reserved.</span>
+            <span class="footer-legal">
+              <a href="./privacy.html">Privacy Policy</a>
+              <a href="./terms.html">Terms of Use</a>
+              <a href="./cookies.html">Cookie Notice</a>
+            </span>
           </div>
         </div>
-        <div class="footer-bottom">
-          <span>&copy; 2026 Hamerkop System S.C. All rights reserved.</span>
-          <span class="footer-legal">
-            <a href="./privacy.html">Privacy Policy</a>
-            <a href="./terms.html">Terms of Use</a>
-            <a href="./cookies.html">Cookie Notice</a>
-          </span>
-        </div>
+        <p class="footer-wordmark" aria-hidden="true">Hamerkop</p>
       </footer>"""
 
 
@@ -219,14 +237,12 @@ def layout(title, description, nav, body, slug):
     <meta property="og:description" content="{e(description)}" />
     {head_extra}
     <title>{e(full_title)}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&amp;f[]=general-sans@400,500,600&amp;display=swap" rel="stylesheet" />
+    <script>try{{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}}catch(e){{}}</script>
     <link rel="icon" href="./assets/hamerkop-bird.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#f4ede6" />
+    <meta name="theme-color" content="#f5efe4" />
     <link rel="stylesheet" href="./styles.css?v={CSS_V}" />
     <noscript><style>.reveal{{opacity:1;transform:none}}</style></noscript>
     <script defer src="./main.js?v={JS_V}"></script>
@@ -234,8 +250,6 @@ def layout(title, description, nav, body, slug):
   <body>
     <div class="page-shell">
       <a class="skip-link" href="#main">Skip to main content</a>
-      <div class="ambient ambient-left"></div>
-      <div class="ambient ambient-right"></div>
 {header(nav, slug)}
 
       <main id="main" tabindex="-1">
@@ -404,17 +418,25 @@ def fmt_date(iso):
     return f"{d} {months[m - 1]} {y}"
 
 
+def read_minutes(a):
+    words = 0
+    for block in a["body"]:
+        if isinstance(block, str):
+            words += len(block.split())
+        else:
+            words += sum(len(str(x).split()) for v in block.values() for x in (v if isinstance(v, list) else [v]))
+    return max(1, round(words / 200))
+
+
 def article_card(a):
     media = (
-        f'<div class="service-visual"><img src="{img(a["image"], 1200)}" alt="" loading="lazy" /></div>\n            '
+        f'<div class="journal-media"><img src="{img(a["image"], 1200)}" alt="" loading="lazy" /></div>\n            '
         if a.get("image") else ""
     )
-    return f"""          <a class="feature-card article-card reveal" href="./article-{a["slug"]}.html">
-            {media}<p class="service-kicker">{e(CATEGORIES[a["category"]]["name"])}</p>
+    return f"""          <a class="journal-card reveal" href="./article-{a["slug"]}.html">
+            {media}<p class="journal-meta">{e(CATEGORIES[a["category"]]["name"])} <span aria-hidden="true">&bull;</span> {read_minutes(a)} min read</p>
             <h3>{e(a["title"])}</h3>
             <p>{e(a["summary"])}</p>
-            <p class="article-meta"><time datetime="{a["date"]}">{fmt_date(a["date"])}</time></p>
-            <span class="card-link">Read article {ARROW}</span>
           </a>"""
 
 
@@ -440,7 +462,7 @@ def latest_articles():
     cards = "\n".join(article_card(a) for a in ARTICLES[:6])
     return f"""        <section class="page-band">
 {section_heading("Latest", "Recent articles")}
-          <div class="feature-grid">
+          <div class="journal-grid">
 {cards}
           </div>
         </section>"""
@@ -456,7 +478,7 @@ def home_insights():
 def category_page(c):
     articles = [a for a in ARTICLES if a["category"] == c["slug"]]
     if articles:
-        listing = '        <section class="page-band feature-grid">\n' + "\n".join(article_card(a) for a in articles) + "\n        </section>"
+        listing = '        <section class="page-band journal-grid">\n' + "\n".join(article_card(a) for a in articles) + "\n        </section>"
     else:
         listing = f"""        <section class="page-band">
           <div class="detail-card empty-state reveal">
@@ -496,7 +518,7 @@ def article_page(a):
     related = [x for x in ARTICLES if x["category"] == a["category"] and x is not a][:3]
     related_html = (
         '        <section class="page-band">\n' + section_heading("Related", f'More on {c["name"]}')
-        + '\n          <div class="feature-grid">\n' + "\n".join(article_card(x) for x in related) + "\n          </div>\n        </section>\n"
+        + '\n          <div class="journal-grid">\n' + "\n".join(article_card(x) for x in related) + "\n          </div>\n        </section>\n"
         if related else ""
     )
     body = f"""        <article class="article">
@@ -505,7 +527,7 @@ def article_page(a):
               <p class="eyebrow"><a href="./insights.html">Insights</a> &middot; <a href="./{c["slug"]}.html">{e(c["name"])}</a></p>
               <h1>{e(a["title"])}</h1>
               <p class="lede">{e(a["summary"])}</p>
-              <p class="article-meta"><time datetime="{a["date"]}">{fmt_date(a["date"])}</time>{author}</p>
+              <p class="article-meta"><time datetime="{a["date"]}">{fmt_date(a["date"])}</time>{author} &middot; {read_minutes(a)} min read</p>
             </div>
           </header>
 {image}          <div class="article-body reveal">
@@ -589,6 +611,96 @@ def odoo_stats():
             </div>"""
 
 
+# --------------------------------------------------------------------------- homepage components
+
+def home_solution_cards():
+    """The three priority solutions as tall photo cards."""
+    picks = {"solution-erp": "./assets/erp.jpg", "solution-e-invoicing": "./assets/invoice.jpg", "solution-integration": "./assets/data.jpg"}
+    cards = []
+    for s in DATA["solutions"]:
+        if s["slug"] not in picks:
+            continue
+        cards.append(f"""            <a class="photo-card reveal" href="./{s["slug"]}.html">
+              <img src="{picks[s["slug"]]}" alt="" loading="lazy" />
+              <span class="photo-chip">Solution {s["number"]}</span>
+              <span class="photo-card-body">
+                <span class="photo-card-kicker">{e(s["name"])}</span>
+                <span class="photo-card-title">{e(s["headline"])}</span>
+                <span class="photo-card-cta">Explore {ARROW}</span>
+              </span>
+            </a>""")
+    return "\n".join(cards)
+
+
+SHOWCASE = [
+    ("./products.html#erp-family", "ERP Family", "ERP Lite, ERP Business, ERP Enterprise and ERP for Government provide different levels of operational scope and control.", "1497215842964-222b430dc094"),
+    ("./product-eims.html", "Hamerkop EIMS", "Electronic invoice and receipt processing connected with the systems that create, record and report the transaction.", "./assets/invoice.jpg"),
+    ("./product-finance-suite.html", "Finance Suite", "A financial workflow platform for institutions managing collections, reconciliation and settlement.", "./assets/fintech.jpg"),
+    ("./product-identity.html", "Identity", "Institutional identity and access for verified users, controlled roles and secure application access.", "1555949963-aa79dcee981c"),
+    ("./product-integrator.html", "Integrator", "A managed integration layer for applications, APIs and legacy environments.", "./assets/data.jpg"),
+    ("./product-insight.html", "Insight", "A reporting and analytics layer built around institutional data.", "1460925895917-afdab827c52f"),
+]
+
+
+def product_showcase():
+    """Numbered product list; hovering or focusing a row swaps the photo beside it."""
+    rows = "\n".join(
+        f"""              <li>
+                <a class="showcase-row{" is-active" if n == 1 else ""}" href="{href}" data-image="{img(image, 1400)}">
+                  <span class="showcase-index">0{n}</span>
+                  <span class="showcase-name">{e(name)}</span>
+                  <span class="showcase-text">{e(text)}</span>
+                </a>
+              </li>"""
+        for n, (href, name, text, image) in enumerate(SHOWCASE, 1)
+    )
+    first = img(SHOWCASE[0][3], 1400)
+    return f"""          <div class="showcase">
+            <figure class="showcase-media reveal"><img src="{first}" alt="" /></figure>
+            <ol class="showcase-list">
+{rows}
+            </ol>
+          </div>"""
+
+
+def industry_scroller():
+    cards = "\n".join(
+        f"""              <a class="scroll-card" href="./{i["slug"]}.html">
+                <img src="{img(i["image"], 900)}" alt="" loading="lazy" />
+                <span class="scroll-card-body">
+                  <span class="photo-card-kicker">Industry {i["number"]}</span>
+                  <span class="scroll-card-title">{e(i.get("short", i["name"]))}</span>
+                </span>
+              </a>"""
+        for i in DATA["industries"]
+    )
+    return f"""          <div class="scroller" data-scroller>
+            <div class="scroller-track" tabindex="0" aria-label="Industries">
+{cards}
+            </div>
+            <div class="scroller-controls">
+              <button type="button" class="round-button" data-scroll="-1" aria-label="Previous industries">{ARROW}</button>
+              <button type="button" class="round-button" data-scroll="1" aria-label="Next industries">{ARROW}</button>
+            </div>
+          </div>"""
+
+
+def spec_sheet():
+    rows = [
+        ("Headquarters", "Addis Ababa"),
+        ("Solution areas", str(len(DATA["solutions"]))),
+        ("Products", str(len(DATA["products"]) + 1)),
+        ("Industries served", str(len(DATA["industries"]))),
+        ("Delivery stages", str(len(DATA["delivery"]))),
+        ("Odoo partner grade", "Silver"),
+    ]
+    items = "\n".join(f'              <div class="spec-row"><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in rows)
+    return f"""            <dl class="spec-sheet reveal">
+{items}
+              <p class="spec-note">From discovery to go-live, stabilization and continuous improvement.</p>
+            </dl>"""
+
+
 SNIPPETS = {
     "solution_cards": solution_cards,
     "erp_products": lambda: products_by("erp"),
@@ -601,6 +713,10 @@ SNIPPETS = {
     "insight_cards": insight_cards,
     "latest_articles": latest_articles,
     "home_insights": home_insights,
+    "home_solution_cards": home_solution_cards,
+    "product_showcase": product_showcase,
+    "industry_scroller": industry_scroller,
+    "spec_sheet": spec_sheet,
     "site_email": lambda: SITE["email"],
     "form_attrs": lambda: (
         f'data-email="{e(SITE["email"])}" data-routes="{e(json.dumps(SITE["routes"]))}"'

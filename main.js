@@ -229,6 +229,71 @@ if (galleryItems.length && typeof HTMLDialogElement === "function") {
   });
 }
 
+// Light/dark theme toggle, remembered per visitor.
+const themeToggle = document.querySelector(".theme-toggle");
+if (themeToggle) {
+  const root = document.documentElement;
+  const sync = () => {
+    const dark = root.dataset.theme === "dark";
+    themeToggle.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#15120d" : "#f5efe4");
+  };
+  sync();
+  themeToggle.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      /* storage unavailable: the choice lasts for this page only */
+    }
+    sync();
+  });
+}
+
+// Product showcase: hovering or focusing a row swaps the photo.
+document.querySelectorAll(".showcase").forEach((showcase) => {
+  const media = showcase.querySelector(".showcase-media");
+  const image = media.querySelector("img");
+  const rows = showcase.querySelectorAll(".showcase-row");
+  const activate = (row) => {
+    if (row.classList.contains("is-active")) return;
+    rows.forEach((r) => r.classList.toggle("is-active", r === row));
+    media.classList.add("is-swapping");
+    const next = new Image();
+    next.onload = next.onerror = () => {
+      image.src = row.dataset.image;
+      media.classList.remove("is-swapping");
+    };
+    next.src = row.dataset.image;
+  };
+  rows.forEach((row) => {
+    row.addEventListener("mouseenter", () => activate(row));
+    row.addEventListener("focus", () => activate(row));
+  });
+});
+
+// Horizontal scrollers (industries): previous/next buttons.
+document.querySelectorAll("[data-scroller]").forEach((scroller) => {
+  const track = scroller.querySelector(".scroller-track");
+  const buttons = scroller.querySelectorAll("[data-scroll]");
+  const update = () => {
+    const max = track.scrollWidth - track.clientWidth - 2;
+    buttons[0].disabled = track.scrollLeft <= 2;
+    buttons[1].disabled = track.scrollLeft >= max;
+  };
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const card = track.firstElementChild;
+      const step = card ? card.getBoundingClientRect().width + 18 : track.clientWidth;
+      track.scrollBy({ left: Number(button.dataset.scroll) * step, behavior: "smooth" });
+    });
+  });
+  track.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+});
+
 // Reveal-on-scroll, with graceful fallbacks.
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
