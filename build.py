@@ -101,8 +101,8 @@ DESIGNS = [
     },
     {
         "key": "bold", "name": "Bold", "ref_name": "NoveQ", "ref": "https://noveq.framer.website/",
-        "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />',
-        "type": "Plus Jakarta Sans", "toggle": False,
+        "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />',
+        "type": "Plus Jakarta Sans + Inter", "toggle": False,
         "swatches": ["#f4f4f5", "#ffffff", "#0a0a0a", "#ea580c", "#a1a1aa"],
         "summary": "Confident and heavy: sticky dark hero with character-blur text, two-tone headlines, bento grid with counters, alternating service rows, step cards and a capabilities marquee.",
     },
@@ -882,6 +882,125 @@ def bold_steps():
     )
 
 
+# ---------------------------------------------------------------- reference-faithful components
+
+APPS = {
+    "eims": ("Hamerkop EIMS", "Invoices", ["Dashboard", "Invoices", "Receipts", "Validation", "Reports", "Integrations", "Settings"],
+             ["Document", "Source", "Status"],
+             [("Sales invoice", "ERP · Head office", "Validated", ""), ("Sales invoice", "POS · Branch 01", "Validated", ""),
+              ("Credit note", "ERP · Head office", "Submitted", "is-info"), ("Receipt", "POS · Branch 02", "Validated", ""),
+              ("Sales invoice", "Billing", "Needs correction", "is-warn"), ("Receipt", "POS · Branch 03", "Submitted", "is-info"),
+              ("Sales invoice", "ERP · Head office", "Validated", "")]),
+    "erp": ("Hamerkop ERP", "Purchase requests", ["Dashboard", "Finance", "Purchase requests", "Inventory", "People", "Sales", "Reports"],
+            ["Request", "Department", "Status"],
+            [("Office supplies", "Administration", "Approved", ""), ("Laboratory reagents", "Operations", "In review", "is-info"),
+             ("Vehicle maintenance", "Logistics", "Approved", ""), ("IT equipment", "Technology", "Awaiting budget", "is-warn"),
+             ("Training services", "People", "Approved", ""), ("Packaging materials", "Production", "In review", "is-info")]),
+}
+
+
+def app_mock(kind):
+    """A full application window (illustrative): sidebar navigation plus a document table."""
+    product, current, nav, cols, rows = APPS[kind]
+    side = "".join(f'<li{" class=is-current" if n == current else ""}>{e(n)}</li>' for n in nav)
+    head = "".join(f"<span>{e(c)}</span>" for c in cols)
+    body = "".join(
+        f'<div class="app-row"><span><i>{e(a[:1])}</i>{e(a)}</span><span>{e(b)}</span><span><em class="ui-status {c}">{e(st)}</em></span></div>'
+        for a, b, st, c in rows
+    )
+    return f"""<div class="app-window" aria-hidden="true">
+              <aside class="app-side"><p class="app-brand"><img src="./assets/hamerkop-bird.svg" alt="" />{e(product)}</p><ul>{side}</ul></aside>
+              <div class="app-main"><div class="app-top"><b>{e(current)}</b><span class="app-search">Search</span><span class="app-tag">Illustrative</span></div>
+                <div class="app-row app-head">{head}</div>{body}</div>
+            </div>"""
+
+
+FAQ = [
+    ("Getting started", "Where does an engagement with Hamerkop start?",
+     "With the current operation: operational challenges, legacy system constraints, compliance and reporting requirements, existing systems and integration needs, and the sequence required to move to a stable working environment."),
+    ("Getting started", "Who does Hamerkop work with?",
+     "Organizations operating in complex or regulated environments, including private companies, financial institutions, government bodies, healthcare providers and development organizations."),
+    ("Getting started", "What should we prepare before a consultation?",
+     "Useful context includes your organization and sector, the operational challenge, existing systems, regulatory or reporting requirements, the number of entities, locations or users, important integration requirements and the expected timeline."),
+    ("Delivery", "How does a Hamerkop implementation run?",
+     "Every implementation moves through four stages: Discover, Design, Implement, and Stabilize & Improve, connecting the business requirement to architecture, go-live and continuous improvement."),
+    ("Delivery", "Do you support systems after go-live?",
+     "Yes. ERP Support covers incident resolution, maintenance, health reviews and continuous improvement, and Managed Services can operate defined technology environments through structured service arrangements."),
+    ("Products", "Do you implement Odoo?",
+     "Yes. Hamerkop is an Odoo Silver Partner, and Odoo forms part of our ERP implementation capability alongside Hamerkop ERP products and client-specific integrations."),
+    ("Products", "Can Hamerkop EIMS work with our existing ERP or POS?",
+     "EIMS manages electronic invoice and receipt processes while integrating them with ERP, accounting, billing and point-of-sale environments."),
+]
+
+
+def faq_items(tabs=False):
+    groups = []
+    for g, _, _ in FAQ:
+        if g not in groups:
+            groups.append(g)
+    items = "\n".join(
+        f"""            <details class="faq-item"{f' data-faq-group="{e(g)}"' if tabs else ""}{" hidden" if tabs and g != groups[0] else ""}>
+              <summary>{e(q)}</summary>
+              <p>{e(a)}</p>
+            </details>"""
+        for g, q, a in FAQ
+    )
+    if not tabs:
+        return items
+    buttons = "".join(
+        f'<button type="button" data-faq-tab="{e(g)}" aria-pressed="{"true" if i == 0 else "false"}">{e(g)}</button>'
+        for i, g in enumerate(groups)
+    )
+    return f'<div class="faq-tabs" role="group" aria-label="Question categories">{buttons}</div>\n{items}'
+
+
+def editions_cards(featured="product-erp-business"):
+    cards = []
+    for p in DATA["products"]:
+        if p["family"] != "erp" or p["slug"] == "product-erp-government":
+            continue
+        caps = "".join(f"<li>{e(c)}</li>" for c in p["capabilities"])
+        hot = p["slug"] == featured
+        demo = contact_url("demo", "Enterprise Systems & ERP", product=p["name"])
+        cards.append(f"""            <article class="edition{" is-featured" if hot else ""}">
+              <div class="edition-head"><span class="bold-tag">{e(p["name"])}</span>{'<span class="edition-flag">Most chosen</span>' if hot else ""}</div>
+              <p class="edition-for">{e(p["designed_for"])}</p>
+              <a class="button {"button-dark" if hot else "button-ghost"} edition-cta" href="{demo}">Request a Demo</a>
+              <p class="edition-label">What's included</p>
+              <ul>{caps}</ul>
+            </article>""")
+    return "\n".join(cards)
+
+
+def dark_products():
+    feature = next(p for p in DATA["products"] if p["slug"] == "product-erp-enterprise")
+    chips = lambda caps: "".join(f"<span>{e(c)}</span>" for c in caps)
+    eims_caps = ["Invoice workflows", "Validation", "Integration", "Traceability", "Reporting", "Access"]
+    lead = f"""            <a class="glass-case glass-feature reveal" href="./product-eims.html">
+              <div><h3>Hamerkop EIMS</h3><p class="glass-sub">Electronic Invoicing Management System</p>
+                <p class="glass-text">Keep invoicing connected to the systems behind every transaction, from ERP and billing to point of sale.</p></div>
+              <dl><div><dt>Category</dt><dd>Flagship product</dd></div><div><dt>Integrates with</dt><dd>ERP, finance, billing, POS</dd></div><div><dt>Delivery</dt><dd>Configuration, integration, rollout, training</dd></div></dl>
+              <div class="glass-chips">{chips(eims_caps)}</div>
+            </a>"""
+    rows = []
+    for slug in ["product-erp-enterprise", "product-integrator", "product-insight"]:
+        p = next(x for x in DATA["products"] if x["slug"] == slug)
+        rows.append(f"""            <a class="glass-case glass-row reveal" href="./{slug}.html">
+              <div><p class="glass-sub">{e(p["eyebrow"])}</p><h3>{e(p["name"])}</h3><p class="glass-text">{e(p["headline"])}</p>
+                <div class="glass-chips">{chips(p["capabilities"][:3])}</div></div>
+              <img src="{img(p["image"], 800)}" alt="" loading="lazy" />
+            </a>""")
+    return lead + "\n" + "\n".join(rows)
+
+
+def consult_form():
+    """The consultation form from the contact page, for reuse on a homepage."""
+    src = (SRC / "pages" / "contact.html").read_text(encoding="utf-8")
+    start = src.index('<h2 id="form-title">')
+    end = src.index("</div>", src.index('id="consult-success-text"')) + len("</div>")
+    return src[start:end].replace("{{form_attrs}}", SNIPPETS["form_attrs"]())
+
+
 SNIPPETS = {
     "solution_cards": solution_cards,
     "erp_products": lambda: products_by("erp"),
@@ -905,6 +1024,13 @@ SNIPPETS = {
     "compare_cards": compare_cards,
     "bold_services": bold_services,
     "bold_steps": bold_steps,
+    "app_eims": lambda: app_mock("eims"),
+    "app_erp": lambda: app_mock("erp"),
+    "faq_items": faq_items,
+    "faq_tabbed": lambda: faq_items(True),
+    "editions_cards": editions_cards,
+    "dark_products": dark_products,
+    "consult_form": consult_form,
     **{f"mock_{k}": (lambda k=k: ui_mock(k)) for k in MOCKS},
     "site_email": lambda: SITE["email"],
     "form_attrs": lambda: (

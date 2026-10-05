@@ -3,94 +3,160 @@ title: Home
 description: Hamerkop Systems designs and delivers enterprise systems that bring operations, financial control, compliance, integration and information together.
 nav: home
 ---
-        <!-- Sticky hero: the photo stays while the copy scrolls over it -->
-        <section class="bold-hero">
-          <div class="bold-hero-media" aria-hidden="true">
+        <!-- Hero (NoveQ): dark photographic hero, headline top-left, segmented buttons,
+             glass card bottom-left, logo strip along the bottom; the photo stays pinned
+             while the scroll-revealed statement passes over it. -->
+        <section class="nq-hero" data-nav="dark">
+          <div class="nq-hero-media" aria-hidden="true">
             <img class="hero-zoom" src="./assets/hero-3.jpg" alt="" />
           </div>
-          <div class="bold-hero-content">
-            <div class="bold-hero-intro">
-              <a class="announce reveal" href="#milestone"><b>NEW</b> Odoo Silver Partner within {{odoo_days}} days</a>
-              <h1 data-anim="blur-in">Run your institution on systems you <em>can trust.</em></h1>
-              <div class="bold-hero-foot reveal">
-                <p class="lede">Enterprise systems that bring operations, financial control, compliance, integration and information together.</p>
-                <div class="hero-actions">
-                  <a class="button button-dark" href="./contact.html">Request a Consultation</a>
-                  <a class="button button-on-dark" href="./product-eims.html">Explore Hamerkop EIMS</a>
-                </div>
+          <div class="nq-hero-screen">
+            <div class="nq-hero-top">
+              <h1 data-anim="blur-in">Run your institution on systems you can trust.</h1>
+              <p class="nq-hero-sub reveal">Enterprise systems that bring operations, financial control, compliance, integration and information together.</p>
+              <div class="nq-segmented reveal">
+                <a class="nq-seg-primary" href="./contact.html">Request a Consultation</a>
+                <a class="nq-seg-secondary" href="./solutions.html">Our Solutions</a>
               </div>
             </div>
-            <div class="bold-hero-statement">
-              <p data-scrub="blur">Hamerkop Systems helps businesses, financial institutions, government organizations and other complex operations move beyond disconnected spreadsheets, aging software and fragmented technology.</p>
+            <div class="nq-hero-bottom">
+              <a class="nq-glass-card reveal" href="./partnership-odoo.html">
+                {{odoo_mark}}
+                <span><b>Odoo Silver Partner within {{odoo_days}} days of signing.</b> Read how Hamerkop reached Silver grade.</span>
+              </a>
+              <div class="nq-hero-strip reveal">
+                {{logo_marquee}}
+                <p>Certified by INSA &middot; Accredited by the Ministry of Revenue</p>
+              </div>
             </div>
+          </div>
+          <div class="nq-hero-statement">
+            <p data-scrub="blur">Hamerkop Systems helps businesses, financial institutions, government organizations and other complex operations move beyond disconnected spreadsheets, aging software and fragmented technology.</p>
           </div>
         </section>
 
-        <!-- About + bento -->
-        <section class="section-pad">
-          <h2 class="bold-display reveal">Built to make complex technology work in the real world. <span class="muted-line">For institutions that need systems to work every day.</span></h2>
-          <div class="bold-intro reveal">
-            <p>Hamerkop Systems is an Ethiopian enterprise technology company headquartered in Addis Ababa, working with institutions that need reliable systems, stronger control and a clear connection between technology and day-to-day operations.</p>
+        <!-- Who we are: two-tone headline, intro row and bento with counters -->
+        <section class="nq-section">
+          <p class="eyebrow">Who we are</p>
+          <h2 class="nq-display reveal">Built to make complex technology work in the real world: <span class="muted-line">for institutions that need systems to work every day.</span></h2>
+          <div class="nq-intro reveal">
+            <p>We work with institutions that need reliable systems, stronger control and a clear connection between technology and day-to-day operations.</p>
             <span>Addis Ababa, Ethiopia</span>
           </div>
-          <div class="bento" data-stagger>
-            <figure class="bento-media">
+          <div class="nq-bento" data-stagger>
+            <figure class="nq-bento-media">
               <img src="./assets/team.jpg" alt="Hamerkop team at work" loading="lazy" />
-              <figcaption class="photo-chip">How we deliver: discover, design, implement, improve</figcaption>
+              <figcaption><span class="nq-play" aria-hidden="true"></span>How we work<small>Discover, design, implement, improve</small></figcaption>
             </figure>
-            <div class="stat-card"><span class="stat-figure"><span data-count="{{odoo_days}}">{{odoo_days}}</span><small> days</small></span><div><h3>To Odoo Silver Partner</h3><p>From signing the partnership agreement to Silver grade.</p></div></div>
-            <div class="stat-card"><span class="stat-figure"><span data-count="6">6</span></span><div><h3>Solution areas</h3><p>ERP, invoicing, fintech, identity, integration and data.</p></div></div>
-            <div class="stat-card"><span class="stat-figure"><span data-count="9">9</span></span><div><h3>Products</h3><p>From ERP Lite to Hamerkop EIMS, Integrator and Insight.</p></div></div>
-            <div class="stat-card"><span class="stat-figure"><span data-count="9">9</span></span><div><h3>Industries served</h3><p>Public, financial, commercial and development institutions.</p></div></div>
+            <div class="nq-stat"><p class="nq-stat-figure"><span data-count="{{odoo_days}}">{{odoo_days}}</span> <small>days</small></p><h3>To Odoo Silver Partner</h3><p>From signing the partnership agreement to Silver grade.</p></div>
+            <div class="nq-stat"><p class="nq-stat-figure"><span data-count="6">6</span></p><h3>Solution areas</h3><p>ERP, electronic invoicing, financial technology, identity, integration and data.</p></div>
+            <div class="nq-stat"><p class="nq-stat-figure"><span data-count="9">9</span></p><h3>Products</h3><p>From ERP Lite to Hamerkop EIMS, Integrator and Insight.</p></div>
           </div>
+          <blockquote class="nq-quote reveal">
+            &ldquo;Make institutional technology more reliable, connected and useful.&rdquo;
+            <cite>Our purpose, Hamerkop Systems</cite>
+          </blockquote>
         </section>
 
         <!-- Services -->
-        <section class="section-pad">
-          <div class="bold-section-head">
-            <p class="eyebrow">Solutions</p>
-            <h2 class="bold-display reveal">Everything institutions need to run on connected systems. <span class="muted-line">Shaped around the operation.</span></h2>
-            <p class="reveal">Technology starts with the problem an organization needs to solve. Hamerkop brings together products, implementation expertise and integration capability.</p>
-            <a class="button button-dark reveal" href="./solutions.html">All solutions</a>
+        <section class="nq-section">
+          <p class="eyebrow">Solutions</p>
+          <h2 class="nq-display reveal">Everything institutions need to run on connected systems. <span class="muted-line">Shaped around the operation.</span></h2>
+          <div class="nq-intro reveal">
+            <p>Technology starts with the problem an organization needs to solve. Hamerkop brings together products, implementation expertise and integration capability.</p>
           </div>
+          <a class="nq-pill reveal" href="./contact.html">Request a Consultation</a>
           <div class="bold-services">
 {{bold_services}}
           </div>
         </section>
 
         <!-- Process -->
-        <section class="section-pad">
-          <div class="bold-section-head bold-row">
+        <section class="nq-section">
+          <div class="nq-head-row">
             <div>
               <p class="eyebrow">How we work</p>
-              <h2 class="bold-display reveal">From operational problem to stable system. <span class="muted-line">Here's exactly what to expect.</span></h2>
+              <h2 class="nq-display reveal">From operational problem to stable system. <span class="muted-line">Here's exactly what to expect.</span></h2>
+              <p class="nq-lead reveal">No black boxes. Every engagement follows the same governed path, so you always know where things stand and what comes next.</p>
             </div>
-            <a class="button button-dark reveal" href="./contact.html">Get in touch</a>
+            <a class="nq-pill reveal" href="./contact.html">Get in touch</a>
           </div>
           <div class="bold-steps" data-stagger>
 {{bold_steps}}
           </div>
         </section>
 
-        <!-- Before / after -->
-        <section class="section-pad">
-          <div class="bold-section-head">
-            <p class="eyebrow">The difference</p>
-            <h2 class="bold-display reveal">What changes when your systems <span class="muted-line">finally work together.</span></h2>
+        <!-- Sliding before / after -->
+        <section class="nq-section">
+          <h2 class="nq-display nq-center reveal">What changes when your systems <span class="muted-line">finally work together.</span></h2>
+          <div class="slide-compare reveal" data-slide-compare>
+            <article class="slide-panel is-ours is-open">
+              <button class="slide-tab" type="button" aria-expanded="true"><span>With Hamerkop</span></button>
+              <div class="slide-body">
+                <p class="eyebrow">After</p>
+                <h3>Connected, governed systems</h3>
+                <ul>
+                  <li>Finance, procurement, inventory, people and sales on one connected platform</li>
+                  <li>Electronic invoicing connected to ERP, finance, billing and POS</li>
+                  <li>Secure, monitored interfaces between critical systems</li>
+                  <li>Roles, permissions and traceable activity around every workflow</li>
+                  <li>Reporting built on information captured in daily operations</li>
+                  <li>Support from discovery through go-live and continuous improvement</li>
+                </ul>
+              </div>
+            </article>
+            <article class="slide-panel">
+              <button class="slide-tab" type="button" aria-expanded="false"><span>The old way</span></button>
+              <div class="slide-body">
+                <p class="eyebrow">Before</p>
+                <h3>Fragmented technology</h3>
+                <ul>
+                  <li>Spreadsheets and disconnected departmental tools</li>
+                  <li>Aging software that is hard to change</li>
+                  <li>Invoicing separated from the transaction behind it</li>
+                  <li>Information re-keyed manually between systems</li>
+                  <li>Management reports rebuilt by hand</li>
+                  <li>Unclear ownership of critical records</li>
+                </ul>
+              </div>
+            </article>
           </div>
-{{compare_cards}}
-          <div class="bold-marquee">{{capability_marquee}}</div>
+          <div class="nq-chip-row">
+            <h3 class="reveal">This is why institutions don't go back to disconnected systems.</h3>
+            {{capability_marquee}}
+          </div>
+        </section>
+
+        <!-- Dark product showcase -->
+        <section class="nq-dark" data-nav="dark">
+          <div class="nq-dark-media" aria-hidden="true"><img src="./assets/hero-1.jpg" alt="" loading="lazy" /></div>
+          <div class="nq-dark-inner">
+            <p class="nq-dark-statement" data-scrub="blur">Platforms for different stages of institutional growth, connected to the systems you already run and supported from go-live onwards.</p>
+            <div class="glass-cases">
+{{dark_products}}
+            </div>
+            <a class="nq-pill nq-pill-light reveal" href="./products.html">All products</a>
+          </div>
+        </section>
+
+        <!-- Editions (pricing layout, no prices) -->
+        <section class="nq-section">
+          <h2 class="nq-display nq-center reveal">Three ERP editions. <span class="muted-line">One connected way of working.</span></h2>
+          <p class="nq-lead nq-center reveal">Every edition is implemented around how your organization operates, with the structure and control expected from an enterprise platform.</p>
+          <div class="editions" data-stagger>
+{{editions_cards}}
+          </div>
         </section>
 
         <!-- Odoo milestone -->
-        <section id="milestone" class="milestone section-pad" aria-labelledby="milestone-title">
+        <section id="milestone" class="nq-section">
           <div class="milestone-panel">
             <div class="milestone-copy reveal">
               <div class="milestone-badge-row">
                 {{odoo_mark}}
                 <p class="eyebrow">Partnership milestone</p>
               </div>
-              <h2 id="milestone-title">Odoo Silver Partner <em>within {{odoo_days}} days</em> of signing.</h2>
+              <h2>Odoo Silver Partner <em>within {{odoo_days}} days</em> of signing.</h2>
               <p>Odoo now forms part of our ERP implementation capability, alongside Hamerkop ERP products, Ethiopian localization and client-specific integrations.</p>
 {{odoo_stats}}
               <div class="hero-actions">
@@ -101,18 +167,44 @@ nav: home
           </div>
         </section>
 
-        <!-- Insights -->
-        <section class="section-pad">
-          <div class="bold-section-head bold-row">
+        <!-- FAQ with category tabs -->
+        <section class="nq-section">
+          <h2 class="nq-display nq-center reveal">Everything you need to know <span class="muted-line">before taking the next step.</span></h2>
+          <div class="nq-faq reveal" data-faq>
+{{faq_tabbed}}
+            <div class="nq-faq-foot">
+              <p>Still have a question that isn't answered here? <span>Tell us about your operation and we'll route it to the right team.</span></p>
+              <a class="nq-pill" href="./contact.html">Ask a Question</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Blog -->
+        <section class="nq-section">
+          <div class="nq-head-row">
             <div>
               <p class="eyebrow">Insights</p>
-              <h2 class="bold-display reveal">Practical thinking <span class="muted-line">on enterprise technology in Ethiopia.</span></h2>
+              <h2 class="nq-display reveal">Insights</h2>
+              <p class="nq-lead reveal">Practical thinking on enterprise technology in Ethiopia, from electronic invoicing and ERP to integration and data.</p>
             </div>
-            <a class="button button-ghost reveal" href="./insights.html">Read Insights</a>
+            <a class="nq-link reveal" href="./insights.html">All articles &#8599;</a>
           </div>
           <div class="journal-grid" data-stagger>
 {{home_insights}}
           </div>
         </section>
 
-{{default_cta}}
+        <!-- Contact pre-footer -->
+        <section class="nq-contact" data-nav="dark">
+          <div class="nq-contact-inner">
+            <div class="nq-contact-card reveal">
+              <h2>Every reliable system starts with a single conversation.</h2>
+              <p class="nq-contact-quote">&ldquo;A consultation begins with the current challenge, the systems involved and the outcome the organization is trying to improve.&rdquo;</p>
+              <a class="nq-pill" href="./contact.html">Request a Consultation</a>
+              <div class="nq-contact-meta"><a href="mailto:{{site_email}}">{{site_email}}</a><span>Addis Ababa, Ethiopia</span></div>
+            </div>
+            <div class="nq-contact-card nq-contact-form reveal">
+{{consult_form}}
+            </div>
+          </div>
+        </section>

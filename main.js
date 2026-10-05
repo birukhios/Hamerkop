@@ -294,6 +294,49 @@ document.querySelectorAll("[data-scroller]").forEach((scroller) => {
   update();
 });
 
+// Header colour follows the section underneath it (sections marked data-nav="dark").
+const darkSections = [...document.querySelectorAll('[data-nav="dark"]')];
+if (topbar && darkSections.length) {
+  const syncNav = () => {
+    const y = topbar.getBoundingClientRect().top + topbar.offsetHeight / 2;
+    const onDark = darkSections.some((s) => {
+      const r = s.getBoundingClientRect();
+      return r.top <= y && r.bottom >= y;
+    });
+    topbar.classList.toggle("is-on-dark", onDark);
+  };
+  syncNav();
+  window.addEventListener("scroll", syncNav, { passive: true });
+  window.addEventListener("resize", syncNav);
+}
+
+// Sliding comparison: one panel expands, the other collapses to a vertical tab.
+document.querySelectorAll("[data-slide-compare]").forEach((group) => {
+  const panels = [...group.querySelectorAll(".slide-panel")];
+  panels.forEach((panel) => {
+    panel.querySelector(".slide-tab").addEventListener("click", () => {
+      panels.forEach((p) => {
+        const open = p === panel;
+        p.classList.toggle("is-open", open);
+        p.querySelector(".slide-tab").setAttribute("aria-expanded", String(open));
+      });
+    });
+  });
+});
+
+// FAQ category tabs (Bold): show only the questions in the chosen category.
+document.querySelectorAll("[data-faq]").forEach((faq) => {
+  const buttons = [...faq.querySelectorAll("[data-faq-tab]")];
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+      faq.querySelectorAll("[data-faq-group]").forEach((item) => {
+        item.hidden = item.dataset.faqGroup !== button.dataset.faqTab;
+      });
+    });
+  });
+});
+
 // ---------------------------------------------------------------- motion library
 // Opt-in effects used by the design directions. Everything is skipped when the
 // visitor prefers reduced motion, leaving the content in its final state.
