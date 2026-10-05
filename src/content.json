@@ -51,7 +51,8 @@
           "Move from legacy environments or restore direction to stalled ERP programs."
         ]
       ],
-      "odoo": true
+      "odoo": true,
+      "hero": "1756721306784-b05ad62d7e3c"
     },
     {
       "slug": "solution-e-invoicing",
@@ -98,7 +99,8 @@
       "product": [
         "product-eims",
         "Explore Hamerkop EIMS"
-      ]
+      ],
+      "hero": "1771495562804-373fb516114c"
     },
     {
       "slug": "solution-fintech",
@@ -145,7 +147,8 @@
       "product": [
         "product-finance-suite",
         "Explore Finance Suite"
-      ]
+      ],
+      "hero": "1664022379391-8b52fd2653f0"
     },
     {
       "slug": "solution-identity",
@@ -192,7 +195,8 @@
       "product": [
         "product-identity",
         "Explore Identity"
-      ]
+      ],
+      "hero": "1650117275187-ac48611175ab"
     },
     {
       "slug": "solution-integration",
@@ -239,7 +243,8 @@
       "product": [
         "product-integrator",
         "Explore Integrator"
-      ]
+      ],
+      "hero": "1756721501969-7aabb5dd647d"
     },
     {
       "slug": "solution-data-ai",
@@ -286,7 +291,8 @@
       "product": [
         "product-insight",
         "Explore Insight"
-      ]
+      ],
+      "hero": "1756721501583-9780c585c6a7"
     }
   ],
   "products": [
@@ -481,7 +487,8 @@
           "Testing, user acceptance, training, go-live and hypercare."
         ]
       ],
-      "odoo": true
+      "odoo": true,
+      "hero": "1756721501657-639c90be59ec"
     },
     {
       "slug": "service-erp-customization",
@@ -504,7 +511,8 @@
           "Extensions & documentation",
           "Integration-related extensions supported by clear technical and operational documentation."
         ]
-      ]
+      ],
+      "hero": "1771495604392-2008757fb32a"
     },
     {
       "slug": "service-erp-support",
@@ -527,7 +535,8 @@
           "Improvement",
           "Health reviews, service-level arrangements and continuous improvement."
         ]
-      ]
+      ],
+      "hero": "1512654458600-cf5387bd9428"
     },
     {
       "slug": "service-systems-integration",
@@ -550,7 +559,8 @@
           "Operations",
           "Operational documentation and runbooks for the live integration environment."
         ]
-      ]
+      ],
+      "hero": "1607456083092-e24b5cd45a9c"
     },
     {
       "slug": "service-technology-consulting",
@@ -573,7 +583,8 @@
           "Decision support",
           "Vendor evaluation and implementation planning for major technology initiatives."
         ]
-      ]
+      ],
+      "hero": "1624314138470-5a2f24623f10"
     },
     {
       "slug": "service-managed-services",
@@ -596,7 +607,8 @@
           "Improve",
           "Service reviews and improvement planning over time."
         ]
-      ]
+      ],
+      "hero": "1674272130894-ef04c07e922c"
     }
   ],
   "industries": [

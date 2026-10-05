@@ -88,7 +88,7 @@ DESIGNS = [
     {
         "key": "noir", "name": "Noir", "ref_name": "Hedvig", "ref": "https://hedvig.framer.website/",
         "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />',
-        "type": "Figtree", "toggle": False,
+        "type": "Figtree", "toggle": False, "image_heroes": True,
         "swatches": ["#0a0a0a", "#141414", "#fafafa", "#ea580c", "#71717a"],
         "summary": "Cinematic on brand ink: zooming full-bleed hero, scroll-scrubbed statement, portrait cards, full-screen cards that stack as you scroll, and a before/after comparison.",
     },
@@ -324,7 +324,17 @@ def layout(title, description, nav, body, slug):
 
 # --------------------------------------------------------------------------- shared blocks
 
-def page_hero(eyebrow, h1, lede, actions="", extra=""):
+def page_hero(eyebrow, h1, lede, actions="", extra="", image=None):
+    if image and ACTIVE and ACTIVE.get("image_heroes"):
+        return f"""        <section class="hero page-hero has-image" data-pointer-parallax>
+          <img class="page-hero-bg" src="{img(image, 2400)}" alt="" />
+          <div class="hero-copy" data-scroll-out>
+            <p class="eyebrow">{eyebrow}</p>
+            {extra}<h1 data-anim="blur-in">{e(h1)}</h1>
+            <p class="lede reveal">{e(lede)}</p>
+            {actions}
+          </div>
+        </section>"""
     return f"""        <section class="hero page-hero">
           <div class="hero-copy reveal">
             <p class="eyebrow">{eyebrow}</p>
@@ -1001,6 +1011,77 @@ def consult_form():
     return src[start:end].replace("{{form_attrs}}", SNIPPETS["form_attrs"]())
 
 
+# ---------------------------------------------------------------- Noir hub components
+
+def noir_solution_explorer():
+    """Huge numbered list; the pinned panel swaps photo and summary on hover/focus."""
+    rows = "\n".join(
+        f"""              <li>
+                <a class="showcase-row{" is-active" if n == 0 else ""}" href="./{x["slug"]}.html" data-image="{img(x.get("hero", x["image"]), 1600)}">
+                  <span class="showcase-index">{x["number"]}</span>
+                  <span class="showcase-name">{e(x["name"])}</span>
+                  <span class="showcase-text">{e(x["summary"])} <b>Explore &rarr;</b></span>
+                </a>
+              </li>"""
+        for n, x in enumerate(DATA["solutions"])
+    )
+    first = DATA["solutions"][0]
+    return f"""          <div class="showcase nx-explorer">
+            <figure class="showcase-media"><img src="{img(first.get("hero", first["image"]), 1600)}" alt="" /></figure>
+            <ol class="showcase-list">
+{rows}
+            </ol>
+          </div>"""
+
+
+def noir_service_track():
+    cards = "\n".join(
+        f"""              <a class="hs-card" href="./{x["slug"]}.html">
+                <span class="hs-num">{x["number"]}</span>
+                <figure><img src="{img(x.get("hero", x["image"]), 1200)}" alt="" loading="lazy" /></figure>
+                <h3>{e(x["name"])}</h3>
+                <p>{e(x["summary"])}</p>
+                <span class="hs-more">Explore the service &rarr;</span>
+              </a>"""
+        for x in DATA["services"]
+    )
+    return f"""          <div class="hs-track">
+{cards}
+          </div>"""
+
+
+def noir_timeline():
+    steps = "\n".join(
+        f"""            <li data-step>
+              <span class="nx-step-dot" aria-hidden="true"></span>
+              <span class="nx-step-num">0{n}</span>
+              <h3>{e(name)}</h3>
+              <p>{e(full)}</p>
+            </li>"""
+        for n, (name, short, full) in enumerate(DATA["delivery"], 1)
+    )
+    return f"""          <ol class="nx-timeline" data-progress-line>
+{steps}
+          </ol>"""
+
+
+def noir_industry_mosaic():
+    tiles = "\n".join(
+        f"""            <a class="nx-tile nx-tile-{n}" href="./{x["slug"]}.html" data-tilt="5">
+              <img src="{img(x["image"], 1200)}" alt="" loading="lazy" />
+              <span class="nx-tile-body">
+                <small>Industry {x["number"]}</small>
+                <b>{e(x["name"])}</b>
+                <em>{e(x["summary"])}</em>
+              </span>
+            </a>"""
+        for n, x in enumerate(DATA["industries"], 1)
+    )
+    return f"""          <div class="nx-mosaic" data-stagger>
+{tiles}
+          </div>"""
+
+
 SNIPPETS = {
     "solution_cards": solution_cards,
     "erp_products": lambda: products_by("erp"),
@@ -1031,6 +1112,10 @@ SNIPPETS = {
     "editions_cards": editions_cards,
     "dark_products": dark_products,
     "consult_form": consult_form,
+    "noir_solution_explorer": noir_solution_explorer,
+    "noir_service_track": noir_service_track,
+    "noir_timeline": noir_timeline,
+    "noir_industry_mosaic": noir_industry_mosaic,
     **{f"mock_{k}": (lambda k=k: ui_mock(k)) for k in MOCKS},
     "site_email": lambda: SITE["email"],
     "form_attrs": lambda: (
@@ -1062,6 +1147,7 @@ def solution_page(s):
             f'<a href="./solutions.html">Solutions</a> &middot; Solution {s["number"]}',
             s["headline"], s["lede"],
             actions((contact_url(interest=s["name"]), "Request a Consultation"), *product_btn),
+            image=s.get("hero", s["image"]),
         ),
         f"""        <section class="page-band split-panel">
           <aside class="panel-dark reveal">
@@ -1124,6 +1210,7 @@ def service_page(s):
             s["headline"], s["lede"],
             actions((consult, "Request a Consultation"), ("./services.html", "All services")),
             extra=f'<p class="product-name">Hamerkop Services &middot; {e(s["name"])}</p>\n            ',
+            image=s.get("hero", s["image"]),
         ),
         f"""        <section class="page-band split-panel">
           <div class="story-media reveal">
@@ -1151,6 +1238,7 @@ def industry_page(i):
             i["headline"], i["lede"],
             actions((consult, "Request a Consultation"), ("./industries.html", "All industries")),
             extra=f'<p class="product-name">{e(i["name"])}</p>\n            ',
+            image=i.get("hero", i["image"]),
         ),
         f"""        <section class="page-band split-panel">
           <div class="story-media reveal">
@@ -1173,7 +1261,7 @@ def industry_page(i):
 FRONT = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 
 
-def render_page(path):
+def render_page(path, slug=None):
     raw = path.read_text(encoding="utf-8")
     m = FRONT.match(raw)
     meta = dict(line.split(":", 1) for line in m.group(1).splitlines() if ":" in line)
@@ -1187,13 +1275,14 @@ def render_page(path):
         return SNIPPETS[key]()
 
     body = re.sub(r"\{\{(\w+)\}\}", sub, body)
-    return layout(meta["title"], meta["description"], meta.get("nav", ""), body, path.stem)
+    return layout(meta["title"], meta["description"], meta.get("nav", ""), body, slug or path.stem)
 
 
 def render_all():
     out = {}
     for p in sorted((SRC / "pages").glob("*.html")):
-        out[p.name] = render_page(p)
+        override = SRC / "designs" / f'{ACTIVE["key"]}-{p.stem}.html' if ACTIVE else None
+        out[p.name] = render_page(override if override and override.exists() else p, p.stem)
     if ACTIVE:
         home = SRC / "designs" / f'{ACTIVE["key"]}-home.html'
         if home.exists():

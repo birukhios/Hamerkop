@@ -489,8 +489,10 @@ if (!reduceMotion) {
     });
     parallax.forEach((el) => {
       const r = el.parentElement.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > vh) return;
-      el.style.transform = `translate3d(0, ${(-r.top * Number(el.dataset.parallax || 0.2)).toFixed(1)}px, 0) scale(1.08)`;
+      if (r.bottom < -vh || r.top > vh * 2) return;
+      // Centred: zero shift when the frame is mid-screen, so the overscan is used evenly up and down.
+      const shift = (vh / 2 - (r.top + r.height / 2)) * Number(el.dataset.parallax || 0.2);
+      el.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
     });
   };
   const request = () => {
@@ -657,6 +659,64 @@ if (!reduceMotion) {
   window.addEventListener("scroll", () => requestAnimationFrame(onScroll), { passive: true });
   onScroll();
 }
+
+
+// Pinned horizontal gallery: vertical scrolling moves the track sideways (wide screens only).
+document.querySelectorAll("[data-hscroll]").forEach((section) => {
+  const sticky = section.querySelector(".hs-sticky");
+  const track = section.querySelector(".hs-track");
+  const wide = window.matchMedia("(min-width: 901px)");
+  let distance = 0;
+  const setup = () => {
+    const pin = !reduceMotion && wide.matches;
+    section.classList.toggle("is-pinned", pin);
+    if (!pin) {
+      section.style.height = "";
+      track.style.transform = "";
+      return;
+    }
+    // Measure from the last card itself so the track ends exactly at the page gutter.
+    track.style.transform = "";
+    const last = track.lastElementChild;
+    const gutter = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    distance = last ? Math.max(0, last.offsetLeft + last.offsetWidth + gutter - sticky.clientWidth) : 0;
+    section.style.height = `${distance + window.innerHeight}px`;
+  };
+  const move = () => {
+    if (!section.classList.contains("is-pinned")) return;
+    const r = section.getBoundingClientRect();
+    const progress = clamp01(-r.top / Math.max(1, section.offsetHeight - window.innerHeight));
+    track.style.transform = `translate3d(${(-progress * distance).toFixed(1)}px, 0, 0)`;
+    section.style.setProperty("--hs", progress.toFixed(3));
+  };
+  setup();
+  move();
+  window.addEventListener("resize", () => {
+    setup();
+    move();
+  });
+  window.addEventListener("load", () => {
+    setup();
+    move();
+  });
+  window.addEventListener("scroll", () => requestAnimationFrame(move), { passive: true });
+});
+
+// Timeline whose line fills as you scroll; steps light up as the line reaches them.
+document.querySelectorAll("[data-progress-line]").forEach((line) => {
+  const steps = [...line.querySelectorAll("[data-step]")];
+  const update = () => {
+    const r = line.getBoundingClientRect();
+    const p = clamp01((window.innerHeight * 0.62 - r.top) / Math.max(1, r.height));
+    line.style.setProperty("--p", p.toFixed(3));
+    steps.forEach((step) => {
+      const at = (step.offsetTop + 20) / line.offsetHeight;
+      step.classList.toggle("is-reached", p >= at);
+    });
+  };
+  update();
+  window.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+});
 
 // Reveal-on-scroll, with graceful fallbacks.
 const prefersReducedMotion = window.matchMedia(
