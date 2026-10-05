@@ -536,17 +536,12 @@
   ],
 
   "odoo": {
-    "_note": "Replace the placeholder photos and fill in the dates (e.g. \"12 August 2026\") once confirmed. Leave a date as null to hide it.",
-    "badge": "./assets/odoo/silver-badge.svg",
+    "_note": "Set badge to the official badge path once supplied. Add photos as objects with src (e.g. ./assets/odoo/signing-1.jpg) and caption; galleries appear automatically once photos are listed. Dates (e.g. 12 August 2026) show on the timeline; null hides them.",
+    "badge": null,
     "partner_url": null,
     "agreement_date": null,
     "silver_date": null,
     "days": 30,
-    "photos": [
-      {"src": "./assets/odoo/signing-1.svg", "caption": "Signing of the Odoo partnership agreement"},
-      {"src": "./assets/odoo/signing-2.svg", "caption": "Hamerkop and Odoo representatives after the signing"},
-      {"src": "./assets/odoo/signing-3.svg", "caption": "The Hamerkop ERP team"},
-      {"src": "./assets/odoo/signing-4.svg", "caption": "Partnership agreement documents"}
-    ]
+    "photos": []
   }
 }

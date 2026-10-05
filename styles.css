@@ -1716,10 +1716,6 @@ main:focus {
   margin: 0;
 }
 
-.hero-award-badge {
-  width: 76px;
-  height: 76px;
-}
 
 /* Odoo Silver Partner milestone */
 .milestone-panel {
@@ -1756,11 +1752,60 @@ main:focus {
   color: #d9dde4;
 }
 
-.milestone-badge {
-  width: 92px;
-  height: 92px;
+/* Odoo partner mark: the official badge image, or the Odoo logo with a Silver Partner label */
+.odoo-mark {
   flex: 0 0 auto;
-  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+}
+
+img.odoo-mark {
+  width: 84px;
+  height: 84px;
+}
+
+span.odoo-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #d5d9df;
+  box-shadow: 0 8px 22px rgba(17, 17, 17, 0.12);
+}
+
+span.odoo-mark img {
+  height: 22px;
+  width: auto;
+}
+
+span.odoo-mark span {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #eef0f3, #b9bec7);
+  color: #3d4149;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.milestone-badge-row {
+  flex-wrap: wrap;
+}
+
+/* Without photos the milestone runs as a single, wider column */
+.milestone-panel:not(:has(.milestone-gallery)) {
+  grid-template-columns: 1fr;
+}
+
+.milestone-panel:not(:has(.milestone-gallery)) .milestone-copy h1,
+.milestone-panel:not(:has(.milestone-gallery)) .milestone-copy h2 {
+  max-width: 24ch;
+}
+
+.milestone-panel:not(:has(.milestone-gallery)) .milestone-copy > p {
+  max-width: 70ch;
 }
 
 .milestone-copy h1,
@@ -1962,13 +2007,8 @@ main:focus {
   transform: translateY(-3px);
 }
 
-.odoo-note img {
-  width: 64px;
-  height: 64px;
-  flex: 0 0 auto;
-}
 
-.odoo-note > span:first-of-type {
+.odoo-note > span:not(.odoo-mark):not(.card-link) {
   flex: 1;
   color: var(--muted);
   line-height: 1.6;
@@ -2139,6 +2179,24 @@ a.team-card {
 
 .cert-logos a {
   display: inline-flex;
+}
+
+.cert-logos .cert-odoo img.odoo-mark {
+  height: 52px;
+  width: auto;
+}
+
+.cert-logos span.odoo-mark {
+  height: 52px;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.cert-logos span.odoo-mark img {
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
 }
 
 @media (hover: none) {

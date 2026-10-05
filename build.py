@@ -92,7 +92,7 @@ def footer():
               <div class="cert-logos">
                 <img src="./assets/insa.svg" alt="INSA certified" />
                 <img src="./assets/mor.svg" alt="Ministry of Revenue accredited" />
-                <a href="./partnership-odoo.html"><img src="{DATA["odoo"]["badge"]}" alt="Odoo Silver Partner" /></a>
+                <a class="cert-odoo" href="./partnership-odoo.html">{odoo_mark()}</a>
               </div>
               <p>Certified by INSA and accredited by the Ethiopian Ministry of Revenue. All Hamerkop systems are inspected every 6 months. Odoo Silver Partner.</p>
             </div>
@@ -246,7 +246,7 @@ def odoo_note():
     """Small callout linking ERP pages to the Odoo partnership."""
     return f"""        <section class="page-band">
           <a class="odoo-note reveal" href="./partnership-odoo.html">
-            <img src="{DATA["odoo"]["badge"]}" alt="" />
+            {odoo_mark()}
             <span>
               <strong>Hamerkop is an Odoo Silver Partner.</strong>
               Odoo forms part of our ERP implementation capability alongside Hamerkop products and client-specific integrations.
@@ -330,7 +330,18 @@ def insight_cards():
     )
 
 
-def odoo_gallery(limit=None):
+def odoo_mark():
+    """The official badge once supplied; until then the Odoo logo with a Silver Partner label."""
+    badge = DATA["odoo"].get("badge")
+    if badge:
+        return f'<img class="odoo-mark" src="{badge}" alt="Odoo Silver Partner" />'
+    return (
+        '<span class="odoo-mark" role="img" aria-label="Odoo Silver Partner">'
+        '<img src="./assets/partners/odoo.svg" alt="" /><span>Silver Partner</span></span>'
+    )
+
+
+def gallery_items(limit=None):
     photos = DATA["odoo"]["photos"][:limit] if limit else DATA["odoo"]["photos"]
     return "\n".join(
         f"""              <button type="button" class="gallery-item" data-lightbox data-caption="{e(p["caption"])}">
@@ -338,6 +349,29 @@ def odoo_gallery(limit=None):
               </button>"""
         for p in photos
     )
+
+
+# Galleries render only once real signing photos are listed in content.json.
+def odoo_gallery_home():
+    if not DATA["odoo"]["photos"]:
+        return ""
+    return f"""            <div class="milestone-gallery reveal" aria-label="Partnership signing photos">
+{gallery_items(3)}
+            </div>"""
+
+
+def odoo_gallery_section():
+    if not DATA["odoo"]["photos"]:
+        return ""
+    return f"""        <section class="section-pad">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Gallery</p>
+            <h2>The partnership signing.</h2>
+          </div>
+          <div class="photo-grid reveal">
+{gallery_items()}
+          </div>
+        </section>"""
 
 
 def odoo_timeline():
@@ -379,11 +413,11 @@ SNIPPETS = {
     "delivery_steps": delivery_steps,
     "delivery_steps_long": lambda: delivery_steps(long=True),
     "insight_cards": insight_cards,
-    "odoo_gallery": odoo_gallery,
-    "odoo_gallery_home": lambda: odoo_gallery(3),
+    "odoo_gallery_section": odoo_gallery_section,
+    "odoo_gallery_home": odoo_gallery_home,
     "odoo_timeline": odoo_timeline,
     "odoo_stats": odoo_stats,
-    "odoo_badge": lambda: DATA["odoo"]["badge"],
+    "odoo_mark": odoo_mark,
     "odoo_days": lambda: str(DATA["odoo"]["days"]),
     "odoo_partner_link": lambda: (
         f'<a class="button button-ghost" href="{e(DATA["odoo"]["partner_url"])}" rel="noopener">View our Odoo partner listing</a>'
