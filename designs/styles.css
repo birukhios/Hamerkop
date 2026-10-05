@@ -3112,3 +3112,23 @@ a.glass-case:focus-visible,
   display: grid;
   gap: 14px;
 }
+
+/* Partner logo strip (Editorial landing page) */
+.partners-strip .logo-strip .marquee-item {
+  padding: 22px 34px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+}
+
+.partners-strip .logo-strip img {
+  height: 30px;
+}
+
+/* Performance: looping animations pause while off-screen (class set by main.js) */
+.marquee.is-paused .marquee-track,
+.is-paused .hero-bg,
+.is-paused .nx-cta-bg,
+.is-paused .ui-mock {
+  animation-play-state: paused;
+}

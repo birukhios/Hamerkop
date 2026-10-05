@@ -489,8 +489,10 @@ if (!reduceMotion) {
     });
     parallax.forEach((el) => {
       const r = el.parentElement.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > vh) return;
-      el.style.transform = `translate3d(0, ${(-r.top * Number(el.dataset.parallax || 0.2)).toFixed(1)}px, 0) scale(1.08)`;
+      if (r.bottom < -vh || r.top > vh * 2) return;
+      // Centred: zero shift when the frame is mid-screen, so the overscan is used evenly up and down.
+      const shift = (vh / 2 - (r.top + r.height / 2)) * Number(el.dataset.parallax || 0.2);
+      el.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
     });
   };
   const request = () => {
@@ -542,6 +544,189 @@ document.querySelectorAll("[data-tabs]").forEach((tabs) => {
     });
   });
 });
+
+
+// ---------------------------------------------------------------- cinematic layer (Noir)
+// Every effect is opt-in through a data attribute and skipped for reduced motion.
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+// Opening curtain: shown once per visit.
+const curtain = document.querySelector(".intro-curtain");
+if (curtain) {
+  let seen = false;
+  try {
+    seen = Boolean(sessionStorage.getItem("intro-seen"));
+    sessionStorage.setItem("intro-seen", "1");
+  } catch {
+    /* storage unavailable */
+  }
+  if (seen || reduceMotion) {
+    curtain.remove();
+  } else {
+    document.documentElement.classList.add("is-intro");
+    setTimeout(() => curtain.classList.add("is-done"), 1300);
+    setTimeout(() => {
+      curtain.remove();
+      document.documentElement.classList.remove("is-intro");
+    }, 2300);
+  }
+}
+
+// Crossfading slideshow.
+document.querySelectorAll("[data-slideshow]").forEach((show) => {
+  const slides = [...show.children];
+  if (slides.length < 2 || reduceMotion) return;
+  let i = 0;
+  setInterval(() => {
+    if (document.hidden || show.closest(".is-paused")) return;
+    slides[i].classList.remove("is-active");
+    i = (i + 1) % slides.length;
+    slides[i].classList.add("is-active");
+  }, 6500);
+});
+
+if (!reduceMotion) {
+  // Hero layers drift with the pointer.
+  document.querySelectorAll("[data-pointer-parallax]").forEach((zone) => {
+    if (!finePointer) return;
+    zone.addEventListener("pointermove", (event) => {
+      const r = zone.getBoundingClientRect();
+      zone.style.setProperty("--px", ((event.clientX - r.left) / r.width - 0.5).toFixed(3));
+      zone.style.setProperty("--py", ((event.clientY - r.top) / r.height - 0.5).toFixed(3));
+    });
+    zone.addEventListener("pointerleave", () => {
+      zone.style.setProperty("--px", 0);
+      zone.style.setProperty("--py", 0);
+    });
+  });
+
+  // Cards tilt towards the pointer and carry a soft spotlight.
+  const tiltables = [...document.querySelectorAll("[data-tilt]")];
+  if (document.documentElement.dataset.design === "noir") {
+    tiltables.push(...document.querySelectorAll(".feature-card, .detail-card, .compare-card, .journal-card"));
+  }
+  if (finePointer) {
+    tiltables.forEach((card) => {
+      const strength = Number(card.dataset.tilt || 0);
+      card.addEventListener("pointermove", (event) => {
+        const r = card.getBoundingClientRect();
+        const x = (event.clientX - r.left) / r.width;
+        const y = (event.clientY - r.top) / r.height;
+        card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+        card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+        if (strength) {
+          card.style.transform = `perspective(900px) rotateX(${((0.5 - y) * strength).toFixed(2)}deg) rotateY(${((x - 0.5) * strength).toFixed(2)}deg)`;
+        }
+      });
+      card.addEventListener("pointerleave", () => {
+        card.style.transform = "";
+      });
+    });
+  }
+
+  // Buttons lean towards the pointer.
+  if (finePointer) {
+    document.querySelectorAll("[data-magnetic]").forEach((el) => {
+      el.addEventListener("pointermove", (event) => {
+        const r = el.getBoundingClientRect();
+        const dx = event.clientX - (r.left + r.width / 2);
+        const dy = event.clientY - (r.top + r.height / 2);
+        el.style.transform = `translate(${(dx * 0.22).toFixed(1)}px, ${(dy * 0.32).toFixed(1)}px)`;
+      });
+      el.addEventListener("pointerleave", () => {
+        el.style.transform = "";
+      });
+    });
+  }
+
+  // Images uncover with a curtain wipe as they enter the screen.
+  document.querySelectorAll("[data-clip-reveal]").forEach((el) => onVisible(el, () => el.classList.add("is-in"), 0.25));
+
+  // Scroll-linked: hero content eases away; giant marquee rows slide with the page.
+  const scrollOut = [...document.querySelectorAll("[data-scroll-out]")];
+  const scrollRows = [...document.querySelectorAll("[data-scroll-row]")];
+  const onScroll = () => {
+    scrollOut.forEach((el) => {
+      const h = (el.closest("section") || el).offsetHeight || window.innerHeight;
+      el.style.setProperty("--out", clamp01(window.scrollY / (h * 0.7)).toFixed(3));
+    });
+    scrollRows.forEach((row) => {
+      const r = row.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+      const shift = (window.innerHeight - r.top) * Number(row.dataset.scrollRow);
+      row.style.transform = `translate3d(${shift.toFixed(1)}px, 0, 0)`;
+    });
+  };
+  window.addEventListener("scroll", () => requestAnimationFrame(onScroll), { passive: true });
+  onScroll();
+}
+
+
+// Pinned horizontal gallery: vertical scrolling moves the track sideways (wide screens only).
+document.querySelectorAll("[data-hscroll]").forEach((section) => {
+  const sticky = section.querySelector(".hs-sticky");
+  const track = section.querySelector(".hs-track");
+  const wide = window.matchMedia("(min-width: 901px)");
+  let distance = 0;
+  const setup = () => {
+    const pin = !reduceMotion && wide.matches;
+    section.classList.toggle("is-pinned", pin);
+    if (!pin) {
+      section.style.height = "";
+      track.style.transform = "";
+      return;
+    }
+    // Measure from the last card itself so the track ends exactly at the page gutter.
+    track.style.transform = "";
+    const last = track.lastElementChild;
+    const gutter = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    distance = last ? Math.max(0, last.offsetLeft + last.offsetWidth + gutter - sticky.clientWidth) : 0;
+    section.style.height = `${distance + window.innerHeight}px`;
+  };
+  const move = () => {
+    if (!section.classList.contains("is-pinned")) return;
+    const r = section.getBoundingClientRect();
+    const progress = clamp01(-r.top / Math.max(1, section.offsetHeight - window.innerHeight));
+    track.style.transform = `translate3d(${(-progress * distance).toFixed(1)}px, 0, 0)`;
+    section.style.setProperty("--hs", progress.toFixed(3));
+  };
+  setup();
+  move();
+  window.addEventListener("resize", () => {
+    setup();
+    move();
+  });
+  window.addEventListener("load", () => {
+    setup();
+    move();
+  });
+  window.addEventListener("scroll", () => requestAnimationFrame(move), { passive: true });
+});
+
+// Timeline whose line fills as you scroll; steps light up as the line reaches them.
+document.querySelectorAll("[data-progress-line]").forEach((line) => {
+  const steps = [...line.querySelectorAll("[data-step]")];
+  const update = () => {
+    const r = line.getBoundingClientRect();
+    const p = clamp01((window.innerHeight * 0.62 - r.top) / Math.max(1, r.height));
+    line.style.setProperty("--p", p.toFixed(3));
+    steps.forEach((step) => {
+      const at = (step.offsetTop + 20) / line.offsetHeight;
+      step.classList.toggle("is-reached", p >= at);
+    });
+  };
+  update();
+  window.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+});
+
+// Performance: pause looping animations while they are off-screen.
+if ("IntersectionObserver" in window) {
+  const pausable = document.querySelectorAll(".marquee, .nx-cta, .nx-hero, .hero-full, .sv-hero-art, .page-hero.is-art");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle("is-paused", !entry.isIntersecting));
+  }, { rootMargin: "100px" });
+  pausable.forEach((el) => io.observe(el));
+}
 
 // Reveal-on-scroll, with graceful fallbacks.
 const prefersReducedMotion = window.matchMedia(
