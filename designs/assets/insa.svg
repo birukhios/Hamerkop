@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 64" role="img" aria-label="INSA - Information Network Security Administration">
+  <defs>
+    <linearGradient id="insaShield" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c0392b"/>
+      <stop offset="0.5" stop-color="#7a4a8c"/>
+      <stop offset="1" stop-color="#2c5aa0"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(3,1)">
+    <path d="M30 0 58 9 58 33C58 48 46 57 30 63 14 57 2 48 2 33L2 9Z" fill="url(#insaShield)"/>
+    <path d="M30 6 52 13 52 33C52 45 42 52 30 57 18 52 8 45 8 33L8 13Z" fill="#ffffff"/>
+    <circle cx="30" cy="26" r="12" fill="#d6342c"/>
+    <circle cx="30" cy="26" r="8" fill="#ffffff"/>
+    <circle cx="30" cy="26" r="5" fill="#1b2a4a"/>
+    <circle cx="32" cy="24" r="1.5" fill="#ffffff" opacity="0.85"/>
+    <g stroke="#1b2a4a" stroke-width="1" fill="none" stroke-linecap="round">
+      <path d="M30 38v12"/>
+      <path d="M26 41v8M34 41v7"/>
+    </g>
+    <circle cx="30" cy="52" r="1.6" fill="#d6342c"/>
+  </g>
+  <text x="76" y="29" font-family="Manrope, Arial, sans-serif" font-size="21" font-weight="800" letter-spacing="0.5" fill="#1b2a4a">INSA</text>
+  <text x="77" y="45" font-family="Manrope, Arial, sans-serif" font-size="8.6" font-weight="600" letter-spacing="0.2" fill="#5a6472">Information Network Security Administration</text>
+</svg>

@@ -1,0 +1,371 @@
+/* ==========================================================================
+   Direction: Noir — after hedvig.framer.website
+   Brand ink as the canvas, cinematic photography, centred bold type,
+   stacking cards and scroll-revealed text. Hamerkop orange for every CTA.
+   Layered on top of styles.css.
+   ========================================================================== */
+
+:root {
+  --canvas: #0a0a0a;
+  --paper: #141414;
+  --sand: #1f1f22;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  --ink: #fafafa;
+  --ink-2: rgba(250, 250, 250, 0.84);
+  --muted: rgba(250, 250, 250, 0.6);
+  --faint: rgba(250, 250, 250, 0.42);
+  --accent-soft: #2a1306;
+  --band: #141414;
+  --band-2: #1f1f22;
+  --success-bg: #052e22;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --puck-ghost: #fafafa;
+  --puck-ghost-arrow: var(--arrow-dark);
+  --font-display: "Figtree", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, sans-serif;
+  --heading-weight: 600;
+  --radius-xl: 20px;
+  --radius-lg: 16px;
+  --radius-md: 14px;
+  color-scheme: dark;
+}
+
+h1 {
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  letter-spacing: -0.04em;
+}
+
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.muted-line {
+  display: block;
+  color: var(--faint);
+}
+
+/* Reverse logo on the dark canvas */
+.topbar .logo-on-light {
+  display: none;
+}
+
+.topbar .logo-on-dark {
+  display: block;
+}
+
+.nav-shell {
+  background: rgba(20, 20, 20, 0.82);
+}
+
+.section-heading {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-heading h2,
+.section-heading p:not(.eyebrow) {
+  margin-inline: auto;
+}
+
+.section-head {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- hero */
+.noir-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: end center;
+  width: 100vw;
+  min-height: clamp(640px, 100vh, 980px);
+  margin-top: calc(-1 * var(--nav-space));
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  text-align: center;
+}
+
+.noir-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noir-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(0deg, #0a0a0a 0%, rgba(10, 10, 10, 0.7) 34%, rgba(10, 10, 10, 0.15) 70%, rgba(10, 10, 10, 0.45) 100%);
+}
+
+.noir-hero-inner {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  width: min(900px, calc(100vw - 32px));
+  padding: 0 0 clamp(56px, 9vh, 110px);
+}
+
+.noir-hero h1 {
+  font-size: clamp(2.8rem, 6.6vw, 5.6rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.noir-hero .lede {
+  margin: 0;
+  color: var(--ink-2);
+}
+
+.noir-hero .hero-actions {
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.announce {
+  background: rgba(20, 20, 20, 0.8);
+  border-color: var(--line-strong);
+}
+
+/* ---------------------------------------------------------------- statement */
+.statement,
+.noir-statement {
+  margin-inline: auto;
+  max-width: 22em;
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+
+.statement span {
+  color: var(--faint);
+}
+
+/* ---------------------------------------------------------------- portrait cards */
+.portrait-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.portrait-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+
+.portrait-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 900ms ease;
+}
+
+.portrait-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(10, 10, 10, 0.85), transparent 55%);
+}
+
+.portrait-card span {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 1;
+  font-weight: 600;
+}
+
+.portrait-card:hover img {
+  transform: scale(1.06);
+}
+
+/* ---------------------------------------------------------------- stacking cards */
+.noir-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+  min-height: min(78vh, 640px);
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+}
+
+.noir-card:nth-child(even) figure {
+  order: 2;
+}
+
+.noir-card figure {
+  height: 100%;
+  min-height: 320px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.noir-card figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noir-card > div {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  padding: clamp(8px, 3vw, 40px);
+}
+
+.noir-card h3 {
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+}
+
+.noir-card p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- feature with image */
+.noir-feature {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: 560px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+}
+
+.noir-feature > img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noir-feature::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(10, 10, 10, 0.92), rgba(10, 10, 10, 0.4) 70%);
+}
+
+.noir-feature-copy {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  max-width: 720px;
+  padding: clamp(24px, 5vw, 56px);
+}
+
+.noir-feature-copy p {
+  margin: 0;
+  color: var(--ink-2);
+}
+
+/* ---------------------------------------------------------------- shared components on dark */
+.compare-card {
+  background: var(--paper);
+}
+
+.dark-band,
+.cta,
+.milestone-panel,
+.panel-dark {
+  border: 1px solid var(--line);
+}
+
+.dark-band {
+  background: var(--paper);
+}
+
+.cta {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 130%, rgba(234, 88, 12, 0.4), transparent 55%),
+    var(--paper);
+}
+
+.cta-content h2 {
+  margin-inline: auto;
+}
+
+.cta-side {
+  justify-items: center;
+}
+
+.site-footer {
+  background: #000;
+  border-top: 1px solid var(--line);
+}
+
+.marquee-item {
+  background: var(--paper);
+}
+
+.logo-strip .marquee-item {
+  background: #fafafa;
+}
+
+/* Inner-page heroes centred like the homepage */
+.page-hero .hero-copy {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.page-hero h1,
+.page-hero .lede {
+  margin-inline: auto;
+}
+
+.page-hero .hero-actions {
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .portrait-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .noir-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .noir-card:nth-child(even) figure {
+    order: 0;
+  }
+
+  .noir-card figure {
+    min-height: 220px;
+    aspect-ratio: 16 / 10;
+  }
+}
