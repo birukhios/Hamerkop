@@ -294,6 +294,177 @@ document.querySelectorAll("[data-scroller]").forEach((scroller) => {
   update();
 });
 
+// ---------------------------------------------------------------- motion library
+// Opt-in effects used by the design directions. Everything is skipped when the
+// visitor prefers reduced motion, leaving the content in its final state.
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
+
+// Wrap each word (and optionally each character) in spans, keeping inline markup such as <em>.
+const splitText = (el, chars) => {
+  const units = [];
+  const walk = (node) => {
+    [...node.childNodes].forEach((child) => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) {
+            frag.append(" ");
+            return;
+          }
+          const word = document.createElement("span");
+          word.className = "w";
+          if (chars) {
+            [...part].forEach((c) => {
+              const ch = document.createElement("span");
+              ch.className = "c";
+              ch.textContent = c;
+              word.append(ch);
+              units.push(ch);
+            });
+          } else {
+            word.textContent = part;
+            units.push(word);
+          }
+          frag.append(word);
+        });
+        child.replaceWith(frag);
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        walk(child);
+      }
+    });
+  };
+  walk(el);
+  return units;
+};
+
+const onVisible = (el, fn, threshold = 0.2) => {
+  if (!("IntersectionObserver" in window)) return fn();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        fn();
+        io.disconnect();
+      }
+    });
+  }, { threshold });
+  io.observe(el);
+};
+
+if (!reduceMotion) {
+  document.documentElement.classList.add("motion");
+
+  // Words blur and rise into place, one after another.
+  document.querySelectorAll('[data-anim="blur-in"]').forEach((el) => {
+    splitText(el, false).forEach((w, i) => w.style.setProperty("--i", i));
+    onVisible(el, () => el.classList.add("is-in"), 0.1);
+  });
+
+  // Children appear one after another.
+  document.querySelectorAll("[data-stagger]").forEach((el) => {
+    [...el.children].forEach((child, i) => child.style.setProperty("--i", i));
+    onVisible(el, () => el.classList.add("is-in"), 0.15);
+  });
+
+  // Scroll-scrubbed text: words fade in (data-scrub="fade") or characters un-blur (data-scrub="blur").
+  const scrubs = [...document.querySelectorAll("[data-scrub]")].map((el) => ({
+    el,
+    mode: el.dataset.scrub,
+    units: splitText(el, el.dataset.scrub === "blur"),
+  }));
+
+  // Cards that stack while scrolling: earlier cards shrink back as the next one arrives.
+  const stacks = [...document.querySelectorAll(".stack")].map((s) => [...s.querySelectorAll(".stack-card")]);
+
+  // Gentle parallax for hero images.
+  const parallax = [...document.querySelectorAll("[data-parallax]")];
+
+  let ticking = false;
+  const frame = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+    scrubs.forEach(({ el, mode, units }) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -vh || r.top > vh * 2) return;
+      const progress = clamp01((vh * 0.88 - r.top) / (r.height + vh * 0.42));
+      const n = units.length;
+      units.forEach((u, i) => {
+        const v = clamp01((progress * (n + 6) - i) / 6);
+        if (mode === "blur") {
+          u.style.filter = v >= 1 ? "none" : `blur(${((1 - v) * 7).toFixed(2)}px)`;
+          u.style.opacity = (0.35 + v * 0.65).toFixed(3);
+        } else {
+          u.style.opacity = (0.12 + v * 0.88).toFixed(3);
+        }
+      });
+    });
+    stacks.forEach((cards) => {
+      cards.forEach((card, i) => {
+        const next = cards[i + 1];
+        if (!next) return;
+        const gap = next.getBoundingClientRect().top - card.getBoundingClientRect().top;
+        const p = clamp01(1 - gap / card.offsetHeight);
+        card.style.transform = `scale(${(1 - p * 0.08).toFixed(4)})`;
+        card.style.setProperty("--dim", (p * 0.55).toFixed(3));
+      });
+    });
+    parallax.forEach((el) => {
+      const r = el.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      el.style.transform = `translate3d(0, ${(-r.top * Number(el.dataset.parallax || 0.2)).toFixed(1)}px, 0) scale(1.08)`;
+    });
+  };
+  const request = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(frame);
+    }
+  };
+  window.addEventListener("scroll", request, { passive: true });
+  window.addEventListener("resize", request);
+  frame();
+}
+
+// Numbers count up when they come into view.
+document.querySelectorAll("[data-count]").forEach((el) => {
+  const target = Number(el.dataset.count);
+  if (reduceMotion || !target) return;
+  el.textContent = "0";
+  onVisible(el, () => {
+    const start = performance.now();
+    const step = (now) => {
+      const t = clamp01((now - start) / 1400);
+      el.textContent = String(Math.round(target * (1 - Math.pow(1 - t, 3))));
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, 0.6);
+});
+
+// Tabs (Serene "one platform" section).
+document.querySelectorAll("[data-tabs]").forEach((tabs) => {
+  const buttons = [...tabs.querySelectorAll('[role="tab"]')];
+  const select = (button) => {
+    buttons.forEach((b) => {
+      const on = b === button;
+      b.setAttribute("aria-selected", String(on));
+      b.tabIndex = on ? 0 : -1;
+      document.getElementById(b.getAttribute("aria-controls")).hidden = !on;
+    });
+  };
+  buttons.forEach((button, i) => {
+    button.addEventListener("click", () => select(button));
+    button.addEventListener("keydown", (event) => {
+      const dir = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+      if (!dir) return;
+      const next = buttons[(i + dir + buttons.length) % buttons.length];
+      next.focus();
+      select(next);
+    });
+  });
+});
+
 // Reveal-on-scroll, with graceful fallbacks.
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"

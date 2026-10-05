@@ -13,7 +13,7 @@ nav: home
           <div class="hero-full-inner">
             <div class="hero-headline">
               <p class="chip reveal">Enterprise technology &middot; Addis Ababa, Ethiopia</p>
-              <h1 class="reveal">Run your institution on systems you <em>can trust.</em></h1>
+              <h1 data-anim="blur-in">Run your institution on systems you <em>can trust.</em></h1>
               <div class="hero-foot reveal">
                 <div>
                   <p class="lede">
@@ -64,7 +64,7 @@ nav: home
 
         <!-- 02 Who we are & capability -->
         <section class="section-pad">
-          <p class="statement reveal">
+          <p class="statement" data-scrub="fade">
             Enterprise technology built around real operations. <span>Hamerkop Systems is an Ethiopian
             enterprise technology company headquartered in Addis Ababa, working with institutions that
             need reliable systems, stronger control and a clear connection between technology and
@@ -96,10 +96,10 @@ nav: home
             </div>
             <a class="button button-ghost reveal" href="./solutions.html">All solutions</a>
           </div>
-          <div class="solution-grid">
+          <div class="solution-grid" data-stagger>
 {{home_solution_cards}}
           </div>
-          <div class="mini-grid">
+          <div class="mini-grid" data-stagger>
             <a class="mini-card reveal" href="./solution-fintech.html">
               <span class="mini-index">04</span>
               <h3>Financial Technology</h3>
@@ -216,6 +216,12 @@ nav: home
 {{industry_scroller}}
         </section>
 
+        <!-- Capabilities marquee (two rows, opposite directions) -->
+        <section class="section-pad marquee-band" aria-label="Capabilities">
+          {{capability_marquee}}
+          {{industry_marquee}}
+        </section>
+
         <!-- 09 Insights -->
         <section class="section-pad">
           <div class="section-head">
@@ -226,7 +232,7 @@ nav: home
             </div>
             <a class="button button-ghost reveal" href="./insights.html">Read Insights</a>
           </div>
-          <div class="journal-grid">
+          <div class="journal-grid" data-stagger>
 {{home_insights}}
           </div>
         </section>

@@ -1,29 +1,12 @@
 /* ==========================================================================
-   Direction: Serene — inspired by solva-template.framer.website
-   Calm off-white, light serif headlines, small-radius cards, ink buttons,
-   framed imagery with floating interface cards. Layered on top of styles.css.
+   Direction: Serene — after solva-template.framer.website
+   Brand neutrals (Surface #FAFAFA, Paper, Ink, Muted), light serif headlines,
+   quiet rectangular buttons in Hamerkop orange, interface cards floating over
+   soft photography, blur-in headlines. Layered on top of styles.css.
    ========================================================================== */
 
 :root {
-  --canvas: #fbfaf6;
-  --paper: #f4f2ec;
-  --sand: #ece9e0;
-  --line: #e4e0d6;
-  --line-strong: #c9c4b8;
-  --ink: #1c1a15;
-  --ink-2: #3d3a33;
-  --muted: #56524a;
-  --faint: #8c887e;
-  --accent: #1c1a15;
-  --accent-deep: #9a4a22;
-  --accent-soft: #f1e6dc;
-  --band: #1c1a15;
-  --band-2: #29261f;
-  --on-band: #fbfaf6;
-  --on-band-muted: #b9b4a8;
-  --on-accent: #fbfaf6;
-  --accent-puck: #fbfaf6;
-  --accent-puck-arrow: var(--arrow-dark);
+  --sand: #f4f4f5;
   --font-display: "Sentient", Georgia, serif;
   --font-body: "Onest", system-ui, sans-serif;
   --heading-weight: 300;
@@ -39,7 +22,9 @@ h1 {
 }
 
 h2 {
-  letter-spacing: -0.05em;
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  letter-spacing: -0.045em;
+  line-height: 1.08;
 }
 
 h3 {
@@ -48,21 +33,25 @@ h3 {
   letter-spacing: -0.02em;
 }
 
-h1 em,
-h2 em {
-  font-style: italic;
-  color: #9a4a22;
+.muted-line {
+  display: block;
+  color: var(--muted);
 }
 
 /* Quiet rectangular buttons without arrow pucks */
 .button {
-  min-height: 46px;
-  padding: 0 20px;
+  min-height: 44px;
+  padding: 0 18px;
   font-size: 0.92rem;
 }
 
 .button::after {
   display: none;
+}
+
+.button-ghost {
+  background: var(--paper);
+  border-color: var(--line);
 }
 
 .nav-shell {
@@ -74,85 +63,180 @@ h2 em {
   padding: 0 16px;
 }
 
-.chip::before,
-.page-hero .eyebrow::before {
-  background: #9a4a22;
-}
-
-.check-list li::before,
-.row-list li::before {
-  background: #9a4a22;
-}
-
-/* Split hero: copy on the left, framed photograph on the right */
-.hero-full {
-  width: auto;
-  min-height: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(28px, 4vw, 64px);
-  align-items: center;
-  padding-top: clamp(40px, 6vw, 72px);
-  overflow: visible;
-}
-
-.hero-full::before {
-  display: none;
-}
-
-.hero-slides {
-  position: relative;
-  grid-column: 2;
-  grid-row: 1;
-  z-index: 0;
-  aspect-ratio: 4 / 4.6;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-}
-
-.hero-bg {
-  filter: saturate(0.8) sepia(0.12);
-}
-
-.hero-full-inner {
-  grid-column: 1;
-  grid-row: 1;
-  width: auto;
-  padding: 0;
-}
-
-.hero-full h1 {
-  max-width: 12ch;
-  font-size: clamp(3rem, 6vw, 5.4rem);
-  line-height: 1.02;
-}
-
-.hero-foot {
-  grid-template-columns: 1fr;
-  position: static;
-}
-
-.hero-full .award-card {
-  position: absolute;
-  right: 4%;
-  bottom: 7%;
-  z-index: 2;
-  border-radius: 14px;
-  box-shadow: 0 30px 70px rgba(28, 26, 21, 0.18);
-}
-
 .card-link svg {
   border-radius: 8px;
 }
 
-/* Soft cards */
+.section-heading {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-heading h2,
+.section-heading p:not(.eyebrow) {
+  margin-inline: auto;
+}
+
+/* ---------------------------------------------------------------- hero */
+.serene-hero {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+  padding-top: clamp(28px, 5vw, 64px);
+}
+
+.serene-hero-copy {
+  display: grid;
+  justify-items: start;
+  gap: 20px;
+}
+
+.serene-hero h1 {
+  max-width: 12ch;
+  font-size: clamp(2.8rem, 5.4vw, 4.8rem);
+  line-height: 1.02;
+}
+
+.serene-hero .lede {
+  margin: 0;
+}
+
+.serene-hero .hero-actions {
+  margin-top: 4px;
+}
+
+.serene-hero-stage {
+  aspect-ratio: 4 / 4.2;
+}
+
+.mock-stage > img {
+  filter: saturate(0.75) brightness(1.04);
+}
+
+.serene-hero-stage .ui-mock {
+  width: min(360px, 82%);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ---------------------------------------------------------------- logos */
+.serene-logos {
+  display: grid;
+  gap: 18px;
+  text-align: center;
+}
+
+.serene-caption {
+  margin: 0;
+  color: var(--muted);
+}
+
+.logo-strip .marquee-item {
+  border-color: transparent;
+  background: var(--paper);
+}
+
+/* ---------------------------------------------------------------- three ways */
+.serene-tile {
+  display: block;
+}
+
+.serene-tile .mock-stage {
+  aspect-ratio: 4 / 3.4;
+  margin-bottom: 18px;
+}
+
+.serene-tile .ui-mock {
+  width: 84%;
+  transform: scale(0.92);
+  transition: transform 400ms ease;
+}
+
+.serene-tile:hover .ui-mock {
+  transform: scale(0.96) translateY(-4px);
+}
+
+.serene-tile p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- feature rows */
+.serene-rows {
+  display: grid;
+  gap: 20px;
+}
+
+.serene-row {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+  padding: 16px;
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+}
+
+.serene-row:nth-child(even) .mock-stage {
+  order: 2;
+}
+
+.serene-row .mock-stage {
+  aspect-ratio: 4 / 3;
+}
+
+.serene-row > div:not(.mock-stage) {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  padding: clamp(8px, 2vw, 24px);
+}
+
+.serene-row h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.12;
+}
+
+.serene-row p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- tabs */
+.tab-panel {
+  background: var(--paper);
+}
+
+.tab-panel h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+}
+
+.tab-panel .button {
+  margin-top: 18px;
+}
+
+/* ---------------------------------------------------------------- cards */
 .feature-card,
 .detail-card,
 .mini-card,
 .spec-sheet,
-.odoo-note {
+.odoo-note,
+.step {
   border-color: transparent;
+  background: var(--paper);
 }
 
 .statement {
@@ -160,28 +244,23 @@ h2 em {
   letter-spacing: -0.04em;
 }
 
-.statement span {
-  color: var(--faint);
-}
-
 .photo-card-cta {
-  background: var(--canvas);
-  color: var(--ink);
-}
-
-.feature-split-media,
-.steps-media,
-.trio-media,
-.journal-media,
-.photo-card,
-.scroll-card {
-  filter: saturate(0.85);
+  background: var(--brand-orange);
 }
 
 /* Light footer */
 .site-footer {
   background: var(--paper);
   color: var(--ink);
+  border-top: 1px solid var(--line);
+}
+
+.site-footer .logo-on-light {
+  display: block;
+}
+
+.site-footer .logo-on-dark {
+  display: none;
 }
 
 .footer-links a,
@@ -202,36 +281,30 @@ h2 em {
 
 .footer-links a:hover,
 .footer-legal a:hover {
-  color: #9a4a22;
-}
-
-.brand-light .brand-mark {
-  filter: none;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--brand-orange);
 }
 
 .footer-wordmark {
-  font-weight: 300;
-  color: rgba(28, 26, 21, 0.05);
+  color: rgba(10, 10, 10, 0.05);
 }
 
 .cert-logos > img {
-  background: #fff;
+  border: 1px solid var(--line);
 }
 
 @media (max-width: 900px) {
-  .hero-full {
+  .serene-hero,
+  .serene-row {
     grid-template-columns: 1fr;
   }
 
-  .hero-slides {
-    grid-column: 1;
-    grid-row: 2;
-    aspect-ratio: 4 / 3;
+  .serene-row:nth-child(even) .mock-stage {
+    order: 0;
   }
 
-  .hero-full .award-card {
-    position: relative;
-    right: auto;
-    bottom: auto;
+  .serene-hero-stage {
+    aspect-ratio: 4 / 3;
   }
 }

@@ -18,9 +18,9 @@
     <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
     <link rel="icon" href="./assets/hamerkop-bird.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f5efe4" />
-    <link rel="stylesheet" href="./styles.css?v=85f7b1b4" />
+    <link rel="stylesheet" href="./styles.css?v=6e198498" />
     <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
-    <script defer src="./main.js?v=fdd49e52"></script>
+    <script defer src="./main.js?v=737d0c23"></script>
   </head>
   <body>
     <div class="page-shell">
@@ -28,8 +28,8 @@
       <header class="topbar">
         <div class="nav-shell">
           <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
-            <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
-            <span class="brand-name">Hamerkop</span>
+            <img class="brand-logo logo-on-light" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." width="148" height="40" />
+            <img class="brand-logo logo-on-dark" src="./assets/hamerkop-logo-white.svg" alt="Hamerkop System S.C." width="148" height="40" />
           </a>
           <nav id="site-nav" class="site-nav" aria-label="Primary">
           <div class="nav-item">
@@ -115,7 +115,7 @@
           <div class="hero-full-inner">
             <div class="hero-headline">
               <p class="chip reveal">Enterprise technology &middot; Addis Ababa, Ethiopia</p>
-              <h1 class="reveal">Run your institution on systems you <em>can trust.</em></h1>
+              <h1 data-anim="blur-in">Run your institution on systems you <em>can trust.</em></h1>
               <div class="hero-foot reveal">
                 <div>
                   <p class="lede">
@@ -170,7 +170,7 @@
 
         <!-- 02 Who we are & capability -->
         <section class="section-pad">
-          <p class="statement reveal">
+          <p class="statement" data-scrub="fade">
             Enterprise technology built around real operations. <span>Hamerkop Systems is an Ethiopian
             enterprise technology company headquartered in Addis Ababa, working with institutions that
             need reliable systems, stronger control and a clear connection between technology and
@@ -191,10 +191,10 @@
             <figure class="trio-media reveal"><img src="./assets/team.jpg" alt="Hamerkop team in discussion" loading="lazy" /></figure>
             <dl class="spec-sheet reveal">
               <div class="spec-row"><dt>Headquarters</dt><dd>Addis Ababa</dd></div>
-              <div class="spec-row"><dt>Solution areas</dt><dd>6</dd></div>
-              <div class="spec-row"><dt>Products</dt><dd>9</dd></div>
-              <div class="spec-row"><dt>Industries served</dt><dd>9</dd></div>
-              <div class="spec-row"><dt>Delivery stages</dt><dd>4</dd></div>
+              <div class="spec-row"><dt>Solution areas</dt><dd data-count="6">6</dd></div>
+              <div class="spec-row"><dt>Products</dt><dd data-count="9">9</dd></div>
+              <div class="spec-row"><dt>Industries served</dt><dd data-count="9">9</dd></div>
+              <div class="spec-row"><dt>Delivery stages</dt><dd data-count="4">4</dd></div>
               <div class="spec-row"><dt>Odoo partner grade</dt><dd>Silver</dd></div>
               <p class="spec-note">From discovery to go-live, stabilization and continuous improvement.</p>
             </dl>
@@ -210,7 +210,7 @@
             </div>
             <a class="button button-ghost reveal" href="./solutions.html">All solutions</a>
           </div>
-          <div class="solution-grid">
+          <div class="solution-grid" data-stagger>
             <a class="photo-card reveal" href="./solution-erp.html">
               <img src="./assets/erp.jpg" alt="" loading="lazy" />
               <span class="photo-chip">Solution 01</span>
@@ -239,7 +239,7 @@
               </span>
             </a>
           </div>
-          <div class="mini-grid">
+          <div class="mini-grid" data-stagger>
             <a class="mini-card reveal" href="./solution-fintech.html">
               <span class="mini-index">04</span>
               <h3>Financial Technology</h3>
@@ -472,6 +472,12 @@
           </div>
         </section>
 
+        <!-- Capabilities marquee (two rows, opposite directions) -->
+        <section class="section-pad marquee-band" aria-label="Capabilities">
+          <div class="marquee " style="--marquee-speed:55s"><div class="marquee-track"><span class="marquee-item">Enterprise Systems &amp; ERP</span><span class="marquee-item">Electronic Invoicing</span><span class="marquee-item">Financial Technology</span><span class="marquee-item">Identity &amp; Trust</span><span class="marquee-item">Enterprise Integration</span><span class="marquee-item">Data, Analytics &amp; AI</span><span class="marquee-item">Hamerkop EIMS</span><span class="marquee-item">ERP Lite</span><span class="marquee-item">ERP Business</span><span class="marquee-item">ERP Enterprise</span><span class="marquee-item">ERP for Government</span><span class="marquee-item">Finance Suite</span><span class="marquee-item">Identity</span><span class="marquee-item">Integrator</span><span class="marquee-item">Insight</span><span class="marquee-copy" aria-hidden="true" style="display:contents"><span class="marquee-item">Enterprise Systems &amp; ERP</span><span class="marquee-item">Electronic Invoicing</span><span class="marquee-item">Financial Technology</span><span class="marquee-item">Identity &amp; Trust</span><span class="marquee-item">Enterprise Integration</span><span class="marquee-item">Data, Analytics &amp; AI</span><span class="marquee-item">Hamerkop EIMS</span><span class="marquee-item">ERP Lite</span><span class="marquee-item">ERP Business</span><span class="marquee-item">ERP Enterprise</span><span class="marquee-item">ERP for Government</span><span class="marquee-item">Finance Suite</span><span class="marquee-item">Identity</span><span class="marquee-item">Integrator</span><span class="marquee-item">Insight</span></span></div></div>
+          <div class="marquee marquee-reverse" style="--marquee-speed:45s"><div class="marquee-track"><a class="marquee-item" href="./industry-manufacturing.html">Manufacturing</a><a class="marquee-item" href="./industry-retail-distribution.html">Retail &amp; Distribution</a><a class="marquee-item" href="./industry-financial-services.html">Financial Services</a><a class="marquee-item" href="./industry-government.html">Government &amp; Public Sector</a><a class="marquee-item" href="./industry-healthcare.html">Healthcare</a><a class="marquee-item" href="./industry-insurance.html">Insurance</a><a class="marquee-item" href="./industry-education.html">Education</a><a class="marquee-item" href="./industry-ngos-development.html">NGOs &amp; Development</a><a class="marquee-item" href="./industry-logistics-transport.html">Logistics &amp; Transport</a><span class="marquee-copy" aria-hidden="true" style="display:contents"><a class="marquee-item" href="./industry-manufacturing.html">Manufacturing</a><a class="marquee-item" href="./industry-retail-distribution.html">Retail &amp; Distribution</a><a class="marquee-item" href="./industry-financial-services.html">Financial Services</a><a class="marquee-item" href="./industry-government.html">Government &amp; Public Sector</a><a class="marquee-item" href="./industry-healthcare.html">Healthcare</a><a class="marquee-item" href="./industry-insurance.html">Insurance</a><a class="marquee-item" href="./industry-education.html">Education</a><a class="marquee-item" href="./industry-ngos-development.html">NGOs &amp; Development</a><a class="marquee-item" href="./industry-logistics-transport.html">Logistics &amp; Transport</a></span></div></div>
+        </section>
+
         <!-- 09 Insights -->
         <section class="section-pad">
           <div class="section-head">
@@ -482,7 +488,7 @@
             </div>
             <a class="button button-ghost reveal" href="./insights.html">Read Insights</a>
           </div>
-          <div class="journal-grid">
+          <div class="journal-grid" data-stagger>
           <a class="journal-card reveal" href="./article-what-happens-after-go-live.html">
             <div class="journal-media"><img src="./assets/team.jpg" alt="" loading="lazy" /></div>
             <p class="journal-meta">Digital Transformation <span aria-hidden="true">&bull;</span> 2 min read</p>
@@ -520,9 +526,9 @@
         <div class="footer-inner">
           <div class="footer-grid">
             <div class="footer-brand">
-              <a class="brand brand-light" href="./index.html" aria-label="Hamerkop System S.C. home">
-                <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
-                <span class="brand-name">Hamerkop</span>
+              <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
+                <img class="brand-logo logo-on-light" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." width="160" height="43" />
+                <img class="brand-logo logo-on-dark" src="./assets/hamerkop-logo-white.svg" alt="Hamerkop System S.C." width="160" height="43" />
               </a>
               <p>
                 Enterprise technology for organizations that require reliable operations, connected
@@ -576,7 +582,7 @@
             </span>
           </div>
         </div>
-        <p class="footer-wordmark" aria-hidden="true">Hamerkop</p>
+        <p class="footer-wordmark" aria-hidden="true">HAMERKOP</p>
       </footer>
     </div>
   </body>

@@ -82,29 +82,29 @@ DESIGNS = [
         "key": "editorial", "name": "Editorial", "ref_name": "Wayfare", "ref": "https://touroperator.framer.website/",
         "fonts": FONTSHARE + '<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&amp;f[]=general-sans@400,500,600&amp;display=swap" rel="stylesheet" />',
         "type": "Clash Grotesk + General Sans", "toggle": True,
-        "swatches": ["#f5efe4", "#fcf9f3", "#211d16", "#ee7a2e", "#bcb4a3"],
-        "summary": "Warm editorial cream, full-bleed photography that fades into the page, pill buttons with arrow pucks and a light/dark toggle.",
+        "swatches": ["#fafafa", "#ffffff", "#0a0a0a", "#ea580c", "#71717a"],
+        "summary": "Editorial and photographic: full-bleed hero with blur-in headline, scroll-revealed statement, spec sheet with counters, hover-swap product list, industries scroller and two-row marquee.",
     },
     {
         "key": "noir", "name": "Noir", "ref_name": "Hedvig", "ref": "https://hedvig.framer.website/",
         "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />',
         "type": "Figtree", "toggle": False,
-        "swatches": ["#000000", "#111111", "#eeeeee", "#fe6819", "#2a2a2a"],
-        "summary": "Pure black and cinematic: centred bold headlines over photography, alternating image and text cards, vivid orange calls to action.",
+        "swatches": ["#0a0a0a", "#141414", "#fafafa", "#ea580c", "#71717a"],
+        "summary": "Cinematic on brand ink: zooming full-bleed hero, scroll-scrubbed statement, portrait cards, full-screen cards that stack as you scroll, and a before/after comparison.",
     },
     {
         "key": "serene", "name": "Serene", "ref_name": "Solva", "ref": "https://solva-template.framer.website/",
         "fonts": FONTSHARE + GOOGLE + '<link href="https://api.fontshare.com/v2/css?f[]=sentient@300,400&amp;display=swap" rel="stylesheet" />\n    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&amp;display=swap" rel="stylesheet" />',
         "type": "Sentient + Onest", "toggle": False,
-        "swatches": ["#fbfaf6", "#f4f2ec", "#1c1a15", "#9a4a22", "#c9c4b8"],
-        "summary": "Calm and considered: light serif headlines, quiet ink buttons, framed imagery with floating interface cards and a light footer.",
+        "swatches": ["#fafafa", "#ffffff", "#0a0a0a", "#ea580c", "#a1a1aa"],
+        "summary": "Calm and considered: light serif headlines that blur in, interface cards floating over photography, logo marquee, alternating feature rows and a tabbed product section.",
     },
     {
         "key": "bold", "name": "Bold", "ref_name": "NoveQ", "ref": "https://noveq.framer.website/",
         "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />',
         "type": "Plus Jakarta Sans", "toggle": False,
-        "swatches": ["#f0f0f0", "#ffffff", "#0a0a0a", "#0274de", "#a6a6a6"],
-        "summary": "Confident tech-agency energy: heavy geometric type with grey second lines, electric blue, white cards on grey and a dark navy hero.",
+        "swatches": ["#f4f4f5", "#ffffff", "#0a0a0a", "#ea580c", "#a1a1aa"],
+        "summary": "Confident and heavy: sticky dark hero with character-blur text, two-tone headlines, bento grid with counters, alternating service rows, step cards and a capabilities marquee.",
     },
 ]
 ACTIVE = None  # the direction being rendered; None means the normal site build
@@ -180,8 +180,8 @@ def header(active, slug):
     return f"""      <header class="topbar">
         <div class="nav-shell">
           <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
-            <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
-            <span class="brand-name">Hamerkop</span>
+            <img class="brand-logo logo-on-light" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." width="148" height="40" />
+            <img class="brand-logo logo-on-dark" src="./assets/hamerkop-logo-white.svg" alt="Hamerkop System S.C." width="148" height="40" />
           </a>
           <nav id="site-nav" class="site-nav" aria-label="Primary">
 {links}
@@ -206,9 +206,9 @@ def footer():
         <div class="footer-inner">
           <div class="footer-grid">
             <div class="footer-brand">
-              <a class="brand brand-light" href="./index.html" aria-label="Hamerkop System S.C. home">
-                <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
-                <span class="brand-name">Hamerkop</span>
+              <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
+                <img class="brand-logo logo-on-light" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." width="160" height="43" />
+                <img class="brand-logo logo-on-dark" src="./assets/hamerkop-logo-white.svg" alt="Hamerkop System S.C." width="160" height="43" />
               </a>
               <p>
                 Enterprise technology for organizations that require reliable operations, connected
@@ -257,7 +257,7 @@ def footer():
             </span>
           </div>
         </div>
-        <p class="footer-wordmark" aria-hidden="true">Hamerkop</p>
+        <p class="footer-wordmark" aria-hidden="true">HAMERKOP</p>
       </footer>"""
 
 
@@ -754,11 +754,132 @@ def spec_sheet():
         ("Delivery stages", str(len(DATA["delivery"]))),
         ("Odoo partner grade", "Silver"),
     ]
-    items = "\n".join(f'              <div class="spec-row"><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in rows)
+    items = "\n".join(
+        f'              <div class="spec-row"><dt>{e(k)}</dt><dd{f" data-count={chr(34)}{v}{chr(34)}" if v.isdigit() else ""}>{e(v)}</dd></div>'
+        for k, v in rows
+    )
     return f"""            <dl class="spec-sheet reveal">
 {items}
               <p class="spec-note">From discovery to go-live, stabilization and continuous improvement.</p>
             </dl>"""
+
+
+def marquee(items, extra_class="", speed=40):
+    """Infinite marquee. The second copy is hidden from assistive technology."""
+    track = "".join(items)
+    return (
+        f'<div class="marquee {extra_class}" style="--marquee-speed:{speed}s">'
+        f'<div class="marquee-track">{track}<span class="marquee-copy" aria-hidden="true" style="display:contents">{track}</span></div></div>'
+    )
+
+
+def capability_marquee(reverse=False):
+    names = [s["name"] for s in DATA["solutions"]] + ["Hamerkop EIMS"] + [p["name"] for p in DATA["products"]]
+    return marquee([f'<span class="marquee-item">{e(n)}</span>' for n in names], "marquee-reverse" if reverse else "", 55)
+
+
+def industry_marquee():
+    return marquee([f'<a class="marquee-item" href="./{i["slug"]}.html">{e(i["name"])}</a>' for i in DATA["industries"]], "marquee-reverse", 45)
+
+
+LOGOS = [("odoo", "Odoo"), ("sap", "SAP"), ("postgresql", "PostgreSQL"), ("mysql", "MySQL"), ("googlecloud", "Google Cloud"), ("ubuntu", "Ubuntu")]
+
+
+def logo_marquee():
+    items = [f'<span class="marquee-item"><img src="./assets/partners/{f}.svg" alt="{n}" /></span>' for f, n in LOGOS]
+    items += ['<span class="marquee-item"><img src="./assets/insa.svg" alt="INSA certified" /></span>',
+              '<span class="marquee-item"><img src="./assets/mor.svg" alt="Ministry of Revenue accredited" /></span>']
+    return marquee(items, "logo-strip", 35)
+
+
+BEFORE = [
+    "Spreadsheets and disconnected departmental tools",
+    "Aging software that is hard to change",
+    "Invoicing separated from the transaction behind it",
+    "Information re-keyed manually between systems",
+    "Management reports rebuilt by hand",
+    "Unclear ownership of critical records",
+]
+AFTER = [
+    "Finance, procurement, inventory, people and sales on one connected platform",
+    "Electronic invoicing connected to ERP, finance, billing and POS",
+    "Secure, monitored interfaces between critical systems",
+    "Roles, permissions and traceable activity around every workflow",
+    "Reporting built on information captured in daily operations",
+    "Support from discovery through go-live and continuous improvement",
+]
+
+
+def compare_cards():
+    before = "".join(f"<li>{e(x)}</li>" for x in BEFORE)
+    after = "".join(f"<li>{e(x)}</li>" for x in AFTER)
+    return f"""          <div class="compare-cards" data-stagger>
+            <article class="compare-card">
+              <p class="eyebrow">Before</p>
+              <h3>Fragmented technology</h3>
+              <ul>{before}</ul>
+            </article>
+            <article class="compare-card is-ours">
+              <p class="eyebrow">With Hamerkop</p>
+              <h3>Connected, governed systems</h3>
+              <ul>{after}</ul>
+            </article>
+          </div>"""
+
+
+MOCKS = {
+    "invoices": ("EIMS · Invoice status", [("INV-0412", "Validated", ""), ("INV-0413", "Submitted", "is-info"), ("INV-0414", "Needs correction", "is-warn"), ("INV-0415", "Validated", "")]),
+    "close": ("ERP · Month-end close", [("Purchase orders matched", "Done", ""), ("Stock reconciled", "Done", ""), ("Payroll posted", "In review", "is-info"), ("Management report", "Ready", "")]),
+    "interfaces": ("Integrator · Interfaces", [("ERP ↔ EIMS", "Connected", ""), ("POS ↔ EIMS", "Connected", ""), ("Core banking ↔ Finance Suite", "Monitored", "is-info"), ("Legacy HR ↔ ERP", "Monitored", "is-info")]),
+    "reconcile": ("Finance Suite · Reconciliation", [("Collections batch", "Matched", ""), ("Settlement file", "Matched", ""), ("Exceptions", "To review", "is-warn")]),
+    "roles": ("Identity · Roles", [("Finance officer", "Approve invoices", "is-info"), ("Branch cashier", "Create receipts", "is-info"), ("Internal auditor", "Read only", "is-info")]),
+    "reports": ("Insight · Executive reporting", [("Revenue by branch", "Updated", ""), ("Procurement spend", "Updated", ""), ("Budget vs actual", "Updated", "")]),
+}
+
+
+def ui_mock(key):
+    """Illustrative interface card (workflow states only, no performance figures)."""
+    title, rows = MOCKS[key]
+    body = "".join(f'<div class="ui-row"><b>{e(a)}</b><span class="ui-status {c}">{e(b)}</span></div>' for a, b, c in rows)
+    return f'<div class="ui-mock" aria-hidden="true"><div class="ui-mock-head">{e(title)}<span>Illustrative</span></div>{body}</div>'
+
+
+TAGS = {
+    "solution-erp": "Where operations connect",
+    "solution-e-invoicing": "Where compliance lives",
+    "solution-fintech": "Where transactions settle",
+    "solution-identity": "Where trust begins",
+    "solution-integration": "Where systems meet",
+    "solution-data-ai": "Where decisions improve",
+}
+
+
+def bold_services():
+    rows = []
+    for n, sol in enumerate(DATA["solutions"]):
+        bullets = "".join(f"<li>{e(t)}</li>" for t, _ in sol["capabilities"][:5])
+        rows.append(f"""          <div class="bold-service{" is-flipped" if n % 2 else ""}">
+            <article class="bold-service-card reveal">
+              <span class="bold-tag">{e(TAGS[sol["slug"]])}</span>
+              <h3>{e(sol["name"])}</h3>
+              <p>{e(sol["summary"])}</p>
+              <ul>{bullets}</ul>
+              <a class="card-link" href="./{sol["slug"]}.html">Explore {e(sol["name"])} {ARROW}</a>
+            </article>
+            <figure class="bold-service-media reveal"><img src="{img(sol["image"], 1400)}" alt="" loading="lazy" /></figure>
+          </div>""")
+    return "\n".join(rows)
+
+
+def bold_steps():
+    return "\n".join(
+        f"""            <article class="bold-step">
+              <span class="bold-tag">Step 0{n}</span>
+              <h3>{e(name)}</h3>
+              <p>{e(full)}</p>
+            </article>"""
+        for n, (name, short, full) in enumerate(DATA["delivery"], 1)
+    )
 
 
 SNIPPETS = {
@@ -777,6 +898,14 @@ SNIPPETS = {
     "product_showcase": product_showcase,
     "industry_scroller": industry_scroller,
     "spec_sheet": spec_sheet,
+    "capability_marquee": capability_marquee,
+    "capability_marquee_reverse": lambda: capability_marquee(True),
+    "industry_marquee": industry_marquee,
+    "logo_marquee": logo_marquee,
+    "compare_cards": compare_cards,
+    "bold_services": bold_services,
+    "bold_steps": bold_steps,
+    **{f"mock_{k}": (lambda k=k: ui_mock(k)) for k in MOCKS},
     "site_email": lambda: SITE["email"],
     "form_attrs": lambda: (
         f'data-email="{e(SITE["email"])}" data-routes="{e(json.dumps(SITE["routes"]))}"'
@@ -939,6 +1068,10 @@ def render_all():
     out = {}
     for p in sorted((SRC / "pages").glob("*.html")):
         out[p.name] = render_page(p)
+    if ACTIVE:
+        home = SRC / "designs" / f'{ACTIVE["key"]}-home.html'
+        if home.exists():
+            out["index.html"] = render_page(home)
     for s in DATA["solutions"]:
         out[f'{s["slug"]}.html'] = solution_page(s)
     for p in DATA["products"]:
