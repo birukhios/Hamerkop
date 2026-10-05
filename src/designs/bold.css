@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Direction: Bold — inspired by noveq.framer.website
+   Light grey canvas, white cards, heavy geometric sans, electric blue,
+   dark navy hero, headlines with a grey second line. Layered on styles.css.
+   ========================================================================== */
+
+:root {
+  --canvas: #f0f0f0;
+  --paper: #ffffff;
+  --sand: #e8e8e8;
+  --line: #e3e3e3;
+  --line-strong: #c8c8c8;
+  --ink: #0a0a0a;
+  --ink-2: #242424;
+  --muted: #5f5f5f;
+  --faint: #a6a6a6;
+  --accent: #0274de;
+  --accent-deep: #0260b8;
+  --accent-soft: #e1efff;
+  --band: #0a0a0a;
+  --band-2: #181818;
+  --on-band: #ffffff;
+  --on-band-muted: rgba(255, 255, 255, 0.6);
+  --on-accent: #ffffff;
+  --accent-puck: #ffffff;
+  --accent-puck-arrow: var(--arrow-dark);
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+  --heading-weight: 600;
+  --radius-xl: 36px;
+  --radius-lg: 20px;
+  --radius-md: 16px;
+}
+
+h1 {
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  letter-spacing: -0.04em;
+}
+
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+/* "| Label" style eyebrows */
+.eyebrow,
+.service-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-2);
+}
+
+.eyebrow::before,
+.service-kicker::before {
+  content: "";
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.page-hero .eyebrow::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.dark-band .eyebrow,
+.cta .eyebrow,
+.panel-dark .eyebrow,
+.panel-dark .service-kicker,
+.milestone-badge-row .eyebrow {
+  color: var(--on-band-muted);
+}
+
+/* Dark navy hero with white type */
+.hero-full {
+  color: #fff;
+}
+
+.hero-full::before {
+  background:
+    linear-gradient(180deg, rgba(3, 20, 42, 0.55) 0%, rgba(3, 14, 30, 0.72) 55%, rgba(2, 10, 22, 0.94) 100%);
+}
+
+.hero-bg {
+  filter: saturate(0.6) hue-rotate(-8deg);
+}
+
+.hero-full h1 {
+  color: #fff;
+  font-size: clamp(3rem, 7.4vw, 6.4rem);
+  letter-spacing: -0.05em;
+}
+
+.hero-full .lede {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-full .chip {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.hero-full .button-ink {
+  background: #fff;
+  color: var(--ink);
+}
+
+h1 em,
+h2 em,
+.milestone-copy em {
+  color: #3d9bff;
+}
+
+.page-hero h1 em {
+  color: var(--accent);
+}
+
+.award-card {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink);
+}
+
+/* White cards on grey */
+.feature-card,
+.detail-card,
+.mini-card,
+.spec-sheet,
+.odoo-note,
+.step {
+  border-color: transparent;
+}
+
+.statement {
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.statement span {
+  color: var(--faint);
+}
+
+.section-heading h2 {
+  max-width: 22ch;
+}
+
+.photo-card-chip,
+.photo-chip {
+  border-radius: 999px;
+}
+
+.button-ghost {
+  background: #fff;
+  border-color: transparent;
+}
+
+.round-button {
+  background: #fff;
+  border-color: transparent;
+}
+
+.button-ink::after {
+  background-image: var(--arrow-light);
+}

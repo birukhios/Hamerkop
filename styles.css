@@ -32,6 +32,12 @@
   --arrow-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23211d16' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
   --puck-ghost: var(--ink);
   --puck-ghost-arrow: var(--arrow-light);
+  /* Text and arrow puck on accent-coloured surfaces */
+  --on-accent: #211d16;
+  --accent-puck: #211d16;
+  --accent-puck-arrow: var(--arrow-light);
+  --button-radius: 999px;
+  --heading-weight: 400;
 
   /* Type */
   --font-display: "Clash Grotesk", "General Sans", system-ui, sans-serif;
@@ -106,7 +112,7 @@ h2,
 h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: var(--heading-weight);
   text-wrap: balance;
 }
 
@@ -192,7 +198,7 @@ main {
   min-height: 52px;
   padding: 6px 6px 6px 22px;
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: var(--button-radius);
   font-family: inherit;
   font-size: 0.98rem;
   font-weight: 500;
@@ -218,16 +224,16 @@ main {
 .button-dark,
 .hero-cta {
   background: var(--accent);
-  color: #211d16;
+  color: var(--on-accent);
 }
 
 .button-dark::after {
-  background-color: #211d16;
-  background-image: var(--arrow-light);
+  background-color: var(--accent-puck);
+  background-image: var(--accent-puck-arrow);
 }
 
 .button-dark:hover {
-  background: #f28a43;
+  filter: brightness(1.06);
 }
 
 .button-ink {
@@ -296,7 +302,7 @@ main {
   padding: 7px;
   border-radius: 50%;
   background: var(--accent);
-  color: #211d16;
+  color: var(--on-accent);
   transition: transform 200ms ease;
 }
 
@@ -379,7 +385,7 @@ a.card-link:hover svg {
 
 .premium-badge {
   background: var(--accent);
-  color: #211d16;
+  color: var(--on-accent);
 }
 
 .soon-tag {
@@ -542,14 +548,14 @@ a.card-link:hover svg {
   padding: 4px 4px 4px 18px;
   font-size: 0.92rem;
   background: var(--accent);
-  color: #211d16;
+  color: var(--on-accent);
 }
 
 .nav-cta::after {
   width: 36px;
   height: 36px;
-  background-color: #211d16;
-  background-image: var(--arrow-light);
+  background-color: var(--accent-puck);
+  background-image: var(--accent-puck-arrow);
   background-size: 16px;
 }
 
@@ -1107,7 +1113,7 @@ a.team-card:hover .industry-photo img,
   padding: 7px 8px 7px 14px;
   border-radius: 999px;
   background: var(--accent);
-  color: #211d16;
+  color: var(--on-accent);
   font-size: 0.88rem;
   font-weight: 500;
 }
@@ -2309,12 +2315,12 @@ main:focus {
     justify-content: space-between;
     margin-top: 10px;
     background: var(--accent);
-    color: #211d16;
+    color: var(--on-accent);
   }
 
   .nav-cta-mobile::after {
-    background-color: #211d16;
-    background-image: var(--arrow-light);
+    background-color: var(--accent-puck);
+    background-image: var(--accent-puck-arrow);
   }
 
   .trio {
@@ -2530,4 +2536,26 @@ main:focus {
 :root[data-theme="dark"] .milestone-panel,
 :root[data-theme="dark"] .site-footer {
   border: 1px solid var(--line);
+}
+
+/* Design-direction preview badge (only on the comparison builds) */
+.design-badge {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 70;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #151515;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.design-badge span {
+  color: rgba(255, 255, 255, 0.65);
 }
