@@ -578,6 +578,7 @@ document.querySelectorAll("[data-slideshow]").forEach((show) => {
   if (slides.length < 2 || reduceMotion) return;
   let i = 0;
   setInterval(() => {
+    if (document.hidden || show.closest(".is-paused")) return;
     slides[i].classList.remove("is-active");
     i = (i + 1) % slides.length;
     slides[i].classList.add("is-active");
@@ -717,6 +718,15 @@ document.querySelectorAll("[data-progress-line]").forEach((line) => {
   update();
   window.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
 });
+
+// Performance: pause looping animations while they are off-screen.
+if ("IntersectionObserver" in window) {
+  const pausable = document.querySelectorAll(".marquee, .nx-cta, .nx-hero, .hero-full, .sv-hero-art, .page-hero.is-art");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle("is-paused", !entry.isIntersecting));
+  }, { rootMargin: "100px" });
+  pausable.forEach((el) => io.observe(el));
+}
 
 // Reveal-on-scroll, with graceful fallbacks.
 const prefersReducedMotion = window.matchMedia(

@@ -1027,7 +1027,8 @@
           "h2": "Where to begin"
         },
         "A useful first step is a short readiness review covering transaction sources, master data quality, exception scenarios and reporting needs. The result is a realistic picture of what must change in the existing systems, which is usually where most of the effort lies, and a sequence for introducing electronic invoicing without disrupting day-to-day operations."
-      ]
+      ],
+      "art": "1682220784379-e0ce4380db64"
     },
     {
       "slug": "recovering-a-stalled-erp-implementation",
@@ -1082,7 +1083,8 @@
           "h2": "Signs the recovery is working"
         },
         "Month-end close becomes more predictable, management reports are produced from the system rather than rebuilt in spreadsheets, open issues trend down and departments stop maintaining parallel records. Those are the measures that matter, more than the number of modules marked as live."
-      ]
+      ],
+      "art": "1709377195538-5522ed0f9e10"
     },
     {
       "slug": "reconciliation-is-a-design-problem",
@@ -1131,7 +1133,8 @@
           "h2": "Where to begin"
         },
         "Choose one high-volume flow, such as card or mobile collections, map it end to end and identify where identifiers are lost or data arrives late. Fixing one flow well usually reveals patterns that apply across the rest of the transaction environment."
-      ]
+      ],
+      "art": "1687392946855-8e35efa25ad7"
     },
     {
       "slug": "modernizing-legacy-systems-without-replacing-everything",
@@ -1181,7 +1184,8 @@
           "h2": "The outcome"
         },
         "Progressive modernization lets institutions improve services while keeping operations running. The integration layer built along the way remains valuable: it becomes the foundation for connecting future systems, partners and government services."
-      ]
+      ],
+      "art": "1668456186589-a182ed97df44"
     },
     {
       "slug": "practical-ai-starts-with-governed-data",
@@ -1228,7 +1232,8 @@
           "h2": "Start small and measure"
         },
         "A focused pilot with defined success criteria shows whether a use case is worth scaling. Measuring time saved, error rates or decision quality keeps the work grounded in operational value rather than technology for its own sake."
-      ]
+      ],
+      "art": "1654018715719-a61ef570b756"
     },
     {
       "slug": "what-happens-after-go-live",
@@ -1274,7 +1279,8 @@
           "h2": "The measure of success"
         },
         "The real test of a technology program is whether, a year after go-live, the institution relies on the system for its daily work, trusts the information it produces and can change it with confidence. That outcome is planned from the start, not left to chance."
-      ]
+      ],
+      "art": "1635776062764-e025521e3df3"
     }
   ]
 }

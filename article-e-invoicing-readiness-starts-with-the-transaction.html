@@ -12,15 +12,16 @@
     <link rel="canonical" href="https://birukhios.github.io/Hamerkop/article-e-invoicing-readiness-starts-with-the-transaction.html" />
     <meta property="og:url" content="https://birukhios.github.io/Hamerkop/article-e-invoicing-readiness-starts-with-the-transaction.html" />
     <title>Electronic invoicing readiness starts with the transaction, not the invoice | Hamerkop Systems</title>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
     <link rel="preconnect" href="https://api.fontshare.com" />
     <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
     <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&amp;f[]=general-sans@400,500,600&amp;display=swap" rel="stylesheet" />
     <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
     <link rel="icon" href="./assets/hamerkop-bird.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f5efe4" />
-    <link rel="stylesheet" href="./styles.css?v=3e26dba0" />
+    <link rel="stylesheet" href="./styles.css?v=c000e122" />
     <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
-    <script defer src="./main.js?v=6c6ce7de"></script>
+    <script defer src="./main.js?v=721a1511"></script>
   </head>
   <body>
     <div class="page-shell">
@@ -28,8 +29,8 @@
       <header class="topbar">
         <div class="nav-shell">
           <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
-            <img class="brand-logo logo-on-light" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." width="148" height="40" />
-            <img class="brand-logo logo-on-dark" src="./assets/hamerkop-logo-white.svg" alt="Hamerkop System S.C." width="148" height="40" />
+            <img decoding="async" class="brand-logo logo-on-light" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." width="148" height="40" />
+            <img decoding="async" class="brand-logo logo-on-dark" src="./assets/hamerkop-logo-white.svg" alt="Hamerkop System S.C." width="148" height="40" />
           </a>
           <nav id="site-nav" class="site-nav" aria-label="Primary">
           <div class="nav-item">
@@ -114,7 +115,7 @@
               <p class="article-meta"><time datetime="2026-09-08">8 September 2026</time> &middot; Hamerkop Systems &middot; 3 min read</p>
             </div>
           </header>
-        <figure class="article-image reveal"><img src="./assets/invoice.jpg" alt="" /></figure>
+        <figure class="article-image reveal"><img decoding="async" loading="lazy" src="./assets/invoice.jpg" alt="" /></figure>
           <div class="article-body reveal">
             <p>When organizations prepare for electronic invoicing, the first instinct is often to look for an invoicing tool. That is understandable, but it puts the focus in the wrong place. An electronic invoice is the last step of a transaction that began somewhere else: in an ERP sales order, a point-of-sale terminal, a billing run or a service contract. If that originating data is incomplete or inconsistent, no invoicing layer can fix it on its own.</p><p>Readiness is therefore less about the invoice and more about the path a transaction takes through the organization.</p><h2>1. Map every place a transaction is created</h2><p>Start with an inventory of the systems that create sales or service transactions. Many institutions find more sources than they expected: a central ERP, branch POS systems, a separate billing platform for recurring services, and manual invoices issued from spreadsheets for exceptional cases.</p><p>For each source, record who owns it, how many transactions it produces, how it numbers documents and whether it can be integrated directly or needs an intermediate step.</p><h2>2. Fix the master data before go-live</h2><p>Electronic invoicing exposes weak master data quickly. Customer records, tax identification details, product and service codes, units of measure and tax treatments all need to be accurate and consistent across systems.</p><ul><li>Agree a single owner for customer and product master data.</li><li>Remove duplicates and inactive records that still appear in transactions.</li><li>Check that tax treatments are assigned consistently, not overridden manually at the point of sale.</li><li>Decide which system is the source of truth when records differ.</li></ul><h2>3. Design for status, not just submission</h2><p>An invoice in an electronic process has a life cycle: created, validated, accepted, rejected, corrected, cancelled or credited. Teams need to see that status and act on it. The design question is not only how an invoice is sent, but how rejections are surfaced, who resolves them and how corrections are recorded so the audit trail stays complete.</p><h2>4. Plan the exceptions explicitly</h2><p>Credit notes, returns, partial deliveries, advance payments, cancelled transactions and offline sales at branches are where invoicing processes usually break. Each needs a defined path through the system and a clear owner. Listing these scenarios early prevents surprises during testing.</p><h2>5. Separate duties and keep the record</h2><p>Electronic invoicing changes who can do what. Creating, approving, correcting and reviewing invoice activity should sit with defined roles, and every important event should remain traceable. This protects the organization during audits and makes operational issues easier to investigate.</p><blockquote class="pull-quote">Electronic invoicing is most effective when it is part of the operation, not another system beside it.</blockquote><h2>6. Test with real operating scenarios</h2><p>Test plans should use the organization&#x27;s actual transaction mix: high-volume days, branch operations, the exceptions listed above and integration failures. A short parallel period, where the new process runs alongside the existing one, gives teams confidence before the cut-over.</p><h2>Where to begin</h2><p>A useful first step is a short readiness review covering transaction sources, master data quality, exception scenarios and reporting needs. The result is a realistic picture of what must change in the existing systems, which is usually where most of the effort lies, and a sequence for introducing electronic invoicing without disrupting day-to-day operations.</p>
           </div>
@@ -135,8 +136,8 @@
           <div class="footer-grid">
             <div class="footer-brand">
               <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
-                <img class="brand-logo logo-on-light" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." width="160" height="43" />
-                <img class="brand-logo logo-on-dark" src="./assets/hamerkop-logo-white.svg" alt="Hamerkop System S.C." width="160" height="43" />
+                <img decoding="async" class="brand-logo logo-on-light" src="./assets/hamerkop-logo.svg" alt="Hamerkop System S.C." width="160" height="43" />
+                <img decoding="async" class="brand-logo logo-on-dark" src="./assets/hamerkop-logo-white.svg" alt="Hamerkop System S.C." width="160" height="43" />
               </a>
               <p>
                 Enterprise technology for organizations that require reliable operations, connected
@@ -144,9 +145,9 @@
               </p>
               <div class="footer-cert">
                 <div class="cert-logos">
-                  <img src="./assets/insa.svg" alt="INSA certified" />
-                  <img src="./assets/mor.svg" alt="Ministry of Revenue accredited" />
-                  <a class="cert-odoo" href="./partnership-odoo.html"><span class="odoo-mark" role="img" aria-label="Odoo Silver Partner"><img src="./assets/partners/odoo.svg" alt="" /><span>Silver Partner</span></span></a>
+                  <img decoding="async" loading="lazy" src="./assets/insa.svg" alt="INSA certified" />
+                  <img decoding="async" loading="lazy" src="./assets/mor.svg" alt="Ministry of Revenue accredited" />
+                  <a class="cert-odoo" href="./partnership-odoo.html"><span class="odoo-mark" role="img" aria-label="Odoo Silver Partner"><img decoding="async" loading="lazy" src="./assets/partners/odoo.svg" alt="" /><span>Silver Partner</span></span></a>
                 </div>
                 <p>Certified by INSA and accredited by the Ethiopian Ministry of Revenue. All Hamerkop systems are inspected every 6 months. Odoo Silver Partner.</p>
               </div>

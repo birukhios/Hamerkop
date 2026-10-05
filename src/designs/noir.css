@@ -1593,3 +1593,65 @@ h3 {
     opacity: 1;
   }
 }
+
+/* ---------------------------------------------------------------- partner logos */
+.nx-partners {
+  padding-top: clamp(72px, 8vw, 110px);
+}
+
+.nx-partners .logo-strip .marquee-item {
+  padding: 26px 44px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+/* Logos shown in monochrome white on the dark canvas, full colour on hover */
+.nx-partners .logo-strip img {
+  height: 36px;
+  filter: brightness(0) invert(1);
+  opacity: 0.7;
+  transition: filter 400ms ease, opacity 400ms ease;
+}
+
+.nx-partners .logo-strip .marquee-item:hover {
+  background: #fafafa;
+}
+
+.nx-partners .logo-strip .marquee-item:hover img {
+  filter: none;
+  opacity: 1;
+}
+
+/* Abstract art heroes: keep the glow, soften the overlay so the light reads */
+.page-hero.has-image .page-hero-bg[src*="1709377195538"],
+.page-hero.has-image .page-hero-bg[src*="1700938550585"],
+.page-hero.has-image .page-hero-bg[src*="1685625971503"],
+.page-hero.has-image .page-hero-bg[src*="1708457753320"] {
+  filter: saturate(1.05);
+}
+
+/* Abstract-light heroes (Company, Insights, Contact, Security, articles):
+   the same treatment as the homepage "Start a conversation" section. */
+.page-hero.has-image.is-art .page-hero-bg {
+  opacity: 0.85;
+  filter: none;
+  animation:
+    nx-hero-settle 2400ms cubic-bezier(0.2, 0.7, 0.2, 1) both,
+    nx-breathe 16s 2400ms ease-in-out infinite alternate;
+}
+
+.page-hero.has-image.is-art::after {
+  background:
+    radial-gradient(ellipse at 50% 55%, rgba(10, 10, 10, 0.25), rgba(10, 10, 10, 0.75) 62%, #0a0a0a 92%),
+    linear-gradient(0deg, #0a0a0a 0%, transparent 30%);
+}
+
+.is-paused .page-hero-bg {
+  animation-play-state: paused;
+}
+
+/* Article and category cards in Noir use the same abstract light */
+.journal-media img {
+  filter: saturate(1.05);
+}
