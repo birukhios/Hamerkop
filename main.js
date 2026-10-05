@@ -543,6 +543,121 @@ document.querySelectorAll("[data-tabs]").forEach((tabs) => {
   });
 });
 
+
+// ---------------------------------------------------------------- cinematic layer (Noir)
+// Every effect is opt-in through a data attribute and skipped for reduced motion.
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+// Opening curtain: shown once per visit.
+const curtain = document.querySelector(".intro-curtain");
+if (curtain) {
+  let seen = false;
+  try {
+    seen = Boolean(sessionStorage.getItem("intro-seen"));
+    sessionStorage.setItem("intro-seen", "1");
+  } catch {
+    /* storage unavailable */
+  }
+  if (seen || reduceMotion) {
+    curtain.remove();
+  } else {
+    document.documentElement.classList.add("is-intro");
+    setTimeout(() => curtain.classList.add("is-done"), 1300);
+    setTimeout(() => {
+      curtain.remove();
+      document.documentElement.classList.remove("is-intro");
+    }, 2300);
+  }
+}
+
+// Crossfading slideshow.
+document.querySelectorAll("[data-slideshow]").forEach((show) => {
+  const slides = [...show.children];
+  if (slides.length < 2 || reduceMotion) return;
+  let i = 0;
+  setInterval(() => {
+    slides[i].classList.remove("is-active");
+    i = (i + 1) % slides.length;
+    slides[i].classList.add("is-active");
+  }, 6500);
+});
+
+if (!reduceMotion) {
+  // Hero layers drift with the pointer.
+  document.querySelectorAll("[data-pointer-parallax]").forEach((zone) => {
+    if (!finePointer) return;
+    zone.addEventListener("pointermove", (event) => {
+      const r = zone.getBoundingClientRect();
+      zone.style.setProperty("--px", ((event.clientX - r.left) / r.width - 0.5).toFixed(3));
+      zone.style.setProperty("--py", ((event.clientY - r.top) / r.height - 0.5).toFixed(3));
+    });
+    zone.addEventListener("pointerleave", () => {
+      zone.style.setProperty("--px", 0);
+      zone.style.setProperty("--py", 0);
+    });
+  });
+
+  // Cards tilt towards the pointer and carry a soft spotlight.
+  const tiltables = [...document.querySelectorAll("[data-tilt]")];
+  if (document.documentElement.dataset.design === "noir") {
+    tiltables.push(...document.querySelectorAll(".feature-card, .detail-card, .compare-card, .journal-card"));
+  }
+  if (finePointer) {
+    tiltables.forEach((card) => {
+      const strength = Number(card.dataset.tilt || 0);
+      card.addEventListener("pointermove", (event) => {
+        const r = card.getBoundingClientRect();
+        const x = (event.clientX - r.left) / r.width;
+        const y = (event.clientY - r.top) / r.height;
+        card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+        card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+        if (strength) {
+          card.style.transform = `perspective(900px) rotateX(${((0.5 - y) * strength).toFixed(2)}deg) rotateY(${((x - 0.5) * strength).toFixed(2)}deg)`;
+        }
+      });
+      card.addEventListener("pointerleave", () => {
+        card.style.transform = "";
+      });
+    });
+  }
+
+  // Buttons lean towards the pointer.
+  if (finePointer) {
+    document.querySelectorAll("[data-magnetic]").forEach((el) => {
+      el.addEventListener("pointermove", (event) => {
+        const r = el.getBoundingClientRect();
+        const dx = event.clientX - (r.left + r.width / 2);
+        const dy = event.clientY - (r.top + r.height / 2);
+        el.style.transform = `translate(${(dx * 0.22).toFixed(1)}px, ${(dy * 0.32).toFixed(1)}px)`;
+      });
+      el.addEventListener("pointerleave", () => {
+        el.style.transform = "";
+      });
+    });
+  }
+
+  // Images uncover with a curtain wipe as they enter the screen.
+  document.querySelectorAll("[data-clip-reveal]").forEach((el) => onVisible(el, () => el.classList.add("is-in"), 0.25));
+
+  // Scroll-linked: hero content eases away; giant marquee rows slide with the page.
+  const scrollOut = [...document.querySelectorAll("[data-scroll-out]")];
+  const scrollRows = [...document.querySelectorAll("[data-scroll-row]")];
+  const onScroll = () => {
+    scrollOut.forEach((el) => {
+      const h = (el.closest("section") || el).offsetHeight || window.innerHeight;
+      el.style.setProperty("--out", clamp01(window.scrollY / (h * 0.7)).toFixed(3));
+    });
+    scrollRows.forEach((row) => {
+      const r = row.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+      const shift = (window.innerHeight - r.top) * Number(row.dataset.scrollRow);
+      row.style.transform = `translate3d(${shift.toFixed(1)}px, 0, 0)`;
+    });
+  };
+  window.addEventListener("scroll", () => requestAnimationFrame(onScroll), { passive: true });
+  onScroll();
+}
+
 // Reveal-on-scroll, with graceful fallbacks.
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
