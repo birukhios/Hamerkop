@@ -2199,6 +2199,248 @@ a.team-card {
   border-radius: 0;
 }
 
+/* ------------------------------------------------------------------ dropdown navigation */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-sub-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.nav-sub-toggle:hover {
+  color: var(--text);
+  background: rgba(17, 17, 17, 0.06);
+}
+
+.nav-sub-toggle svg {
+  transition: transform 180ms ease;
+}
+
+.nav-item.is-open .nav-sub-toggle svg {
+  transform: rotate(180deg);
+}
+
+.nav-menu {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: -18px;
+  z-index: 40;
+  display: none;
+  min-width: 270px;
+  padding: 10px;
+  gap: 2px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 24px 60px rgba(17, 17, 17, 0.16);
+}
+
+/* Invisible bridge so the menu stays open while the pointer moves down to it */
+.nav-menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -18px;
+  height: 18px;
+}
+
+.nav-menu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.nav-menu a:hover,
+.nav-menu a[aria-current="page"] {
+  background: rgba(234, 88, 12, 0.08);
+  color: var(--accent-deep);
+}
+
+.nav-menu .nav-menu-all {
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+  border-radius: 12px 12px 0 0;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.nav-item.is-open .nav-menu {
+  display: grid;
+}
+
+@media (min-width: 1181px) and (hover: hover) {
+  .nav-item:hover .nav-menu {
+    display: grid;
+  }
+}
+
+@media (max-width: 1180px) {
+  .site-nav {
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .nav-sub-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-menu {
+    position: static;
+    flex-basis: 100%;
+    min-width: 0;
+    margin-top: 6px;
+    padding: 6px;
+    box-shadow: none;
+    background: rgba(17, 17, 17, 0.03);
+  }
+
+  .nav-menu::before {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ footer legal links */
+.footer-legal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.footer-legal a:hover {
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------ form states */
+.field-error {
+  min-height: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #b42318;
+}
+
+.field-error:empty {
+  display: none;
+}
+
+.form-field [aria-invalid="true"] {
+  border-color: #b42318;
+  background: #fff7f6;
+}
+
+.form-context {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(234, 88, 12, 0.08);
+  color: var(--accent-deep) !important;
+  font-weight: 700;
+}
+
+.form-success {
+  margin-top: 18px;
+  padding: 22px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(21, 128, 61, 0.3);
+  background: #f2fbf5;
+}
+
+.form-success h3 {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.4rem;
+}
+
+.form-success:focus {
+  outline: none;
+}
+
+.consult-form button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* ------------------------------------------------------------------ insights + legal */
+.article-meta {
+  margin: 14px 0 0;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.article-card .article-meta {
+  margin-top: 8px;
+}
+
+.article-image {
+  margin: 32px 0 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 21 / 9;
+}
+
+.article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-body,
+.legal-body {
+  max-width: 760px;
+  margin-top: 40px;
+}
+
+.article-body p,
+.article-body li,
+.legal-body p,
+.legal-body li {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.article-body h2,
+.legal-body h2 {
+  margin: 36px 0 8px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  letter-spacing: -0.01em;
+}
+
+.legal-body a,
+.article-body a {
+  color: var(--accent-deep);
+  text-decoration: underline;
+}
+
+.empty-state h2 {
+  max-width: 24ch;
+}
+
 @media (hover: none) {
   .service-card:hover,
   .work-card:hover,

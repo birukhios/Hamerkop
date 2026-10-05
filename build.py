@@ -9,14 +9,27 @@ Run `python3 build.py` from the repo root. It writes the finished *.html files t
 repo root, which GitHub Pages serves as-is. Edit the sources, not the generated files.
 """
 
+import hashlib
 import json
 import re
 from html import escape
+from urllib.parse import urlencode
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 SRC = ROOT / "src"
 DATA = json.loads((SRC / "content.json").read_text(encoding="utf-8"))
+SITE = DATA["site"]
+CATEGORIES = {c["slug"]: c for c in DATA["insight_categories"]}
+ARTICLES = sorted(DATA["articles"], key=lambda a: a["date"], reverse=True)
+
+
+def asset_version(name):
+    """Short content hash, so browsers fetch styles/scripts again whenever they change."""
+    return hashlib.sha1((ROOT / name).read_bytes()).hexdigest()[:8]
+
+
+CSS_V, JS_V = asset_version("styles.css"), asset_version("main.js")
 
 ARROW = (
     '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" '
@@ -33,6 +46,34 @@ NAV = [
     ("insights", "Insights"),
 ]
 
+# Dropdown entries under the main navigation items.
+MENUS = {
+    "solutions": [(s["slug"], s["name"]) for s in DATA["solutions"]],
+    "products": [("product-eims", "Hamerkop EIMS")] + [(p["slug"], p["name"]) for p in DATA["products"]],
+    "services": [(s["slug"], s["name"]) for s in DATA["services"]],
+    "industries": [(i["slug"], i["name"]) for i in DATA["industries"]],
+}
+
+CHEVRON = (
+    '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" '
+    'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    '<path d="M6 9l6 6 6-6"/></svg>'
+)
+
+# Area of Interest values on the contact form (must match its <option> text).
+PRODUCT_INTEREST = {
+    "product-eims": "Electronic Invoicing",
+    "product-finance-suite": "Financial Technology",
+    "product-identity": "Identity & Trust",
+    "product-integrator": "Enterprise Integration",
+    "product-insight": "Data, Analytics & AI",
+}
+SERVICE_INTEREST = {
+    "service-systems-integration": "Enterprise Integration",
+    "service-technology-consulting": "Technology Consulting",
+    "service-managed-services": "Managed Services",
+}
+
 
 def e(text):
     return escape(text, quote=True)
@@ -45,6 +86,13 @@ def img(ref, width=1400):
     return f"https://images.unsplash.com/photo-{ref}?auto=format&fit=crop&w={width}&q=80"
 
 
+def contact_url(type=None, interest=None, industry=None, product=None):
+    """Link to the consultation form with fields pre-selected."""
+    params = [(k, v) for k, v in (("type", type), ("interest", interest), ("industry", industry), ("product", product)) if v]
+    query = ("?" + urlencode(params)) if params else ""
+    return e(f"./contact.html{query}#consult-form")
+
+
 def odoo_dates():
     o = DATA["odoo"]
     return o.get("agreement_date"), o.get("silver_date")
@@ -52,12 +100,29 @@ def odoo_dates():
 
 # --------------------------------------------------------------------------- layout
 
-def header(active):
-    current = ' class="is-active" aria-current="page"'
-    links = "\n".join(
-        f'          <a href="./{key}.html"{current if key == active else ""}>{label}</a>'
-        for key, label in NAV
-    )
+def header(active, slug):
+    items = []
+    for key, label in NAV:
+        cls = ' class="nav-link is-active"' if key == active else ' class="nav-link"'
+        here = ' aria-current="page"' if key == slug else ""
+        link = f'<a href="./{key}.html"{cls}{here}>{label}</a>'
+        if key not in MENUS:
+            items.append(f"          {link}")
+            continue
+        current = ' aria-current="page"'
+        entries = "\n".join(
+            f'              <a href="./{href}.html"{current if href == slug else ""}>{e(name)}</a>'
+            for href, name in MENUS[key]
+        )
+        items.append(f"""          <div class="nav-item">
+            {link}
+            <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="menu-{key}" aria-label="{label} menu">{CHEVRON}</button>
+            <div class="nav-menu" id="menu-{key}">
+              <a class="nav-menu-all" href="./{key}.html">All {label.lower()}</a>
+{entries}
+            </div>
+          </div>""")
+    links = "\n".join(items)
     return f"""      <header class="topbar">
         <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
           <img class="brand-mark" src="./assets/hamerkop-bird.svg" alt="" />
@@ -117,19 +182,30 @@ def footer():
             <p class="footer-title">Contact</p>
             <div class="footer-contact">
               <span>Addis Ababa, Ethiopia</span>
-              <a href="mailto:hello@hamerkop.systems">hello@hamerkop.systems</a>
+              <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>
+              <a href="./contact.html">Request a Consultation</a>
             </div>
           </div>
         </div>
         <div class="footer-bottom">
           <span>&copy; 2026 Hamerkop System S.C. All rights reserved.</span>
-          <span>Enterprise technology &middot; Addis Ababa, Ethiopia</span>
+          <span class="footer-legal">
+            <a href="./privacy.html">Privacy Policy</a>
+            <a href="./terms.html">Terms of Use</a>
+            <a href="./cookies.html">Cookie Notice</a>
+          </span>
         </div>
       </footer>"""
 
 
-def layout(title, description, nav, body):
+def layout(title, description, nav, body, slug):
     full_title = "Hamerkop Systems — Enterprise Technology Solutions" if nav == "home" else f"{title} | Hamerkop Systems"
+    url = SITE["url"] + ("" if slug == "index" else f"{slug}.html")
+    # The 404 page is served at whatever path was requested, so pin its relative links to the site root.
+    head_extra = (
+        f'<base href="{SITE["url"]}" />\n    <meta name="robots" content="noindex" />'
+        if slug == "404" else f'<link rel="canonical" href="{url}" />\n    <meta property="og:url" content="{url}" />'
+    )
     return f"""<!doctype html>
 <!-- Generated by build.py from src/. Edit the source files, then run: python3 build.py -->
 <html lang="en">
@@ -141,6 +217,7 @@ def layout(title, description, nav, body):
     <meta property="og:site_name" content="Hamerkop Systems" />
     <meta property="og:title" content="{e(full_title)}" />
     <meta property="og:description" content="{e(description)}" />
+    {head_extra}
     <title>{e(full_title)}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -150,16 +227,16 @@ def layout(title, description, nav, body):
     />
     <link rel="icon" href="./assets/hamerkop-bird.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f4ede6" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v={CSS_V}" />
     <noscript><style>.reveal{{opacity:1;transform:none}}</style></noscript>
-    <script defer src="./main.js"></script>
+    <script defer src="./main.js?v={JS_V}"></script>
   </head>
   <body>
     <div class="page-shell">
       <a class="skip-link" href="#main">Skip to main content</a>
       <div class="ambient ambient-left"></div>
       <div class="ambient ambient-right"></div>
-{header(nav)}
+{header(nav, slug)}
 
       <main id="main" tabindex="-1">
 {body.strip()}
@@ -205,12 +282,14 @@ def cta(eyebrow, title, text, button=("./contact.html", "Request a Consultation"
         </section>"""
 
 
-DEFAULT_CTA = cta(
-    "Start a conversation",
-    "Start with the operation you need to improve.",
-    "Whether the requirement is ERP, electronic invoicing, financial technology, identity, "
-    "integration or data, the conversation begins with the current operation and the systems around it.",
-)
+def default_cta(href="./contact.html#consult-form"):
+    return cta(
+        "Start a conversation",
+        "Start with the operation you need to improve.",
+        "Whether the requirement is ERP, electronic invoicing, financial technology, identity, "
+        "integration or data, the conversation begins with the current operation and the systems around it.",
+        (href, "Request a Consultation"),
+    )
 
 
 def info_cards(items, cls="feature-grid"):
@@ -318,16 +397,123 @@ def delivery_steps(long=False):
     )
 
 
-def insight_cards():
-    return "\n".join(
-        f"""          <article class="feature-card insight-card reveal">
-            <p class="service-kicker">Insights</p>
-            <h3>{e(t)}</h3>
-            <p>{e(d)}</p>
-            <span class="soon-tag">Articles coming soon</span>
-          </article>"""
-        for t, d in DATA["insights"]
+def fmt_date(iso):
+    y, m, d = (int(x) for x in iso.split("-"))
+    months = ["January", "February", "March", "April", "May", "June", "July",
+              "August", "September", "October", "November", "December"]
+    return f"{d} {months[m - 1]} {y}"
+
+
+def article_card(a):
+    media = (
+        f'<div class="service-visual"><img src="{img(a["image"], 1200)}" alt="" loading="lazy" /></div>\n            '
+        if a.get("image") else ""
     )
+    return f"""          <a class="feature-card article-card reveal" href="./article-{a["slug"]}.html">
+            {media}<p class="service-kicker">{e(CATEGORIES[a["category"]]["name"])}</p>
+            <h3>{e(a["title"])}</h3>
+            <p>{e(a["summary"])}</p>
+            <p class="article-meta"><time datetime="{a["date"]}">{fmt_date(a["date"])}</time></p>
+            <span class="card-link">Read article {ARROW}</span>
+          </a>"""
+
+
+def category_card(c, home=False):
+    count = sum(1 for a in ARTICLES if a["category"] == c["slug"])
+    status = f"{count} article{'s' if count != 1 else ''}" if count else "Articles coming soon"
+    text = c.get("home_description", c["description"]) if home else c["description"]
+    return f"""          <a class="feature-card insight-card reveal" href="./{c["slug"]}.html">
+            <p class="service-kicker">Insights</p>
+            <h3>{e(c["name"])}</h3>
+            <p>{e(text)}</p>
+            <span class="soon-tag">{status}</span>
+          </a>"""
+
+
+def insight_cards():
+    return "\n".join(category_card(c) for c in DATA["insight_categories"])
+
+
+def latest_articles():
+    if not ARTICLES:
+        return ""
+    cards = "\n".join(article_card(a) for a in ARTICLES[:6])
+    return f"""        <section class="page-band">
+{section_heading("Latest", "Recent articles")}
+          <div class="feature-grid">
+{cards}
+          </div>
+        </section>"""
+
+
+def home_insights():
+    """Latest article previews once articles exist; topic categories until then."""
+    if ARTICLES:
+        return "\n".join(article_card(a) for a in ARTICLES[:3])
+    return "\n".join(category_card(c, home=True) for c in DATA["insight_categories"] if "home_description" in c)
+
+
+def category_page(c):
+    articles = [a for a in ARTICLES if a["category"] == c["slug"]]
+    if articles:
+        listing = '        <section class="page-band feature-grid">\n' + "\n".join(article_card(a) for a in articles) + "\n        </section>"
+    else:
+        listing = f"""        <section class="page-band">
+          <div class="detail-card empty-state reveal">
+            <p class="service-kicker">Coming soon</p>
+            <h2>Articles on {e(c["name"])} are in preparation.</h2>
+            <p>In the meantime, our team is glad to discuss these questions directly.</p>
+            <div class="hero-actions"><a class="button button-dark" href="./contact.html#consult-form">Request a Consultation</a><a class="button button-ghost" href="./insights.html">All insights</a></div>
+          </div>
+        </section>"""
+    others = "\n".join(category_card(o) for o in DATA["insight_categories"] if o is not c)
+    body = "\n".join([
+        page_hero('<a href="./insights.html">Insights</a> &middot; Category', c["name"], c["description"]),
+        listing,
+        '        <section class="page-band">\n' + section_heading("More topics", "Other Insights categories")
+        + '\n          <div class="feature-grid">\n' + others + "\n          </div>\n        </section>",
+    ])
+    return layout(c["name"], c["description"], "insights", body, c["slug"])
+
+
+def article_page(a):
+    c = CATEGORIES[a["category"]]
+    blocks = []
+    for block in a["body"]:
+        if isinstance(block, str):
+            blocks.append(f"<p>{e(block)}</p>")
+        elif "h2" in block:
+            blocks.append(f"<h2>{e(block['h2'])}</h2>")
+        elif "list" in block:
+            blocks.append("<ul>" + "".join(f"<li>{e(x)}</li>" for x in block["list"]) + "</ul>")
+        elif "quote" in block:
+            blocks.append(f'<blockquote class="pull-quote">{e(block["quote"])}</blockquote>')
+    author = f' &middot; {e(a["author"])}' if a.get("author") else ""
+    image = (
+        f'        <figure class="article-image reveal"><img src="{img(a["image"], 1800)}" alt="" /></figure>\n'
+        if a.get("image") else ""
+    )
+    related = [x for x in ARTICLES if x["category"] == a["category"] and x is not a][:3]
+    related_html = (
+        '        <section class="page-band">\n' + section_heading("Related", f'More on {c["name"]}')
+        + '\n          <div class="feature-grid">\n' + "\n".join(article_card(x) for x in related) + "\n          </div>\n        </section>\n"
+        if related else ""
+    )
+    body = f"""        <article class="article">
+          <header class="hero page-hero">
+            <div class="hero-copy reveal">
+              <p class="eyebrow"><a href="./insights.html">Insights</a> &middot; <a href="./{c["slug"]}.html">{e(c["name"])}</a></p>
+              <h1>{e(a["title"])}</h1>
+              <p class="lede">{e(a["summary"])}</p>
+              <p class="article-meta"><time datetime="{a["date"]}">{fmt_date(a["date"])}</time>{author}</p>
+            </div>
+          </header>
+{image}          <div class="article-body reveal">
+            {"".join(blocks)}
+          </div>
+        </article>
+{related_html}{default_cta()}"""
+    return layout(a["title"], a["summary"], "insights", body, f'article-{a["slug"]}')
 
 
 def odoo_mark():
@@ -413,6 +599,13 @@ SNIPPETS = {
     "delivery_steps": delivery_steps,
     "delivery_steps_long": lambda: delivery_steps(long=True),
     "insight_cards": insight_cards,
+    "latest_articles": latest_articles,
+    "home_insights": home_insights,
+    "site_email": lambda: SITE["email"],
+    "form_attrs": lambda: (
+        f'data-email="{e(SITE["email"])}" data-routes="{e(json.dumps(SITE["routes"]))}"'
+        + (f' data-endpoint="{e(SITE["form_endpoint"])}"' if SITE.get("form_endpoint") else "")
+    ),
     "odoo_gallery_section": odoo_gallery_section,
     "odoo_gallery_home": odoo_gallery_home,
     "odoo_timeline": odoo_timeline,
@@ -423,7 +616,7 @@ SNIPPETS = {
         f'<a class="button button-ghost" href="{e(DATA["odoo"]["partner_url"])}" rel="noopener">View our Odoo partner listing</a>'
         if DATA["odoo"].get("partner_url") else ""
     ),
-    "default_cta": lambda: DEFAULT_CTA,
+    "default_cta": default_cta,
     "arrow": lambda: ARROW,
 }
 
@@ -437,7 +630,7 @@ def solution_page(s):
         page_hero(
             f'<a href="./solutions.html">Solutions</a> &middot; Solution {s["number"]}',
             s["headline"], s["lede"],
-            actions(("./contact.html", "Request a Consultation"), *product_btn),
+            actions((contact_url(interest=s["name"]), "Request a Consultation"), *product_btn),
         ),
         f"""        <section class="page-band split-panel">
           <aside class="panel-dark reveal">
@@ -453,12 +646,13 @@ def solution_page(s):
         '        <section class="page-band">\n' + section_heading("Key capabilities", s["name"]) + "\n        </section>",
         info_cards(s["capabilities"]),
         odoo_note() if s.get("odoo") else "",
-        DEFAULT_CTA,
+        default_cta(contact_url(interest=s["name"])),
     ])
-    return layout(s["name"], s["summary"], "solutions", body)
+    return layout(s["name"], s["summary"], "solutions", body, s["slug"])
 
 
 def product_page(p):
+    demo = contact_url("demo", PRODUCT_INTEREST.get(p["slug"], "Enterprise Systems & ERP"), product=p["name"])
     caps = "".join(f"<li>{e(c)}</li>" for c in p["capabilities"])
     designed = (
         f"""            <p class="service-kicker">Designed for</p>
@@ -469,7 +663,7 @@ def product_page(p):
         page_hero(
             f'<a href="./products.html">Products</a> &middot; {e(p["label"])}',
             p["headline"], p["lede"],
-            actions(("./contact.html", "Request a Demo"), ("./products.html", "All products")),
+            actions((demo, "Request a Demo"), ("./products.html", "All products")),
             extra=f'<p class="product-name">{e(p["eyebrow"])} &middot; {e(p["name"])}</p>\n            ',
         ),
         f"""        <section class="page-band split-panel">
@@ -486,17 +680,18 @@ def product_page(p):
         odoo_note() if p["family"] == "erp" else "",
         cta(p["name"], f'See {p["name"]} in your operating context.',
             "Tell us about your organization, current systems and requirements and we will arrange a focused demonstration.",
-            ("./contact.html", "Request a Demo")),
+            (demo, "Request a Demo")),
     ])
-    return layout(p["name"], p["lede"], "products", body)
+    return layout(p["name"], p["lede"], "products", body, p["slug"])
 
 
 def service_page(s):
+    consult = contact_url(interest=SERVICE_INTEREST.get(s["slug"], "Enterprise Systems & ERP"))
     body = "\n".join([
         page_hero(
             f'<a href="./services.html">Services</a> &middot; Service {s["number"]}',
             s["headline"], s["lede"],
-            actions(("./contact.html", "Request a Consultation"), ("./services.html", "All services")),
+            actions((consult, "Request a Consultation"), ("./services.html", "All services")),
             extra=f'<p class="product-name">Hamerkop Services &middot; {e(s["name"])}</p>\n            ',
         ),
         f"""        <section class="page-band split-panel">
@@ -511,18 +706,19 @@ def service_page(s):
         </section>""",
         info_cards(s["scope"]),
         odoo_note() if s.get("odoo") else "",
-        DEFAULT_CTA,
+        default_cta(consult),
     ])
-    return layout(s["name"], s["summary"], "services", body)
+    return layout(s["name"], s["summary"], "services", body, s["slug"])
 
 
 def industry_page(i):
+    consult = contact_url(industry=i["name"])
     caps = "".join(f"<li>{e(c)}</li>" for c in i["capabilities"])
     body = "\n".join([
         page_hero(
             f'<a href="./industries.html">Industries</a> &middot; Industry {i["number"]}',
             i["headline"], i["lede"],
-            actions(("./contact.html", "Request a Consultation"), ("./industries.html", "All industries")),
+            actions((consult, "Request a Consultation"), ("./industries.html", "All industries")),
             extra=f'<p class="product-name">{e(i["name"])}</p>\n            ',
         ),
         f"""        <section class="page-band split-panel">
@@ -536,9 +732,9 @@ def industry_page(i):
         </section>""",
         '        <section class="page-band">\n' + section_heading("Operational focus", i["name"]) + "\n        </section>",
         info_cards(i["focus"]),
-        DEFAULT_CTA,
+        default_cta(consult),
     ])
-    return layout(i["name"], i["summary"], "industries", body)
+    return layout(i["name"], i["summary"], "industries", body, i["slug"])
 
 
 # --------------------------------------------------------------------------- one-off pages
@@ -560,7 +756,7 @@ def render_page(path):
         return SNIPPETS[key]()
 
     body = re.sub(r"\{\{(\w+)\}\}", sub, body)
-    return layout(meta["title"], meta["description"], meta.get("nav", ""), body)
+    return layout(meta["title"], meta["description"], meta.get("nav", ""), body, path.stem)
 
 
 def main():
@@ -575,6 +771,21 @@ def main():
         out[f'{s["slug"]}.html'] = service_page(s)
     for i in DATA["industries"]:
         out[f'{i["slug"]}.html'] = industry_page(i)
+    for c in DATA["insight_categories"]:
+        out[f'{c["slug"]}.html'] = category_page(c)
+    for a in ARTICLES:
+        out[f'article-{a["slug"]}.html'] = article_page(a)
+
+    # Search-engine files. The 404 page is left out of the sitemap.
+    pages = sorted(n for n in out if n != "404.html")
+    urls = "\n".join(
+        f"  <url><loc>{SITE['url']}{'' if n == 'index.html' else n}</loc></url>" for n in pages
+    )
+    (ROOT / "sitemap.xml").write_text(
+        f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n',
+        encoding="utf-8",
+    )
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE['url']}sitemap.xml\n", encoding="utf-8")
 
     for name, html in out.items():
         (ROOT / name).write_text(html, encoding="utf-8")
