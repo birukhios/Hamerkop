@@ -4,14 +4,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Collections, reconciliation, merchant systems, onboarding and financial-system integration." />
+    <meta name="description" content="When reconciliation takes days, the cause is usually upstream. How to design transaction flows that reconcile themselves." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hamerkop Systems" />
-    <meta property="og:title" content="Financial Technology | Hamerkop Systems" />
-    <meta property="og:description" content="Collections, reconciliation, merchant systems, onboarding and financial-system integration." />
-    <link rel="canonical" href="https://birukhios.github.io/Hamerkop/insights-fintech.html" />
-    <meta property="og:url" content="https://birukhios.github.io/Hamerkop/insights-fintech.html" />
-    <title>Financial Technology | Hamerkop Systems</title>
+    <meta property="og:title" content="Reconciliation is a design problem, not a month-end task | Hamerkop Systems" />
+    <meta property="og:description" content="When reconciliation takes days, the cause is usually upstream. How to design transaction flows that reconcile themselves." />
+    <link rel="canonical" href="https://birukhios.github.io/Hamerkop/article-reconciliation-is-a-design-problem.html" />
+    <meta property="og:url" content="https://birukhios.github.io/Hamerkop/article-reconciliation-is-a-design-problem.html" />
+    <title>Reconciliation is a design problem, not a month-end task | Hamerkop Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -106,60 +106,28 @@
       </header>
 
       <main id="main" tabindex="-1">
-<section class="hero page-hero">
-          <div class="hero-copy reveal">
-            <p class="eyebrow"><a href="./insights.html">Insights</a> &middot; Category</p>
-            <h1>Financial Technology</h1>
-            <p class="lede">Collections, reconciliation, merchant systems, onboarding and financial-system integration.</p>
-            
+<article class="article">
+          <header class="hero page-hero">
+            <div class="hero-copy reveal">
+              <p class="eyebrow"><a href="./insights.html">Insights</a> &middot; <a href="./insights-fintech.html">Financial Technology</a></p>
+              <h1>Reconciliation is a design problem, not a month-end task</h1>
+              <p class="lede">When reconciliation takes days, the cause is usually upstream. How to design transaction flows that reconcile themselves.</p>
+              <p class="article-meta"><time datetime="2026-09-22">22 September 2026</time> &middot; Hamerkop Systems</p>
+            </div>
+          </header>
+        <figure class="article-image reveal"><img src="./assets/fintech.jpg" alt="" /></figure>
+          <div class="article-body reveal">
+            <p>In many financial institutions and merchant environments, reconciliation is treated as a recurring effort: teams export records from several systems, line them up in spreadsheets and investigate the differences. When volumes grow, that effort grows with them. The underlying issue is rarely the reconciliation team. It is that the transaction flow was never designed to be reconciled.</p><h2>Start with a shared identifier</h2><p>A transaction should carry a reference that survives every step: initiation, processing, settlement and posting to the ledger. When each system generates its own identifier with no link to the others, matching depends on amounts and dates, which produces false matches and long exception lists.</p><h2>Know every source of truth</h2><p>List each system that records part of a transaction&#x27;s life, including payment channels, switches, core banking or MFI platforms, merchant systems and the ERP or general ledger. For each, define what it is authoritative for and when its data becomes available.</p><h2>Make matching rules explicit</h2><ul><li>Define what counts as a match: exact reference, amount and date tolerances, and one-to-many cases such as batched settlements.</li><li>Agree how fees, reversals and partial payments are treated.</li><li>Version the rules, so changes are deliberate and auditable.</li></ul><h2>Design the exception workflow</h2><p>Exceptions are inevitable. What matters is that each one is assigned, investigated, resolved and recorded in a controlled way rather than in personal inboxes. Ageing exceptions should be visible to management, because they often indicate a process problem upstream.</p><h2>Connect settlement to the ledger</h2><p>Settlement figures should flow into the financial records through a defined interface instead of manual journal entries. That keeps the general ledger aligned with operational reality and shortens the close.</p><blockquote class="pull-quote">Financial technology creates value when a transaction can move cleanly from initiation to record, reconciliation, settlement and reporting.</blockquote><h2>Measure what improves</h2><p>Useful indicators include the automatic match rate, the number and age of open exceptions, and the time taken to close a reconciliation period. As the flow is redesigned, these numbers show whether effort is moving from investigation to oversight.</p><h2>Where to begin</h2><p>Choose one high-volume flow, such as card or mobile collections, map it end to end and identify where identifiers are lost or data arrives late. Fixing one flow well usually reveals patterns that apply across the rest of the transaction environment.</p>
           </div>
-        </section>
-        <section class="page-band feature-grid">
-          <a class="feature-card article-card reveal" href="./article-reconciliation-is-a-design-problem.html">
-            <div class="service-visual"><img src="./assets/fintech.jpg" alt="" loading="lazy" /></div>
-            <p class="service-kicker">Financial Technology</p>
-            <h3>Reconciliation is a design problem, not a month-end task</h3>
-            <p>When reconciliation takes days, the cause is usually upstream. How to design transaction flows that reconcile themselves.</p>
-            <p class="article-meta"><time datetime="2026-09-22">22 September 2026</time></p>
-            <span class="card-link">Read article <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </section>
-        <section class="page-band">
-          <div class="section-heading reveal">
-            <p class="eyebrow">More topics</p>
-            <h2>Other Insights categories</h2>
+        </article>
+        <section class="cta">
+          <div class="cta-content reveal">
+            <p class="eyebrow">Start a conversation</p>
+            <h2>Start with the operation you need to improve.</h2>
           </div>
-          <div class="feature-grid">
-          <a class="feature-card insight-card reveal" href="./insights-e-invoicing-tax.html">
-            <p class="service-kicker">Insights</p>
-            <h3>Electronic Invoicing &amp; Tax Technology</h3>
-            <p>Electronic invoicing readiness, transaction workflows, system integration and operational implications.</p>
-            <span class="soon-tag">1 article</span>
-          </a>
-          <a class="feature-card insight-card reveal" href="./insights-erp-operations.html">
-            <p class="service-kicker">Insights</p>
-            <h3>ERP &amp; Enterprise Operations</h3>
-            <p>Process design, ERP selection, implementation, migration, adoption and long-term system operation.</p>
-            <span class="soon-tag">1 article</span>
-          </a>
-          <a class="feature-card insight-card reveal" href="./insights-integration-architecture.html">
-            <p class="service-kicker">Insights</p>
-            <h3>Integration &amp; Architecture</h3>
-            <p>APIs, interoperability, legacy modernization and the architecture behind connected institutional systems.</p>
-            <span class="soon-tag">1 article</span>
-          </a>
-          <a class="feature-card insight-card reveal" href="./insights-data-ai.html">
-            <p class="service-kicker">Insights</p>
-            <h3>Data &amp; AI</h3>
-            <p>Business intelligence, reporting, governance, document intelligence and practical institutional uses of AI.</p>
-            <span class="soon-tag">1 article</span>
-          </a>
-          <a class="feature-card insight-card reveal" href="./insights-digital-transformation.html">
-            <p class="service-kicker">Insights</p>
-            <h3>Digital Transformation</h3>
-            <p>The decisions that turn technology programs into systems that can be operated, supported and improved.</p>
-            <span class="soon-tag">1 article</span>
-          </a>
+          <div class="cta-side reveal">
+            <p>Whether the requirement is ERP, electronic invoicing, financial technology, identity, integration or data, the conversation begins with the current operation and the systems around it.</p>
+            <a class="button button-dark" href="./contact.html#consult-form">Request a Consultation</a>
           </div>
         </section>
       </main>

@@ -963,5 +963,306 @@
     }
   ],
   "articles_note": "Each article: {\"slug\", \"title\", \"category\" (an insight_categories slug), \"date\" (YYYY-MM-DD), \"author\", \"summary\", \"image\" (optional), \"body\": [\"paragraph\", {\"h2\": \"Heading\"}, {\"list\": [\"item\"]}, {\"quote\": \"text\"}]}. Newest first is not required; the build sorts by date.",
-  "articles": []
+  "articles": [
+    {
+      "slug": "e-invoicing-readiness-starts-with-the-transaction",
+      "title": "Electronic invoicing readiness starts with the transaction, not the invoice",
+      "category": "insights-e-invoicing-tax",
+      "date": "2026-09-08",
+      "author": "Hamerkop Systems",
+      "image": "./assets/invoice.jpg",
+      "summary": "Most electronic invoicing problems begin long before an invoice is issued. A practical view of what to prepare across systems, data and teams.",
+      "body": [
+        "When organizations prepare for electronic invoicing, the first instinct is often to look for an invoicing tool. That is understandable, but it puts the focus in the wrong place. An electronic invoice is the last step of a transaction that began somewhere else: in an ERP sales order, a point-of-sale terminal, a billing run or a service contract. If that originating data is incomplete or inconsistent, no invoicing layer can fix it on its own.",
+        "Readiness is therefore less about the invoice and more about the path a transaction takes through the organization.",
+        {
+          "h2": "1. Map every place a transaction is created"
+        },
+        "Start with an inventory of the systems that create sales or service transactions. Many institutions find more sources than they expected: a central ERP, branch POS systems, a separate billing platform for recurring services, and manual invoices issued from spreadsheets for exceptional cases.",
+        "For each source, record who owns it, how many transactions it produces, how it numbers documents and whether it can be integrated directly or needs an intermediate step.",
+        {
+          "h2": "2. Fix the master data before go-live"
+        },
+        "Electronic invoicing exposes weak master data quickly. Customer records, tax identification details, product and service codes, units of measure and tax treatments all need to be accurate and consistent across systems.",
+        {
+          "list": [
+            "Agree a single owner for customer and product master data.",
+            "Remove duplicates and inactive records that still appear in transactions.",
+            "Check that tax treatments are assigned consistently, not overridden manually at the point of sale.",
+            "Decide which system is the source of truth when records differ."
+          ]
+        },
+        {
+          "h2": "3. Design for status, not just submission"
+        },
+        "An invoice in an electronic process has a life cycle: created, validated, accepted, rejected, corrected, cancelled or credited. Teams need to see that status and act on it. The design question is not only how an invoice is sent, but how rejections are surfaced, who resolves them and how corrections are recorded so the audit trail stays complete.",
+        {
+          "h2": "4. Plan the exceptions explicitly"
+        },
+        "Credit notes, returns, partial deliveries, advance payments, cancelled transactions and offline sales at branches are where invoicing processes usually break. Each needs a defined path through the system and a clear owner. Listing these scenarios early prevents surprises during testing.",
+        {
+          "h2": "5. Separate duties and keep the record"
+        },
+        "Electronic invoicing changes who can do what. Creating, approving, correcting and reviewing invoice activity should sit with defined roles, and every important event should remain traceable. This protects the organization during audits and makes operational issues easier to investigate.",
+        {
+          "quote": "Electronic invoicing is most effective when it is part of the operation, not another system beside it."
+        },
+        {
+          "h2": "6. Test with real operating scenarios"
+        },
+        "Test plans should use the organization's actual transaction mix: high-volume days, branch operations, the exceptions listed above and integration failures. A short parallel period, where the new process runs alongside the existing one, gives teams confidence before the cut-over.",
+        {
+          "h2": "Where to begin"
+        },
+        "A useful first step is a short readiness review covering transaction sources, master data quality, exception scenarios and reporting needs. The result is a realistic picture of what must change in the existing systems, which is usually where most of the effort lies, and a sequence for introducing electronic invoicing without disrupting day-to-day operations."
+      ]
+    },
+    {
+      "slug": "recovering-a-stalled-erp-implementation",
+      "title": "Why ERP implementations stall, and how to recover one",
+      "category": "insights-erp-operations",
+      "date": "2026-09-15",
+      "author": "Hamerkop Systems",
+      "image": "./assets/erp.jpg",
+      "summary": "Stalled ERP programs rarely fail because of the software. The common causes, and a structured way to restore direction.",
+      "body": [
+        "Few organizations set out to run an ERP program that drags on for years. Yet many institutions live with a system that went partly live, a backlog of open issues and teams that have quietly returned to spreadsheets. The software is usually capable of doing the job. What went wrong tends to sit in how the implementation was scoped, owned and run.",
+        {
+          "h2": "The common causes"
+        },
+        {
+          "list": [
+            "Scope defined by modules rather than processes. Lists of modules say little about how work actually moves between departments, where approvals happen or which records are trusted.",
+            "Data migration left until the end. When migration starts late, poor-quality data arrives at go-live and users lose confidence in the system immediately.",
+            "Unclear business ownership. If the ERP is seen as an IT project, decisions about process and policy are delayed or made by default.",
+            "Customization used to avoid decisions. Every customization made to reproduce an old workaround adds cost, testing effort and future upgrade risk.",
+            "Training treated as an event. A few sessions before go-live are not enough for people to change how they work."
+          ]
+        },
+        {
+          "h2": "A structured recovery"
+        },
+        "Recovering a stalled implementation is less about starting again and more about restoring control. A practical sequence looks like this.",
+        {
+          "h2": "1. Stabilize what is live"
+        },
+        "Before redesigning anything, fix the issues that block daily operations. Users need to see that reported problems are being resolved; that rebuilds the credibility the rest of the recovery depends on.",
+        {
+          "h2": "2. Assess honestly"
+        },
+        "Review the configuration, customizations, data quality, open issues and how each department actually works today. The aim is a shared, factual picture: what works, what is being worked around and what was never finished.",
+        {
+          "h2": "3. Re-baseline around processes"
+        },
+        "Redefine the remaining scope as end-to-end processes, such as procure-to-pay, order-to-cash and record-to-report, with a named business owner for each. Decide which customizations to keep, simplify or retire.",
+        {
+          "h2": "4. Treat data as a workstream"
+        },
+        "Assign owners to master data, agree cleansing rules and run migration rehearsals. Reliable data is what turns a configured system into a trusted one.",
+        {
+          "h2": "5. Deliver in phases"
+        },
+        "Plan the remaining work in phases that each deliver visible operational value, with clear acceptance criteria. Smaller releases reduce risk and keep momentum.",
+        {
+          "quote": "The engagement should begin with the operating model rather than the software screen."
+        },
+        {
+          "h2": "Signs the recovery is working"
+        },
+        "Month-end close becomes more predictable, management reports are produced from the system rather than rebuilt in spreadsheets, open issues trend down and departments stop maintaining parallel records. Those are the measures that matter, more than the number of modules marked as live."
+      ]
+    },
+    {
+      "slug": "reconciliation-is-a-design-problem",
+      "title": "Reconciliation is a design problem, not a month-end task",
+      "category": "insights-fintech",
+      "date": "2026-09-22",
+      "author": "Hamerkop Systems",
+      "image": "./assets/fintech.jpg",
+      "summary": "When reconciliation takes days, the cause is usually upstream. How to design transaction flows that reconcile themselves.",
+      "body": [
+        "In many financial institutions and merchant environments, reconciliation is treated as a recurring effort: teams export records from several systems, line them up in spreadsheets and investigate the differences. When volumes grow, that effort grows with them. The underlying issue is rarely the reconciliation team. It is that the transaction flow was never designed to be reconciled.",
+        {
+          "h2": "Start with a shared identifier"
+        },
+        "A transaction should carry a reference that survives every step: initiation, processing, settlement and posting to the ledger. When each system generates its own identifier with no link to the others, matching depends on amounts and dates, which produces false matches and long exception lists.",
+        {
+          "h2": "Know every source of truth"
+        },
+        "List each system that records part of a transaction's life, including payment channels, switches, core banking or MFI platforms, merchant systems and the ERP or general ledger. For each, define what it is authoritative for and when its data becomes available.",
+        {
+          "h2": "Make matching rules explicit"
+        },
+        {
+          "list": [
+            "Define what counts as a match: exact reference, amount and date tolerances, and one-to-many cases such as batched settlements.",
+            "Agree how fees, reversals and partial payments are treated.",
+            "Version the rules, so changes are deliberate and auditable."
+          ]
+        },
+        {
+          "h2": "Design the exception workflow"
+        },
+        "Exceptions are inevitable. What matters is that each one is assigned, investigated, resolved and recorded in a controlled way rather than in personal inboxes. Ageing exceptions should be visible to management, because they often indicate a process problem upstream.",
+        {
+          "h2": "Connect settlement to the ledger"
+        },
+        "Settlement figures should flow into the financial records through a defined interface instead of manual journal entries. That keeps the general ledger aligned with operational reality and shortens the close.",
+        {
+          "quote": "Financial technology creates value when a transaction can move cleanly from initiation to record, reconciliation, settlement and reporting."
+        },
+        {
+          "h2": "Measure what improves"
+        },
+        "Useful indicators include the automatic match rate, the number and age of open exceptions, and the time taken to close a reconciliation period. As the flow is redesigned, these numbers show whether effort is moving from investigation to oversight.",
+        {
+          "h2": "Where to begin"
+        },
+        "Choose one high-volume flow, such as card or mobile collections, map it end to end and identify where identifiers are lost or data arrives late. Fixing one flow well usually reveals patterns that apply across the rest of the transaction environment."
+      ]
+    },
+    {
+      "slug": "modernizing-legacy-systems-without-replacing-everything",
+      "title": "Modernizing legacy systems without replacing everything at once",
+      "category": "insights-integration-architecture",
+      "date": "2026-09-29",
+      "author": "Hamerkop Systems",
+      "image": "./assets/data.jpg",
+      "summary": "Large replacement programs carry large risks. A step-by-step approach that uses integration to modernize around existing systems.",
+      "body": [
+        "Institutions often depend on systems that are old, hard to change and still essential. Replacing them in a single program is tempting, but it concentrates risk: long timelines, complex data migration and a high-stakes cut-over. An alternative is to modernize progressively, using integration to connect new capabilities to existing systems and retiring old components when it is safe to do so.",
+        {
+          "h2": "1. Build an inventory of systems and interfaces"
+        },
+        "Document each system, what it is responsible for, who owns it and how it exchanges information today. Pay particular attention to informal interfaces: file transfers, scheduled scripts and manual re-keying between teams. These are often the most fragile links.",
+        {
+          "h2": "2. Put a controlled layer between systems"
+        },
+        "Instead of connecting every application directly to every other, introduce defined interfaces, such as APIs or a managed integration layer, through which systems exchange information. This separates consumers from the internal details of legacy platforms, so those platforms can later be changed or replaced without rewriting every connection.",
+        {
+          "h2": "3. Prioritize by value and risk"
+        },
+        {
+          "list": [
+            "Which processes suffer most from the current limitations?",
+            "Which interfaces fail most often or need the most manual effort?",
+            "Where would a new capability, such as a digital channel or a reporting layer, deliver value quickly?"
+          ]
+        },
+        "Start where the answer to these questions overlaps, and deliver improvements in small, testable steps.",
+        {
+          "h2": "4. Make integration observable"
+        },
+        "Integrations should not be invisible until they break. Monitoring of message flows, error rates and processing delays gives operations teams early warning and shortens investigations. Agreed service levels make expectations clear between teams and vendors.",
+        {
+          "h2": "5. Document for long-term ownership"
+        },
+        "Runbooks, interface specifications and support procedures turn an integration from a project deliverable into something the organization can operate. Without them, knowledge stays with individuals and every change becomes risky.",
+        {
+          "quote": "Institutional technology rarely lives in one system."
+        },
+        {
+          "h2": "6. Retire deliberately"
+        },
+        "As functions move to new platforms behind the integration layer, legacy components can be switched off one at a time, with data archived according to retention requirements. Each retirement reduces cost and complexity without a single large cut-over.",
+        {
+          "h2": "The outcome"
+        },
+        "Progressive modernization lets institutions improve services while keeping operations running. The integration layer built along the way remains valuable: it becomes the foundation for connecting future systems, partners and government services."
+      ]
+    },
+    {
+      "slug": "practical-ai-starts-with-governed-data",
+      "title": "Practical AI for institutions starts with governed data",
+      "category": "insights-data-ai",
+      "date": "2026-10-01",
+      "author": "Hamerkop Systems",
+      "image": "./assets/expertise.jpg",
+      "summary": "AI projects succeed when the information beneath them is reliable. How to build the data foundation and choose use cases that deliver.",
+      "body": [
+        "Interest in AI is high across institutions, and with good reason: there are real opportunities to reduce manual work and improve decisions. But most AI initiatives that disappoint do so for the same reason. The data they depend on is scattered across systems, inconsistently defined and owned by no one in particular. Before choosing models or tools, it is worth looking at the foundation.",
+        {
+          "h2": "Agree what the numbers mean"
+        },
+        "If two departments calculate revenue, headcount or outstanding balances differently, any dashboard or model built on top will inherit the disagreement. A short list of agreed definitions for key measures, with a named owner for each, is one of the most valuable data investments an institution can make.",
+        {
+          "h2": "Consolidate before you automate"
+        },
+        "A structured reporting environment, such as a data warehouse fed by the operational systems, brings information together in a consistent form. It allows leadership reporting and business intelligence to draw from the same source, and it gives analytics and AI work a reliable starting point.",
+        {
+          "h2": "Get reporting right first"
+        },
+        "Clear, consistent executive and operational reporting often delivers more immediate value than advanced analytics. It also exposes data quality issues early, while they are still inexpensive to fix.",
+        {
+          "h2": "Choose practical use cases"
+        },
+        {
+          "list": [
+            "Document intelligence: extracting and organizing information from invoices, forms, contracts and correspondence.",
+            "Forecasting where historical data is reliable, such as demand, collections or cash flow.",
+            "Anomaly detection on transactions or operational data to highlight items for review.",
+            "Assisted reporting that helps teams find and summarize information faster."
+          ]
+        },
+        "Good candidates have a clear owner, measurable benefit, sufficient historical data and a human review step where decisions matter.",
+        {
+          "h2": "Govern access and use"
+        },
+        "Data governance clarifies who may access which information, for what purpose and under which controls. This matters even more when AI tools are involved, because sensitive information can otherwise flow into places it should not.",
+        {
+          "quote": "Turn institutional data into information people can act on."
+        },
+        {
+          "h2": "Start small and measure"
+        },
+        "A focused pilot with defined success criteria shows whether a use case is worth scaling. Measuring time saved, error rates or decision quality keeps the work grounded in operational value rather than technology for its own sake."
+      ]
+    },
+    {
+      "slug": "what-happens-after-go-live",
+      "title": "From technology program to working system: what happens after go-live",
+      "category": "insights-digital-transformation",
+      "date": "2026-10-04",
+      "author": "Hamerkop Systems",
+      "image": "./assets/team.jpg",
+      "summary": "Go-live is the start of operation, not the end of the program. How to plan support, ownership and improvement so systems keep delivering value.",
+      "body": [
+        "Technology programs are usually planned around a go-live date. Budgets, teams and attention are focused on reaching it. Yet the period after go-live is when an institution discovers whether a new system genuinely supports its operation. Planning for that period is one of the clearest differences between programs that deliver lasting value and those that slowly fall out of use.",
+        {
+          "h2": "Plan the first weeks as a phase of their own"
+        },
+        "The first weeks after go-live, often called hypercare, need dedicated support: experts available to users, fast triage of issues, daily reviews of open items and clear communication about what has been fixed. Users who see problems resolved quickly build confidence in the system.",
+        {
+          "h2": "Define ownership before the project team leaves"
+        },
+        {
+          "list": [
+            "A business owner for each major process, responsible for how it works and how it changes.",
+            "A system owner responsible for configuration, access and releases.",
+            "A support model that defines how users raise issues, how they are prioritized and who resolves them.",
+            "Documentation and runbooks that let the organization operate the system without relying on individuals."
+          ]
+        },
+        {
+          "h2": "Watch adoption, not just availability"
+        },
+        "A system can be fully available and still poorly used. Signs to watch include parallel spreadsheets, manual workarounds, delayed data entry and reports rebuilt outside the system. These indicate where training, process design or configuration need attention.",
+        {
+          "h2": "Review system health regularly"
+        },
+        "Periodic health reviews look at performance, data quality, open issues, security and access, integrations and upcoming changes such as regulatory updates or new business requirements. They turn support from reactive firefighting into planned maintenance.",
+        {
+          "h2": "Improve in planned cycles"
+        },
+        "Requests for change will continue after go-live. Grouping them into planned release cycles, with testing and communication, keeps the system stable while allowing it to evolve with the institution.",
+        {
+          "quote": "Discover. Design. Implement. Stabilize and improve."
+        },
+        {
+          "h2": "The measure of success"
+        },
+        "The real test of a technology program is whether, a year after go-live, the institution relies on the system for its daily work, trusts the information it produces and can change it with confidence. That outcome is planned from the start, not left to chance."
+      ]
+    }
+  ]
 }
