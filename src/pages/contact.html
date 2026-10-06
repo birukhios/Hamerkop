@@ -1,0 +1,126 @@
+---
+hero_image: 1685625971503-ef1f82128939
+title: Request a Consultation
+description: Tell Hamerkop what is happening inside the operation. Requests are routed to the team most relevant to the requirement.
+nav: contact
+---
+        <section class="hero page-hero">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Request a consultation</p>
+            <h1>Tell us what is happening inside the operation.</h1>
+            <p class="lede">
+              A consultation begins with the current challenge, the systems involved and the outcome
+              the organization is trying to improve. From there, the conversation can focus on the
+              relevant platform, integration and implementation scope.
+            </p>
+          </div>
+        </section>
+
+        <section class="page-band split-panel consult">
+          <aside class="panel-dark reveal">
+            <p class="eyebrow">Contact</p>
+            <h2>Start with the problem you need to solve.</h2>
+            <p class="service-kicker">Useful project context</p>
+            <ul>
+              <li>Organization and sector</li>
+              <li>Operational challenge</li>
+              <li>Existing systems or technology</li>
+              <li>Regulatory or reporting requirements</li>
+              <li>Number of entities, locations or users where relevant</li>
+              <li>Important integration requirements</li>
+              <li>Expected project timeline</li>
+            </ul>
+            <p class="service-kicker">Response</p>
+            <p>The request is routed to the Hamerkop team most relevant to the requirement: ERP, electronic invoicing, integration, financial technology, identity, data or managed services.</p>
+            <div class="contact-list">
+              <a href="mailto:{{site_email}}">{{site_email}}</a>
+              <span>Addis Ababa, Ethiopia</span>
+            </div>
+          </aside>
+
+          <div class="detail-card form-card reveal">
+            <h2 id="form-title">Request a Consultation</h2>
+            <p>Fields marked with * are required.</p>
+            <form class="consult-form" id="consult-form" novalidate {{form_attrs}}>
+              <input type="hidden" name="product" />
+              <p class="form-context" id="form-context" hidden></p>
+              <label class="form-field">
+                <span>Request type</span>
+                <select name="type">
+                  <option value="consultation">Consultation</option>
+                  <option value="demo">Product demo</option>
+                </select>
+              </label>
+              <div class="form-grid">
+                <label class="form-field">
+                  <span>Full Name *</span>
+                  <input type="text" name="name" autocomplete="name" required aria-describedby="name-error" />
+                  <small class="field-error" id="name-error"></small>
+                </label>
+                <label class="form-field">
+                  <span>Work Email *</span>
+                  <input type="email" name="email" autocomplete="email" required aria-describedby="email-error" />
+                  <small class="field-error" id="email-error"></small>
+                </label>
+                <label class="form-field">
+                  <span>Organization</span>
+                  <input type="text" name="organization" autocomplete="organization" />
+                </label>
+                <label class="form-field">
+                  <span>Role / Position</span>
+                  <input type="text" name="role" autocomplete="organization-title" />
+                </label>
+                <label class="form-field">
+                  <span>Phone Number</span>
+                  <input type="tel" name="phone" autocomplete="tel" aria-describedby="phone-error" />
+                  <small class="field-error" id="phone-error"></small>
+                </label>
+                <label class="form-field">
+                  <span>Industry</span>
+                  <select name="industry">
+                    <option value="">Select…</option>
+                    <option>Manufacturing</option>
+                    <option>Retail &amp; Distribution</option>
+                    <option>Financial Services</option>
+                    <option>Government &amp; Public Sector</option>
+                    <option>Healthcare</option>
+                    <option>Insurance</option>
+                    <option>Education</option>
+                    <option>NGOs &amp; Development</option>
+                    <option>Logistics &amp; Transport</option>
+                    <option>Other</option>
+                  </select>
+                </label>
+              </div>
+              <label class="form-field">
+                <span>Area of Interest</span>
+                <select name="interest">
+                  <option value="">Select…</option>
+                  <option>Enterprise Systems &amp; ERP</option>
+                  <option>Odoo implementation</option>
+                  <option>Electronic Invoicing</option>
+                  <option>Financial Technology</option>
+                  <option>Identity &amp; Trust</option>
+                  <option>Enterprise Integration</option>
+                  <option>Data, Analytics &amp; AI</option>
+                  <option>Technology Consulting</option>
+                  <option>Managed Services</option>
+                </select>
+              </label>
+              <label class="form-field">
+                <span>Project / Requirement Summary *</span>
+                <textarea name="message" rows="5" required aria-describedby="message-error"></textarea>
+                <small class="field-error" id="message-error"></small>
+              </label>
+              <div class="form-actions">
+                <button class="button button-dark" type="submit">Send request</button>
+                <p class="form-note" id="consult-status" role="status" aria-live="polite"></p>
+              </div>
+            </form>
+            <div class="form-success" id="consult-success" hidden tabindex="-1">
+              <p class="service-kicker">Request received</p>
+              <h3>Thank you. Your request is on its way.</h3>
+              <p id="consult-success-text">The Hamerkop team will reply to the email address you provided.</p>
+            </div>
+          </div>
+        </section>
