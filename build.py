@@ -88,7 +88,7 @@ DESIGNS = [
     {
         "key": "noir", "name": "Noir", "ref_name": "Hedvig", "ref": "https://hedvig.framer.website/",
         "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />',
-        "type": "Figtree", "toggle": False, "image_heroes": True,
+        "type": "Figtree", "toggle": True, "default_theme": "dark", "image_heroes": True,
         "swatches": ["#0a0a0a", "#141414", "#fafafa", "#ea580c", "#71717a"],
         "summary": "Cinematic on brand ink: zooming full-bleed hero, scroll-scrubbed statement, portrait cards, full-screen cards that stack as you scroll, and a before/after comparison.",
     },
@@ -107,7 +107,9 @@ DESIGNS = [
         "summary": "Confident and heavy: sticky dark hero with character-blur text, two-tone headlines, bento grid with counters, alternating service rows, step cards and a capabilities marquee.",
     },
 ]
-ACTIVE = None  # the direction being rendered; None means the normal site build
+ACTIVE = None  # the direction being rendered
+PREVIEW = False  # True only for the side-by-side comparison builds (noindex + preview label)
+SITE_DESIGN = "noir"  # the chosen design for the live site
 
 
 # Area of Interest values on the contact form (must match its <option> text).
@@ -262,7 +264,7 @@ def footer():
 
 
 def layout(title, description, nav, body, slug):
-    full_title = "Hamerkop Systems — Enterprise Technology Solutions" if nav == "home" else f"{title} | Hamerkop Systems"
+    full_title = "Hamerkop Systems | Enterprise Technology Solutions" if nav == "home" else f"{title} | Hamerkop Systems"
     url = SITE["url"] + ("" if slug == "index" else f"{slug}.html")
     # The 404 page is served at whatever path was requested, so pin its relative links to the site root.
     head_extra = (
@@ -271,17 +273,19 @@ def layout(title, description, nav, body, slug):
     )
     design = ACTIVE or DESIGNS[0]
     fonts = design["fonts"]
+    default_theme = design.get("default_theme", "")
     theme_script = (
-        '<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>'
+        '<script>try{var t=localStorage.getItem("theme")' + (f'||"{default_theme}"' if default_theme else "")
+        + ';if(t)document.documentElement.dataset.theme=t}catch(e){}</script>'
         if design["toggle"] else ""
     )
     design_css = ""
     badge = ""
-    if ACTIVE:
+    if ACTIVE and ACTIVE["key"] != "editorial":
+        version = hashlib.sha1((SRC / "designs" / f'{ACTIVE["key"]}.css').read_bytes()).hexdigest()[:8]
+        design_css = f'\n    <link rel="stylesheet" href="./design.css?v={version}" />'
+    if ACTIVE and PREVIEW:
         head_extra = '<meta name="robots" content="noindex" />'
-        if ACTIVE["key"] != "editorial":
-            version = hashlib.sha1((SRC / "designs" / f'{ACTIVE["key"]}.css').read_bytes()).hexdigest()[:8]
-            design_css = f'\n    <link rel="stylesheet" href="./design.css?v={version}" />'
         badge = (
             f'\n    <div class="design-badge"><a href="../index.html"><strong>{ACTIVE["name"]}</strong> <span>Compare designs &rarr;</span></a>'
             f'<button class="design-badge-close" type="button" aria-label="Hide design preview label">&times;</button></div>'
@@ -1119,7 +1123,7 @@ def noir_timeline():
 
 def noir_industry_mosaic():
     tiles = "\n".join(
-        f"""            <a class="nx-tile nx-tile-{n}" href="./{x["slug"]}.html" data-tilt="5">
+        f"""            <a class="nx-tile nx-tile-{n}" href="./{x["slug"]}.html">
               <img src="{img(x["image"], 1200)}" alt="" loading="lazy" />
               <span class="nx-tile-body">
                 <small>Industry {x["number"]}</small>
@@ -1362,7 +1366,8 @@ def render_all():
 
 def build_designs(target):
     """Render every page once per design direction, plus a comparison page."""
-    global ACTIVE
+    global ACTIVE, PREVIEW
+    PREVIEW = True
     target = (ROOT / target).resolve()
     if target.exists():
         shutil.rmtree(target)
@@ -1529,6 +1534,10 @@ def main():
     if len(sys.argv) == 3 and sys.argv[1] == "--designs":
         build_designs(sys.argv[2])
         return
+    # The live site is built in the chosen design.
+    global ACTIVE
+    ACTIVE = next(d for d in DESIGNS if d["key"] == SITE_DESIGN)
+    shutil.copy(SRC / "designs" / f"{SITE_DESIGN}.css", ROOT / "design.css")
     out = render_all()
 
     # Search-engine files. The 404 page is left out of the sitemap.

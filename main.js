@@ -237,7 +237,7 @@ if (themeToggle) {
   const sync = () => {
     const dark = root.dataset.theme === "dark";
     themeToggle.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#15120d" : "#f5efe4");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#0a0a0a" : "#fafafa");
   };
   sync();
   themeToggle.addEventListener("click", () => {
@@ -599,45 +599,6 @@ if (!reduceMotion) {
       zone.style.setProperty("--py", 0);
     });
   });
-
-  // Cards tilt towards the pointer and carry a soft spotlight.
-  const tiltables = [...document.querySelectorAll("[data-tilt]")];
-  if (document.documentElement.dataset.design === "noir") {
-    tiltables.push(...document.querySelectorAll(".feature-card, .detail-card, .compare-card, .journal-card"));
-  }
-  if (finePointer) {
-    tiltables.forEach((card) => {
-      const strength = Number(card.dataset.tilt || 0);
-      card.addEventListener("pointermove", (event) => {
-        const r = card.getBoundingClientRect();
-        const x = (event.clientX - r.left) / r.width;
-        const y = (event.clientY - r.top) / r.height;
-        card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
-        card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
-        if (strength) {
-          card.style.transform = `perspective(900px) rotateX(${((0.5 - y) * strength).toFixed(2)}deg) rotateY(${((x - 0.5) * strength).toFixed(2)}deg)`;
-        }
-      });
-      card.addEventListener("pointerleave", () => {
-        card.style.transform = "";
-      });
-    });
-  }
-
-  // Buttons lean towards the pointer.
-  if (finePointer) {
-    document.querySelectorAll("[data-magnetic]").forEach((el) => {
-      el.addEventListener("pointermove", (event) => {
-        const r = el.getBoundingClientRect();
-        const dx = event.clientX - (r.left + r.width / 2);
-        const dy = event.clientY - (r.top + r.height / 2);
-        el.style.transform = `translate(${(dx * 0.22).toFixed(1)}px, ${(dy * 0.32).toFixed(1)}px)`;
-      });
-      el.addEventListener("pointerleave", () => {
-        el.style.transform = "";
-      });
-    });
-  }
 
   // Images uncover with a curtain wipe as they enter the screen.
   document.querySelectorAll("[data-clip-reveal]").forEach((el) => onVisible(el, () => el.classList.add("is-in"), 0.25));
