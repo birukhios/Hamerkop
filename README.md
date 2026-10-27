@@ -8,7 +8,8 @@ Static site served by GitHub Pages from the root of `main`. Pages are generated 
 | --- | --- |
 | Solutions, products, services, industries, Insights categories and articles, Odoo milestone, site settings | `src/content.json` |
 | One-off pages (home, hubs, company, contact, legal, 404) | `src/pages/*.html` |
-| Styles / behaviour | `styles.css`, `main.js` |
+| Page overrides for the live design | `src/designs/noir-*.html` |
+| Styles / behaviour | `styles.css`, `src/designs/noir.css`, `main.js` |
 
 Then run:
 
@@ -16,7 +17,9 @@ Then run:
 python3 build.py
 ```
 
-This regenerates every `*.html` page, `sitemap.xml` and `robots.txt` in the repo root. Commit the sources and the generated files together. Python 3 is the only requirement.
+This regenerates every `*.html` page, `sitemap.xml` and `robots.txt` in the repo root, and copies `src/designs/noir.css` to `design.css`. Commit the sources and the generated files together. Python 3 is the only requirement.
+
+Generated files — never edit these by hand, the next build overwrites them: every `*.html` in the repo root, `design.css`, `sitemap.xml`, `robots.txt`.
 
 ## Common tasks
 
@@ -27,9 +30,13 @@ This regenerates every `*.html` page, `sitemap.xml` and `robots.txt` in the repo
 
 ## Design system
 
-Defined at the top of `styles.css` as CSS custom properties, with a dark theme under `:root[data-theme="dark"]`.
+The site runs one design direction, **Noir** — cinematic on brand ink, with full-bleed image
+heroes, scroll-revealed statements and stacking panels. Base tokens are declared as CSS custom
+properties at the top of `styles.css`; `src/designs/noir.css` layers the direction on top and is
+the file to edit for anything visual. The `DESIGN` block in `build.py` holds its fonts and
+behaviour flags.
 
-- **Colour:** cream canvas, paper cards, warm ink, espresso bands, one orange accent (`--accent`).
-- **Type:** Clash Grotesk for display, General Sans for text (both loaded from Fontshare).
-- **Shape:** 24px cards, 32px feature panels, pill buttons. Every `.button` gets its round arrow "puck" from CSS; variants are `button-dark` (accent), `button-ink`, `button-ghost` and `button-on-dark`.
-- **Theme:** the moon/sun toggle stores the visitor's choice in their browser (`localStorage`); the default is light.
+- **Colour:** near-black canvas (`#0a0a0a`), raised `#141414` cards, near-white ink, one orange accent (`--accent`).
+- **Type:** Figtree for display and text, loaded from Google Fonts.
+- **Shape:** 20px cards, 16px panels, pill buttons. Every `.button` gets its round arrow "puck" from CSS; variants are `button-dark` (accent), `button-ink`, `button-ghost` and `button-on-dark`.
+- **Theme:** the moon/sun toggle stores the visitor's choice in `localStorage`; the default is dark.

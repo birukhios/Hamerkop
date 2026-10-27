@@ -13,7 +13,6 @@ import hashlib
 import json
 import re
 import shutil
-import sys
 from html import escape
 from urllib.parse import urlencode
 from pathlib import Path
@@ -71,45 +70,19 @@ THEME_ICONS = (
     '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
 )
 
-# --------------------------------------------------------------------------- design directions
-# `python3 build.py --designs <folder>` renders the whole site once per direction for comparison.
+# --------------------------------------------------------------------------- design
+# The live site is rendered in the "noir" direction: cinematic on brand ink, with a
+# zooming full-bleed hero, scroll-scrubbed statement, portrait cards and stacking panels.
+# Its stylesheet is src/designs/noir.css, copied to design.css on every build; page-level
+# overrides live in src/designs/noir-*.html.
 
-FONTSHARE = '<link rel="preconnect" href="https://api.fontshare.com" />\n    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />\n    '
 GOOGLE = '<link rel="preconnect" href="https://fonts.googleapis.com" />\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n    '
 
-DESIGNS = [
-    {
-        "key": "editorial", "name": "Editorial", "ref_name": "Wayfare", "ref": "https://touroperator.framer.website/",
-        "fonts": FONTSHARE + '<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&amp;f[]=general-sans@400,500,600&amp;display=swap" rel="stylesheet" />',
-        "type": "Clash Grotesk + General Sans", "toggle": True,
-        "swatches": ["#fafafa", "#ffffff", "#0a0a0a", "#ea580c", "#71717a"],
-        "summary": "Editorial and photographic: full-bleed hero with blur-in headline, scroll-revealed statement, spec sheet with counters, hover-swap product list, industries scroller and two-row marquee.",
-    },
-    {
-        "key": "noir", "name": "Noir", "ref_name": "Hedvig", "ref": "https://hedvig.framer.website/",
-        "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />',
-        "type": "Figtree", "toggle": True, "default_theme": "dark", "image_heroes": True,
-        "swatches": ["#0a0a0a", "#141414", "#fafafa", "#ea580c", "#71717a"],
-        "summary": "Cinematic on brand ink: zooming full-bleed hero, scroll-scrubbed statement, portrait cards, full-screen cards that stack as you scroll, and a before/after comparison.",
-    },
-    {
-        "key": "serene", "name": "Serene", "ref_name": "Solva", "ref": "https://solva-template.framer.website/",
-        "fonts": FONTSHARE + GOOGLE + '<link href="https://api.fontshare.com/v2/css?f[]=sentient@300,400&amp;display=swap" rel="stylesheet" />\n    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&amp;display=swap" rel="stylesheet" />',
-        "type": "Sentient + Onest", "toggle": False,
-        "swatches": ["#fafafa", "#ffffff", "#0a0a0a", "#ea580c", "#a1a1aa"],
-        "summary": "Calm and considered: light serif headlines that blur in, interface cards floating over photography, logo marquee, alternating feature rows and a tabbed product section.",
-    },
-    {
-        "key": "bold", "name": "Bold", "ref_name": "NoveQ", "ref": "https://noveq.framer.website/",
-        "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />',
-        "type": "Plus Jakarta Sans + Inter", "toggle": False,
-        "swatches": ["#f4f4f5", "#ffffff", "#0a0a0a", "#ea580c", "#a1a1aa"],
-        "summary": "Confident and heavy: sticky dark hero with character-blur text, two-tone headlines, bento grid with counters, alternating service rows, step cards and a capabilities marquee.",
-    },
-]
-ACTIVE = None  # the direction being rendered
-PREVIEW = False  # True only for the side-by-side comparison builds (noindex + preview label)
-SITE_DESIGN = "noir"  # the chosen design for the live site
+DESIGN = {
+    "key": "noir",
+    "fonts": GOOGLE + '<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />',
+    "toggle": True, "default_theme": "dark", "image_heroes": True,
+}
 
 
 # Area of Interest values on the contact form (must match its <option> text).
@@ -175,10 +148,7 @@ def header(active, slug):
             </div>
           </div>""")
     links = "\n".join(items)
-    toggle = (
-        f'<button class="theme-toggle" type="button" aria-label="Switch to dark theme">{THEME_ICONS}</button>'
-        if not ACTIVE or ACTIVE["toggle"] else ""
-    )
+    toggle = f'<button class="theme-toggle" type="button" aria-label="Switch to dark theme">{THEME_ICONS}</button>'
     return f"""      <header class="topbar">
         <div class="nav-shell">
           <a class="brand" href="./index.html" aria-label="Hamerkop System S.C. home">
@@ -271,28 +241,17 @@ def layout(title, description, nav, body, slug):
         f'<base href="{SITE["url"]}" />\n    <meta name="robots" content="noindex" />'
         if slug == "404" else f'<link rel="canonical" href="{url}" />\n    <meta property="og:url" content="{url}" />'
     )
-    design = ACTIVE or DESIGNS[0]
-    fonts = design["fonts"]
-    default_theme = design.get("default_theme", "")
+    fonts = DESIGN["fonts"]
+    default_theme = DESIGN["default_theme"]
     theme_script = (
-        '<script>try{var t=localStorage.getItem("theme")' + (f'||"{default_theme}"' if default_theme else "")
+        '<script>try{var t=localStorage.getItem("theme")' + f'||"{default_theme}"'
         + ';if(t)document.documentElement.dataset.theme=t}catch(e){}</script>'
-        if design["toggle"] else ""
     )
-    design_css = ""
-    badge = ""
-    if ACTIVE and ACTIVE["key"] != "editorial":
-        version = hashlib.sha1((SRC / "designs" / f'{ACTIVE["key"]}.css').read_bytes()).hexdigest()[:8]
-        design_css = f'\n    <link rel="stylesheet" href="./design.css?v={version}" />'
-    if ACTIVE and PREVIEW:
-        head_extra = '<meta name="robots" content="noindex" />'
-        badge = (
-            f'\n    <div class="design-badge"><a href="../index.html"><strong>{ACTIVE["name"]}</strong> <span>Compare designs &rarr;</span></a>'
-            f'<button class="design-badge-close" type="button" aria-label="Hide design preview label">&times;</button></div>'
-        )
+    version = hashlib.sha1((SRC / "designs" / f'{DESIGN["key"]}.css').read_bytes()).hexdigest()[:8]
+    design_css = f'\n    <link rel="stylesheet" href="./design.css?v={version}" />'
     return optimise_images(f"""<!doctype html>
 <!-- Generated by build.py from src/. Edit the source files, then run: python3 build.py -->
-<html lang="en"{f' data-design="{ACTIVE["key"]}"' if ACTIVE else ""}>
+<html lang="en" data-design="{DESIGN["key"]}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -321,7 +280,7 @@ def layout(title, description, nav, body, slug):
 {body.strip()}
       </main>
 {footer()}
-    </div>{badge}
+    </div>
   </body>
 </html>
 """)
@@ -369,7 +328,7 @@ def optimise_images(html):
 # --------------------------------------------------------------------------- shared blocks
 
 def page_hero(eyebrow, h1, lede, actions="", extra="", image=None, art=False):
-    if image and ACTIVE and ACTIVE.get("image_heroes"):
+    if image:
         return f"""        <section class="hero page-hero has-image{" is-art" if art else ""}" data-pointer-parallax>
           <img class="page-hero-bg" src="{img(image, 2400)}" alt="" />
           <div class="hero-copy" data-scroll-out>
@@ -543,10 +502,8 @@ def read_minutes(a):
 
 
 def article_image(a):
-    """Abstract art in image-hero directions (Noir), the article photo elsewhere."""
-    if ACTIVE and ACTIVE.get("image_heroes") and a.get("art"):
-        return a["art"]
-    return a.get("image")
+    """Abstract art where an article supplies it, otherwise the article photo."""
+    return a.get("art") or a.get("image")
 
 
 def article_card(a):
@@ -633,11 +590,9 @@ def article_page(a):
         elif "quote" in block:
             blocks.append(f'<blockquote class="pull-quote">{e(block["quote"])}</blockquote>')
     author = f' &middot; {e(a["author"])}' if a.get("author") else ""
-    image = (
-        f'        <figure class="article-image reveal"><img src="{img(a["image"], 1800)}" alt="" /></figure>\n'
-        if a.get("image") and not (ACTIVE and ACTIVE.get("image_heroes")) else ""
-    )
-    art_hero = ACTIVE and ACTIVE.get("image_heroes") and a.get("art")
+    # The hero already carries the artwork in this design, so the inline figure stays out.
+    image = ""
+    art_hero = a.get("art")
     related = [x for x in ARTICLES if x["category"] == a["category"] and x is not a][:3]
     related_html = (
         '        <section class="page-band">\n' + section_heading("Related", f'More on {c["name"]}')
@@ -920,34 +875,6 @@ TAGS = {
 }
 
 
-def bold_services():
-    rows = []
-    for n, sol in enumerate(DATA["solutions"]):
-        bullets = "".join(f"<li>{e(t)}</li>" for t, _ in sol["capabilities"][:5])
-        rows.append(f"""          <div class="bold-service{" is-flipped" if n % 2 else ""}">
-            <article class="bold-service-card reveal">
-              <span class="bold-tag">{e(TAGS[sol["slug"]])}</span>
-              <h3>{e(sol["name"])}</h3>
-              <p>{e(sol["summary"])}</p>
-              <ul>{bullets}</ul>
-              <a class="card-link" href="./{sol["slug"]}.html">Explore {e(sol["name"])} {ARROW}</a>
-            </article>
-            <figure class="bold-service-media reveal"><img src="{img(sol["image"], 1400)}" alt="" loading="lazy" /></figure>
-          </div>""")
-    return "\n".join(rows)
-
-
-def bold_steps():
-    return "\n".join(
-        f"""            <article class="bold-step">
-              <span class="bold-tag">Step 0{n}</span>
-              <h3>{e(name)}</h3>
-              <p>{e(full)}</p>
-            </article>"""
-        for n, (name, short, full) in enumerate(DATA["delivery"], 1)
-    )
-
-
 # ---------------------------------------------------------------- reference-faithful components
 
 APPS = {
@@ -1159,8 +1086,6 @@ SNIPPETS = {
     "industry_marquee": industry_marquee,
     "logo_marquee": logo_marquee,
     "compare_cards": compare_cards,
-    "bold_services": bold_services,
-    "bold_steps": bold_steps,
     "app_eims": lambda: app_mock("eims"),
     "app_erp": lambda: app_mock("erp"),
     "faq_items": faq_items,
@@ -1331,7 +1256,7 @@ def render_page(path, slug=None):
         return SNIPPETS[key]()
 
     body = re.sub(r"\{\{(\w+)\}\}", sub, body)
-    if ACTIVE and ACTIVE.get("image_heroes") and meta.get("hero_image") and '<section class="hero page-hero">' in body:
+    if meta.get("hero_image") and '<section class="hero page-hero">' in body:
         body = body.replace(
             '<section class="hero page-hero">',
             f'<section class="hero page-hero has-image is-art" data-pointer-parallax>\n          <img class="page-hero-bg" src="{img(meta["hero_image"], 2400)}" alt="" />',
@@ -1343,12 +1268,11 @@ def render_page(path, slug=None):
 def render_all():
     out = {}
     for p in sorted((SRC / "pages").glob("*.html")):
-        override = SRC / "designs" / f'{ACTIVE["key"]}-{p.stem}.html' if ACTIVE else None
-        out[p.name] = render_page(override if override and override.exists() else p, p.stem)
-    if ACTIVE:
-        home = SRC / "designs" / f'{ACTIVE["key"]}-home.html'
-        if home.exists():
-            out["index.html"] = render_page(home)
+        override = SRC / "designs" / f'{DESIGN["key"]}-{p.stem}.html'
+        out[p.name] = render_page(override if override.exists() else p, p.stem)
+    home = SRC / "designs" / f'{DESIGN["key"]}-home.html'
+    if home.exists():
+        out["index.html"] = render_page(home)
     for s in DATA["solutions"]:
         out[f'{s["slug"]}.html'] = solution_page(s)
     for p in DATA["products"]:
@@ -1364,180 +1288,8 @@ def render_all():
     return out
 
 
-def build_designs(target):
-    """Render every page once per design direction, plus a comparison page."""
-    global ACTIVE, PREVIEW
-    PREVIEW = True
-    target = (ROOT / target).resolve()
-    if target.exists():
-        shutil.rmtree(target)
-    target.mkdir(parents=True)
-    shutil.copytree(ROOT / "assets", target / "assets")
-    shutil.copy(ROOT / "styles.css", target / "styles.css")
-    shutil.copy(ROOT / "main.js", target / "main.js")
-    total = 0
-    for design in DESIGNS:
-        ACTIVE = design
-        folder = target / design["key"]
-        folder.mkdir()
-        if design["key"] != "editorial":
-            shutil.copy(SRC / "designs" / f'{design["key"]}.css', folder / "design.css")
-        for name, html in render_all().items():
-            if name == "404.html":
-                continue
-            html = (html.replace('href="./styles.css', 'href="../styles.css')
-                        .replace('src="./main.js', 'src="../main.js')
-                        .replace('"./assets/', '"../assets/'))
-            (folder / name).write_text(html, encoding="utf-8")
-            total += 1
-    ACTIVE = None
-    (target / "index.html").write_text(compare_page(), encoding="utf-8")
-    print(f"Built {total} pages across {len(DESIGNS)} design directions in {target}.")
-
-
-def compare_page():
-    cards = []
-    options = "".join(f'<option value="{d["key"]}">{d["name"]}</option>' for d in DESIGNS)
-    for d in DESIGNS:
-        swatches = "".join(f'<span style="background:{c}" title="{c}"></span>' for c in d["swatches"])
-        cards.append(f"""      <article class="dir">
-        <a class="thumb" href="./{d["key"]}/index.html" aria-label="Open the {d["name"]} direction">
-          <iframe src="./{d["key"]}/index.html" title="{d["name"]} homepage preview" loading="lazy" tabindex="-1" scrolling="no"></iframe>
-        </a>
-        <div class="dir-body">
-          <div class="dir-head"><h2>{d["name"]}</h2><span class="swatches">{swatches}</span></div>
-          <p>{e(d["summary"])}</p>
-          <dl>
-            <div><dt>Type</dt><dd>{e(d["type"])}</dd></div>
-            <div><dt>Inspired by</dt><dd><a href="{d["ref"]}" target="_blank" rel="noopener">{d["ref_name"]} &#8599;</a></dd></div>
-          </dl>
-          <div class="dir-actions">
-            <a class="btn" href="./{d["key"]}/index.html">Open full site</a>
-            <a class="btn btn-ghost" href="./{d["key"]}/solution-erp.html">Inner page</a>
-          </div>
-        </div>
-      </article>""")
-    return f"""<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
-    <title>Design directions | Hamerkop Systems</title>
-    <link rel="icon" href="./assets/hamerkop-bird.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
-    <style>
-      :root {{ --bg:#f4f4f2; --card:#fff; --ink:#151515; --muted:#666; --line:#e3e3e0; color-scheme: light; }}
-      * {{ box-sizing: border-box; }}
-      body {{ margin:0; font-family:Inter, system-ui, sans-serif; background:var(--bg); color:var(--ink); }}
-      a {{ color:inherit; }}
-      .wrap {{ width:min(1360px, calc(100vw - 32px)); margin:0 auto; padding:48px 0 80px; }}
-      header {{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:36px; }}
-      .brand {{ display:flex; align-items:center; gap:10px; font-weight:600; }}
-      .brand img {{ height:28px; }}
-      h1 {{ margin:18px 0 8px; font-size:clamp(2rem, 4vw, 3.2rem); letter-spacing:-0.035em; line-height:1.05; }}
-      header p {{ margin:0; max-width:60ch; color:var(--muted); line-height:1.6; }}
-      .live {{ font-size:.92rem; color:var(--muted); }}
-      .live a {{ font-weight:600; color:var(--ink); }}
-      .grid {{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; }}
-      .dir {{ overflow:hidden; border:1px solid var(--line); border-radius:20px; background:var(--card); }}
-      .thumb {{ position:relative; display:block; aspect-ratio:16/10; overflow:hidden; border-bottom:1px solid var(--line); background:#ddd; }}
-      .thumb iframe {{ position:absolute; top:0; left:0; width:1440px; height:900px; border:0; pointer-events:none; transform-origin:0 0; }}
-      .dir-body {{ padding:22px; }}
-      .dir-head {{ display:flex; justify-content:space-between; align-items:center; gap:12px; }}
-      .dir h2 {{ margin:0; font-size:1.5rem; letter-spacing:-0.02em; }}
-      .dir p {{ margin:10px 0 0; color:var(--muted); line-height:1.6; }}
-      .swatches {{ display:flex; }}
-      .swatches span {{ width:22px; height:22px; margin-left:-6px; border:2px solid #fff; border-radius:50%; box-shadow:0 0 0 1px var(--line); }}
-      dl {{ display:flex; flex-wrap:wrap; gap:28px; margin:16px 0 0; }}
-      dt {{ font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); }}
-      dd {{ margin:4px 0 0; font-weight:500; }}
-      .dir-actions {{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }}
-      .btn {{ display:inline-flex; align-items:center; min-height:42px; padding:0 18px; border-radius:999px; background:var(--ink); color:#fff; font-weight:500; font-size:.92rem; text-decoration:none; }}
-      .btn-ghost {{ background:transparent; color:var(--ink); box-shadow:inset 0 0 0 1px var(--line); }}
-      .compare {{ margin-top:56px; }}
-      .compare-head {{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px; margin-bottom:16px; }}
-      .compare h2 {{ margin:0; font-size:1.6rem; letter-spacing:-0.02em; }}
-      .controls {{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }}
-      select {{ min-height:42px; padding:0 12px; border:1px solid var(--line); border-radius:10px; background:#fff; font:inherit; }}
-      .panes {{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }}
-      .pane {{ position:relative; height:78vh; overflow:hidden; border:1px solid var(--line); border-radius:16px; background:#fff; }}
-      .pane iframe {{ width:100%; height:100%; border:0; }}
-      .pane-label {{ position:absolute; top:10px; left:10px; z-index:1; padding:4px 10px; border-radius:999px; background:rgba(21,21,21,.85); color:#fff; font-size:.8rem; }}
-      @media (max-width: 900px) {{ .grid, .panes {{ grid-template-columns:1fr; }} .pane {{ height:70vh; }} }}
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <header>
-        <div>
-          <span class="brand"><img src="./assets/hamerkop-bird.svg" alt="" /> Hamerkop Systems</span>
-          <h1>Design directions</h1>
-          <p>Four complete versions of the new Hamerkop website. Content and pages are identical; only the design system changes. Open any direction to browse the full site, or compare two side by side below.</p>
-        </div>
-        <p class="live">Current live site: <a href="{SITE["url"]}">{SITE["url"].replace("https://", "")}</a></p>
-      </header>
-
-      <section class="grid">
-{chr(10).join(cards)}
-      </section>
-
-      <section class="compare" aria-labelledby="compare-title">
-        <div class="compare-head">
-          <h2 id="compare-title">Side by side</h2>
-          <div class="controls">
-            <label>Left <select id="left">{options}</select></label>
-            <label>Right <select id="right">{options}</select></label>
-            <label>Page <select id="page">
-              <option value="index.html">Home</option>
-              <option value="solution-erp.html">Solution page</option>
-              <option value="product-eims.html">EIMS product</option>
-              <option value="partnership-odoo.html">Odoo partnership</option>
-              <option value="insights.html">Insights</option>
-              <option value="contact.html">Contact</option>
-            </select></label>
-          </div>
-        </div>
-        <div class="panes">
-          <div class="pane"><span class="pane-label" id="left-label"></span><iframe id="left-frame" title="Left design"></iframe></div>
-          <div class="pane"><span class="pane-label" id="right-label"></span><iframe id="right-frame" title="Right design"></iframe></div>
-        </div>
-      </section>
-    </div>
-    <script>
-      // Scale the 1440px-wide homepage previews to fit their cards.
-      const fit = () => document.querySelectorAll(".thumb").forEach((t) => {{
-        t.querySelector("iframe").style.transform = `scale(${{t.clientWidth / 1440}})`;
-      }});
-      fit();
-      window.addEventListener("resize", fit);
-
-      const left = document.getElementById("left"), right = document.getElementById("right"), page = document.getElementById("page");
-      right.selectedIndex = 1;
-      const show = () => {{
-        for (const [select, side] of [[left, "left"], [right, "right"]]) {{
-          document.getElementById(`${{side}}-frame`).src = `./${{select.value}}/${{page.value}}`;
-          document.getElementById(`${{side}}-label`).textContent = select.options[select.selectedIndex].text;
-        }}
-      }};
-      [left, right, page].forEach((el) => el.addEventListener("change", show));
-      show();
-    </script>
-  </body>
-</html>
-"""
-
-
 def main():
-    if len(sys.argv) == 3 and sys.argv[1] == "--designs":
-        build_designs(sys.argv[2])
-        return
-    # The live site is built in the chosen design.
-    global ACTIVE
-    ACTIVE = next(d for d in DESIGNS if d["key"] == SITE_DESIGN)
-    shutil.copy(SRC / "designs" / f"{SITE_DESIGN}.css", ROOT / "design.css")
+    shutil.copy(SRC / "designs" / f'{DESIGN["key"]}.css', ROOT / "design.css")
     out = render_all()
 
     # Search-engine files. The 404 page is left out of the sitemap.
